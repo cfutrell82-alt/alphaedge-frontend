@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlphaEdge — Legal</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0A0F1E;--navy-card:#111827;--navy-border:#1E2D45;--navy-hover:#1A2640;--cyan:#00D4FF;--cyan-dim:rgba(0,212,255,0.08);--gold:#F4B942;--green:#00E676;--red:#FF4B4B;--text:#E8EDF5;--text-muted:#6B7FA3;--text-dim:#3A4A6B}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;background:rgba(10,15,30,0.95);border-bottom:1px solid var(--navy-border);backdrop-filter:blur(12px)}
+.nav-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.2rem;color:var(--text);text-decoration:none}
+.nav-logo span{color:var(--cyan)}
+.btn{padding:8px 20px;border-radius:7px;font-size:0.875rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s;display:inline-block;border:none}
+.btn-ghost{background:none;border:1px solid var(--navy-border);color:var(--text-muted)}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+
+.page-wrap{max-width:900px;margin:0 auto;padding:64px 40px 96px}
+.page-eyebrow{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px;display:block}
+.page-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.5rem);font-weight:700;letter-spacing:-0.02em;margin-bottom:14px}
+.page-sub{color:var(--text-muted);font-size:0.95rem;margin-bottom:48px;padding-bottom:32px;border-bottom:1px solid var(--navy-border);max-width:580px;line-height:1.7}
+
+.risk-box{background:rgba(255,75,75,0.06);border:1px solid rgba(255,75,75,0.2);border-left:3px solid var(--red);border-radius:10px;padding:18px 22px;margin-bottom:40px}
+.risk-box strong{color:var(--red);display:block;font-size:0.82rem;font-weight:700;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:6px}
+.risk-box p{font-size:0.85rem;color:var(--text-muted);line-height:1.6}
+
+.doc-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:48px}
+.doc-card{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:14px;padding:22px;text-decoration:none;display:block;transition:all 0.2s;position:relative;overflow:hidden}
+.doc-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%}
+.doc-card.cyan::before{background:var(--cyan)}
+.doc-card.gold::before{background:var(--gold)}
+.doc-card.green::before{background:var(--green)}
+.doc-card.red::before{background:var(--red)}
+.doc-card:hover{border-color:rgba(0,212,255,0.25);transform:translateY(-2px)}
+.doc-icon{font-size:1.8rem;margin-bottom:12px}
+.doc-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;margin-bottom:6px;color:var(--text)}
+.doc-desc{font-size:0.82rem;color:var(--text-muted);line-height:1.5;margin-bottom:12px}
+.doc-meta{display:flex;justify-content:space-between;font-size:0.72rem;color:var(--text-dim)}
+.doc-arrow{color:var(--cyan);font-size:0.85rem}
+
+.contact-legal{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:40px}
+.legal-contact-card{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:12px;padding:18px}
+.lcc-label{font-size:0.72rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+.lcc-email{font-size:0.88rem;color:var(--cyan)}
+.lcc-desc{font-size:0.78rem;color:var(--text-muted);margin-top:4px;line-height:1.4}
+
+.notice-band{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:12px;padding:20px 24px;font-size:0.82rem;color:var(--text-muted);line-height:1.7}
+.notice-band strong{color:var(--text)}
+
+footer{background:var(--navy-card);border-top:1px solid var(--navy-border);padding:32px 40px}
+.footer-inner{max-width:900px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--text);text-decoration:none}
+.footer-logo span{color:var(--cyan)}
+.footer-links{display:flex;gap:20px}
+.footer-links a{color:var(--text-muted);text-decoration:none;font-size:0.82rem}
+.footer-links a:hover{color:var(--text)}
+.footer-copy{font-size:0.78rem;color:var(--text-dim);width:100%}
+
+@media(max-width:600px){nav{padding:0 16px}.page-wrap{padding:40px 16px 64px}.doc-grid,.contact-legal{grid-template-columns:1fr}.doc-card::before{width:100%;height:3px}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="alphaedge-trading.html" class="nav-logo">Alpha<span>Edge</span></a>
+  <a href="alphaedge-trading.html" class="btn btn-ghost">Back to site</a>
+</nav>
+
+<div class="page-wrap">
+  <span class="page-eyebrow">Legal</span>
+  <h1 class="page-title">Legal Documents</h1>
+  <p class="page-sub">All policies, terms, and legal documents governing your use of AlphaEdge. Last reviewed June 16, 2026. AlphaEdge LLC, incorporated in Delaware, USA.</p>
+
+  <div class="risk-box">
+    <strong>⚠ Risk disclosure</strong>
+    <p>Trading financial instruments involves substantial risk of loss. AlphaEdge provides signals and educational content for informational purposes only. Nothing on this platform constitutes financial advice. Past performance is not indicative of future results. Never trade with money you cannot afford to lose.</p>
+  </div>
+
+  <div class="doc-grid">
+    <a href="alphaedge-terms.html" class="doc-card cyan">
+      <div class="doc-icon">📄</div>
+      <div class="doc-title">Terms of Service</div>
+      <div class="doc-desc">The agreement governing your use of AlphaEdge — subscriptions, permitted use, disclaimers, and limitation of liability.</div>
+      <div class="doc-meta"><span>Updated Jun 16, 2026</span><span class="doc-arrow">Read →</span></div>
+    </a>
+    <a href="alphaedge-privacy.html" class="doc-card gold">
+      <div class="doc-icon">🔒</div>
+      <div class="doc-title">Privacy Policy</div>
+      <div class="doc-desc">How we collect, use, and protect your personal data. GDPR and CCPA compliant. We never sell your data.</div>
+      <div class="doc-meta"><span>Updated Jun 16, 2026</span><span class="doc-arrow">Read →</span></div>
+    </a>
+    <a href="alphaedge-copyright.html" class="doc-card green">
+      <div class="doc-icon">©</div>
+      <div class="doc-title">Copyright & DMCA Policy</div>
+      <div class="doc-desc">Ownership of AlphaEdge content, trademark notices for AlphaEdge™, Fortunex™, and Cloutium™, and DMCA takedown procedure.</div>
+      <div class="doc-meta"><span>Updated Jun 16, 2026</span><span class="doc-arrow">Read →</span></div>
+    </a>
+    <a href="alphaedge-trading.html#pricing" class="doc-card cyan">
+      <div class="doc-icon">💳</div>
+      <div class="doc-title">Subscription & Refund Policy</div>
+      <div class="doc-desc">Billing cycles, cancellation rights, refund eligibility, and free trial terms for all AlphaEdge plans.</div>
+      <div class="doc-meta"><span>See Terms §5–7</span><span class="doc-arrow">View →</span></div>
+    </a>
+    <a href="alphaedge-privacy.html#p12" class="doc-card gold">
+      <div class="doc-icon">🇪🇺</div>
+      <div class="doc-title">GDPR & CCPA Compliance</div>
+      <div class="doc-desc">Your rights as an EU or California resident — access, deletion, portability, correction, and opt-out from data processing.</div>
+      <div class="doc-meta"><span>See Privacy §12</span><span class="doc-arrow">View →</span></div>
+    </a>
+    <a href="alphaedge-terms.html#s3" class="doc-card red">
+      <div class="doc-icon">⚠️</div>
+      <div class="doc-title">Risk Disclaimer</div>
+      <div class="doc-desc">Full risk disclosure for trading financial instruments including stocks, forex, cryptocurrencies, and options.</div>
+      <div class="doc-meta"><span>See Terms §3</span><span class="doc-arrow">View →</span></div>
+    </a>
+  </div>
+
+  <div style="margin-bottom:20px">
+    <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--cyan);margin-bottom:16px">Legal contacts</div>
+    <div class="contact-legal">
+      <div class="legal-contact-card"><div class="lcc-label">General legal</div><div class="lcc-email"><a href="mailto:legal@alphaedge.com" style="color:var(--cyan)">legal@alphaedge.com</a></div><div class="lcc-desc">Contracts, partnerships, and general legal inquiries. Response within 48 hours.</div></div>
+      <div class="legal-contact-card"><div class="lcc-label">Privacy & GDPR</div><div class="lcc-email"><a href="mailto:privacy@alphaedge.com" style="color:var(--cyan)">privacy@alphaedge.com</a></div><div class="lcc-desc">Data subject requests, GDPR inquiries. Response within 30 days.</div></div>
+      <div class="legal-contact-card"><div class="lcc-label">DMCA & Copyright</div><div class="lcc-email"><a href="mailto:dmca@alphaedge.com" style="color:var(--cyan)">dmca@alphaedge.com</a></div><div class="lcc-desc">DMCA takedown notices and counter-notices. Response within 48 hours.</div></div>
+      <div class="legal-contact-card"><div class="lcc-label">Business address</div><div class="lcc-email" style="color:var(--text-muted);font-size:0.85rem">AlphaEdge LLC</div><div class="lcc-desc">Delaware, United States. Registered agent on file with the State of Delaware.</div></div>
+    </div>
+  </div>
+
+  <div class="notice-band">
+    <strong>AlphaEdge is not a registered investment adviser.</strong> AlphaEdge LLC and its analysts do not hold FINRA, SEC, or FCA registration. The signals, analysis, and content published by AlphaEdge are for informational and educational purposes only and should not be relied upon as financial advice. Always consult with a qualified and independent financial adviser before making investment decisions.
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a href="alphaedge-trading.html" class="footer-logo">Alpha<span>Edge</span></a>
+    <div class="footer-links">
+      <a href="alphaedge-terms.html">Terms</a>
+      <a href="alphaedge-privacy.html">Privacy</a>
+      <a href="alphaedge-copyright.html">Copyright</a>
+      <a href="alphaedge-support.html">Support</a>
+    </div>
+    <div class="footer-copy">© 2026 AlphaEdge LLC. All rights reserved. AlphaEdge™, Fortunex™, and Cloutium™ are trademarks of AlphaEdge LLC.</div>
+  </div>
+</footer>
+</body>
+</html>

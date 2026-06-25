@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlphaEdge — Blog & Market Insights</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #0A0F1E; --navy-card: #111827; --navy-border: #1E2D45; --navy-hover: #1A2640;
+  --cyan: #00D4FF; --cyan-dim: rgba(0,212,255,0.08); --gold: #F4B942; --gold-dim: rgba(244,185,66,0.10);
+  --green: #00E676; --green-dim: rgba(0,230,118,0.10); --red: #FF4B4B; --purple: #9B6DFF;
+  --text: #E8EDF5; --text-muted: #6B7FA3; --text-dim: #3A4A6B;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--navy); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.7; }
+nav {
+  position: sticky; top: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 64px; background: rgba(10,15,30,0.95);
+  border-bottom: 1px solid var(--navy-border); backdrop-filter: blur(12px);
+}
+.nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; color: var(--text); text-decoration: none; }
+.nav-logo span { color: var(--cyan); }
+.nav-links { display: flex; gap: 28px; }
+.nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
+.nav-links a:hover { color: var(--text); }
+.btn { padding: 8px 20px; border-radius: 7px; font-size: 0.875rem; font-weight: 600; font-family: 'Inter', sans-serif; cursor: pointer; text-decoration: none; transition: all 0.2s; display: inline-block; }
+.btn-primary { background: var(--cyan); color: var(--navy); border: none; }
+.btn-primary:hover { background: #33DDFF; }
+.btn-ghost { background: none; border: 1px solid var(--navy-border); color: var(--text-muted); }
+.btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+
+.page { max-width: 1100px; margin: 0 auto; padding: 60px 40px 80px; }
+
+/* HERO */
+.blog-hero { margin-bottom: 48px; }
+.blog-hero-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; }
+.blog-hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem,4vw,2.8rem); font-weight: 700; letter-spacing: -0.03em; margin-bottom: 12px; }
+.blog-hero p { color: var(--text-muted); font-size: 0.95rem; max-width: 560px; }
+
+/* FILTERS */
+.filter-row { display: flex; gap: 8px; margin-bottom: 36px; flex-wrap: wrap; align-items: center; }
+.filter-btn {
+  padding: 7px 16px; border-radius: 100px; cursor: pointer;
+  font-size: 0.78rem; font-weight: 600; font-family: 'Inter', sans-serif;
+  border: 1px solid var(--navy-border); background: none; color: var(--text-muted); transition: all 0.15s;
+}
+.filter-btn:hover { color: var(--text); border-color: rgba(0,212,255,0.3); }
+.filter-btn.active { background: var(--cyan-dim); color: var(--cyan); border-color: rgba(0,212,255,0.3); }
+.filter-search {
+  margin-left: auto; background: var(--navy-card); border: 1px solid var(--navy-border);
+  border-radius: 8px; padding: 8px 14px; color: var(--text);
+  font-family: 'Inter', sans-serif; font-size: 0.82rem; outline: none; width: 220px;
+  transition: border-color 0.2s;
+}
+.filter-search:focus { border-color: var(--cyan); }
+.filter-search::placeholder { color: var(--text-dim); }
+
+/* FEATURED POST */
+.featured-post {
+  background: var(--navy-card); border: 1px solid var(--navy-border);
+  border-radius: 20px; padding: 36px; margin-bottom: 40px;
+  display: grid; grid-template-columns: 1fr 400px; gap: 40px; align-items: center;
+  cursor: pointer; transition: all 0.2s; position: relative; overflow: hidden;
+}
+.featured-post::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--cyan), var(--gold)); }
+.featured-post:hover { border-color: rgba(0,212,255,0.3); transform: translateY(-2px); }
+.featured-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--gold-dim); border: 1px solid rgba(244,185,66,0.25);
+  color: var(--gold); font-size: 0.68rem; font-weight: 700;
+  padding: 4px 10px; border-radius: 100px; margin-bottom: 14px; letter-spacing: 0.06em;
+}
+.featured-post h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; line-height: 1.3; }
+.featured-post p { color: var(--text-muted); font-size: 0.9rem; line-height: 1.7; margin-bottom: 20px; }
+.post-meta { display: flex; align-items: center; gap: 16px; font-size: 0.75rem; color: var(--text-muted); }
+.post-meta .author { display: flex; align-items: center; gap: 6px; }
+.author-avatar { width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.6rem; font-weight: 700; font-family: 'Space Grotesk', sans-serif; }
+.post-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--text-dim); }
+
+/* FEATURED VISUAL */
+.featured-visual {
+  background: var(--navy); border: 1px solid var(--navy-border);
+  border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 12px;
+}
+.mini-chart { display: flex; align-items: flex-end; gap: 3px; height: 80px; }
+.mini-bar { flex: 1; border-radius: 2px 2px 0 0; transition: opacity 0.2s; }
+.ticker-row { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; }
+.ticker-sym { font-family: 'Space Mono', monospace; font-weight: 700; }
+.ticker-chg.up { color: var(--green); } .ticker-chg.dn { color: var(--red); }
+
+/* GRID */
+.blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-bottom: 48px; }
+.post-card {
+  background: var(--navy-card); border: 1px solid var(--navy-border);
+  border-radius: 16px; overflow: hidden; cursor: pointer;
+  transition: all 0.2s;
+}
+.post-card:hover { border-color: rgba(0,212,255,0.2); transform: translateY(-2px); }
+.post-thumb {
+  height: 140px; display: flex; align-items: center; justify-content: center;
+  font-size: 2.5rem; position: relative; overflow: hidden;
+}
+.post-body { padding: 20px; }
+.post-cat {
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 3px 8px; border-radius: 4px; display: inline-block; margin-bottom: 10px;
+}
+.post-card h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.95rem; line-height: 1.4; margin-bottom: 8px; }
+.post-card p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 14px; }
+.post-footer { display: flex; align-items: center; justify-content: space-between; font-size: 0.72rem; color: var(--text-muted); }
+.read-more { color: var(--cyan); font-weight: 600; }
+
+/* SIDEBAR */
+.blog-layout { display: grid; grid-template-columns: 1fr 300px; gap: 40px; }
+.sidebar { display: flex; flex-direction: column; gap: 20px; }
+.sidebar-card { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 14px; overflow: hidden; }
+.sidebar-header { padding: 14px 16px; border-bottom: 1px solid var(--navy-border); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.82rem; }
+.sidebar-item { display: flex; gap: 12px; padding: 12px 16px; border-bottom: 1px solid rgba(30,45,69,0.5); cursor: pointer; transition: background 0.15s; }
+.sidebar-item:last-child { border-bottom: none; }
+.sidebar-item:hover { background: var(--navy-hover); }
+.si-icon { font-size: 1.2rem; flex-shrink: 0; margin-top: 2px; }
+.si-title { font-size: 0.82rem; font-weight: 600; line-height: 1.4; margin-bottom: 3px; }
+.si-meta { font-size: 0.7rem; color: var(--text-muted); }
+
+/* NEWSLETTER */
+.newsletter-card {
+  background: linear-gradient(135deg, rgba(0,212,255,0.06), rgba(155,109,255,0.04));
+  border: 1px solid rgba(0,212,255,0.2); border-radius: 14px; padding: 22px;
+}
+.newsletter-card h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.95rem; margin-bottom: 8px; }
+.newsletter-card p { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.5; }
+.nl-input { width: 100%; background: var(--navy); border: 1px solid var(--navy-border); border-radius: 7px; padding: 9px 12px; color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.82rem; outline: none; margin-bottom: 8px; transition: border-color 0.2s; }
+.nl-input:focus { border-color: var(--cyan); }
+.nl-btn { width: 100%; padding: 10px; background: var(--cyan); color: var(--navy); border: none; border-radius: 7px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.85rem; cursor: pointer; transition: background 0.2s; }
+.nl-btn:hover { background: #33DDFF; }
+
+/* PAGINATION */
+.pagination { display: flex; gap: 6px; justify-content: center; }
+.page-btn { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.82rem; cursor: pointer; border: 1px solid var(--navy-border); background: none; color: var(--text-muted); transition: all 0.15s; font-family: 'Inter', sans-serif; }
+.page-btn:hover, .page-btn.active { background: var(--cyan-dim); color: var(--cyan); border-color: rgba(0,212,255,0.3); }
+
+footer { background: var(--navy-card); border-top: 1px solid var(--navy-border); padding: 32px 40px; }
+.footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.footer-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: var(--text); text-decoration: none; }
+.footer-logo span { color: var(--cyan); }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text); }
+.footer-copy { font-size: 0.78rem; color: var(--text-dim); width: 100%; }
+
+@media(max-width:900px) {
+  nav { padding: 0 20px; } .nav-links { display: none; }
+  .page { padding: 40px 20px 60px; }
+  .featured-post { grid-template-columns: 1fr; }
+  .featured-visual { display: none; }
+  .blog-layout { grid-template-columns: 1fr; }
+  .blog-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media(max-width:600px) { .blog-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="alphaedge-trading.html" class="nav-logo">Alpha<span>Edge</span></a>
+  <div class="nav-links">
+    <a href="alphaedge-trading.html#markets">Signals</a>
+    <a href="alphaedge-education.html">Education</a>
+    <a href="alphaedge-blog.html" style="color:var(--cyan)">Blog</a>
+    <a href="alphaedge-about.html">About</a>
+  </div>
+  <div style="display:flex;gap:10px;">
+    <button onclick="openModal('login')" class="btn btn-ghost">Sign in</button>
+    <a href="alphaedge-checkout.html" class="btn btn-primary">Start free</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <div class="blog-hero">
+    <div class="blog-hero-label">Market insights & trading education</div>
+    <h1>The AlphaEdge Blog</h1>
+    <p>Weekly market analysis, signal recaps, trading education, and honest commentary from our analyst team.</p>
+  </div>
+
+  <!-- FILTERS -->
+  <div class="filter-row">
+    <button class="filter-btn active" onclick="filterPosts('all', this)">All</button>
+    <button class="filter-btn" onclick="filterPosts('analysis', this)">Market Analysis</button>
+    <button class="filter-btn" onclick="filterPosts('education', this)">Education</button>
+    <button class="filter-btn" onclick="filterPosts('crypto', this)">Crypto</button>
+    <button class="filter-btn" onclick="filterPosts('signals', this)">Signal Recaps</button>
+    <button class="filter-btn" onclick="filterPosts('macro', this)">Macro</button>
+    <input class="filter-search" type="text" placeholder="🔍 Search articles..." oninput="searchPosts(this.value)">
+  </div>
+
+  <!-- FEATURED POST -->
+  <div class="featured-post" onclick="openPost('fed-pivot-2026')">
+    <div>
+      <div class="featured-badge">⭐ Featured</div>
+      <h2>The Fed's rate pivot is here — what it means for every asset class</h2>
+      <p>After 18 months of aggressive tightening, the Fed signalled a clear shift in June 2026. We break down exactly how this changes our positioning across equities, forex, crypto, and options — and which trades we're watching heading into Q3.</p>
+      <div class="post-meta">
+        <div class="author">
+          <div class="author-avatar" style="background:var(--cyan-dim);color:var(--cyan);">MR</div>
+          Marcus Reed
+        </div>
+        <span class="dot"></span>
+        <span>June 15, 2026</span>
+        <span class="dot"></span>
+        <span>12 min read</span>
+        <span class="dot"></span>
+        <span style="color:var(--cyan)">Macro</span>
+      </div>
+    </div>
+    <div class="featured-visual">
+      <div style="font-size:0.68rem;color:var(--text-muted);margin-bottom:4px;">SPY performance — 30 days</div>
+      <div class="mini-chart" id="featured-chart"></div>
+      <div class="ticker-row"><span class="ticker-sym">SPY</span><span class="ticker-chg up">+8.4% (30d)</span></div>
+      <div class="ticker-row"><span class="ticker-sym">QQQ</span><span class="ticker-chg up">+11.2% (30d)</span></div>
+      <div class="ticker-row"><span class="ticker-sym">BTC</span><span class="ticker-chg up">+24.1% (30d)</span></div>
+      <div class="ticker-row"><span class="ticker-sym">EUR/USD</span><span class="ticker-chg dn">-0.8% (30d)</span></div>
+    </div>
+  </div>
+
+  <!-- MAIN LAYOUT -->
+  <div class="blog-layout">
+
+    <!-- POSTS GRID -->
+    <div>
+      <div class="blog-grid" id="posts-grid"></div>
+      <div class="pagination">
+        <button class="page-btn">←</button>
+        <button class="page-btn active">1</button>
+        <button class="page-btn">2</button>
+        <button class="page-btn">3</button>
+        <button class="page-btn">→</button>
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+
+      <!-- Newsletter -->
+      <div class="newsletter-card">
+        <h3>📬 Weekly market brief</h3>
+        <p>Every Sunday, our lead analyst's read on the week ahead — free, no subscription required.</p>
+        <input class="nl-input" type="email" id="nl-email" placeholder="your@email.com">
+        <button class="nl-btn" onclick="subscribeNewsletter()">Get the brief →</button>
+      </div>
+
+      <!-- Trending -->
+      <div class="sidebar-card">
+        <div class="sidebar-header">🔥 Trending this week</div>
+        <div class="sidebar-item" onclick="openPost('rsi-mastery')">
+          <div class="si-icon">📊</div>
+          <div>
+            <div class="si-title">RSI divergence: the most reliable reversal signal</div>
+            <div class="si-meta">4,820 reads · Education</div>
+          </div>
+        </div>
+        <div class="sidebar-item" onclick="openPost('btc-halving-analysis')">
+          <div class="si-icon">₿</div>
+          <div>
+            <div class="si-title">BTC post-halving analysis: where are we in the cycle?</div>
+            <div class="si-meta">3,140 reads · Crypto</div>
+          </div>
+        </div>
+        <div class="sidebar-item" onclick="openPost('options-weekly-plays')">
+          <div class="si-icon">⚙️</div>
+          <div>
+            <div class="si-title">How to trade weekly options without blowing your account</div>
+            <div class="si-meta">2,880 reads · Education</div>
+          </div>
+        </div>
+        <div class="sidebar-item" onclick="openPost('forex-carry-trade')">
+          <div class="si-icon">💱</div>
+          <div>
+            <div class="si-title">The carry trade is back — here's how to play it</div>
+            <div class="si-meta">1,960 reads · Forex</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Signal recap -->
+      <div class="sidebar-card">
+        <div class="sidebar-header">⚡ Last week's signals</div>
+        <div style="padding:14px 16px;">
+          <div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:10px;">
+            <span style="color:var(--text-muted)">Signals sent</span><span style="font-family:'Space Mono',monospace">12</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:10px;">
+            <span style="color:var(--text-muted)">Winners</span><span style="color:var(--green);font-weight:700">10 (83%)</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:0.75rem;margin-bottom:14px;">
+            <span style="color:var(--text-muted)">Best trade</span><span style="color:var(--gold);font-weight:700">NVDA +14.2%</span>
+          </div>
+          <a href="alphaedge-dashboard.html" style="display:block;text-align:center;padding:9px;background:var(--cyan-dim);color:var(--cyan);border:1px solid rgba(0,212,255,0.2);border-radius:7px;font-size:0.8rem;font-weight:600;text-decoration:none;">View full recap →</a>
+        </div>
+      </div>
+
+      <!-- Categories -->
+      <div class="sidebar-card">
+        <div class="sidebar-header">📂 Categories</div>
+        <div style="padding:14px 16px;display:flex;flex-direction:column;gap:8px;">
+          ${[
+            {cat:'Market Analysis', count:24, color:'var(--cyan)'},
+            {cat:'Education',       count:31, color:'var(--gold)'},
+            {cat:'Crypto',         count:18, color:'var(--purple)'},
+            {cat:'Signal Recaps',  count:42, color:'var(--green)'},
+            {cat:'Macro',          count:15, color:'var(--text-muted)'},
+            {cat:'Forex',          count:12, color:'var(--gold)'},
+          ].map(c => `
+            <div onclick="filterPosts('${c.cat.toLowerCase().replace(' ','-')}', null)" style="display:flex;justify-content:space-between;align-items:center;cursor:pointer;padding:4px 0;transition:opacity 0.15s;" onmouseover="this.style.opacity='0.7'" onmouseout="this.style.opacity='1'">
+              <span style="font-size:0.82rem;color:${c.color}">${c.cat}</span>
+              <span style="font-size:0.72rem;background:var(--navy);border:1px solid var(--navy-border);padding:2px 7px;border-radius:4px;color:var(--text-muted)">${c.count}</span>
+            </div>`).join('')}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a href="alphaedge-trading.html" class="footer-logo">Alpha<span>Edge</span></a>
+    <div class="footer-links">
+      <a href="alphaedge-trading.html">Home</a>
+      <a href="alphaedge-about.html">About</a>
+      <a href="alphaedge-terms.html">Terms</a>
+      <a href="alphaedge-privacy.html">Privacy</a>
+    </div>
+    <div class="footer-copy">© 2026 AlphaEdge LLC. All rights reserved. Not financial advice.</div>
+  </div>
+</footer>
+
+<script>
+const POSTS = [
+  { id:'ema-golden-cross', cat:'education', thumb:'📐', thumbBg:'linear-gradient(135deg,#0d1526,#162035)', catLabel:'Education', catColor:'var(--gold)', catBg:'var(--gold-dim)', title:'The EMA golden cross: a complete setup guide', excerpt:'Everything you need to know about using the 9/21 EMA crossover as an entry trigger — with real examples from our signal history.', author:'MR', authorName:'Marcus Reed', date:'Jun 12, 2026', read:'8 min' },
+  { id:'crypto-market-structure', cat:'crypto', thumb:'₿', thumbBg:'linear-gradient(135deg,#1a0f2e,#0d1526)', catLabel:'Crypto', catColor:'var(--purple)', catBg:'var(--purple-dim)', title:'Reading crypto market structure like a professional', excerpt:'Support, resistance, BOS, CHoCH — how institutional traders read the chart and how you can apply the same framework to BTC and ETH.', author:'JL', authorName:'Jamie Laurent', date:'Jun 10, 2026', read:'11 min' },
+  { id:'position-sizing-guide', cat:'education', thumb:'⚖️', thumbBg:'linear-gradient(135deg,#0d1526,#1a2640)', catLabel:'Education', catColor:'var(--gold)', catBg:'var(--gold-dim)', title:'Position sizing: the most important skill in trading', excerpt:'Every profitable trader manages risk first. This guide explains the 1% rule, Kelly Criterion, and how we size every AlphaEdge signal.', author:'NP', authorName:'Nadia Patel', date:'Jun 8, 2026', read:'9 min' },
+  { id:'weekly-signal-recap-jun2', cat:'signals', thumb:'⚡', thumbBg:'linear-gradient(135deg,#0a1a1f,#0d2030)', catLabel:'Signal Recap', catColor:'var(--cyan)', catBg:'var(--cyan-dim)', title:'Signal recap: week of June 2 — 10 wins, 2 losses', excerpt:'Full breakdown of last week\'s 12 signals: what worked, what didn\'t, and what we\'re watching going into the next week.', author:'MR', authorName:'Marcus Reed', date:'Jun 7, 2026', read:'6 min' },
+  { id:'eurusd-breakdown-2026', cat:'analysis', thumb:'💱', thumbBg:'linear-gradient(135deg,#0d1526,#1a2030)', catLabel:'Market Analysis', catColor:'var(--cyan)', catBg:'var(--cyan-dim)', title:'EUR/USD breakdown: why we turned bearish in May', excerpt:'A full walkthrough of the macro and technical reasons behind our EUR/USD sell signals in May — and what the chart is telling us now.', author:'SK', authorName:'Sophie Kim', date:'Jun 5, 2026', read:'10 min' },
+  { id:'options-greeks-simplified', cat:'education', thumb:'🧮', thumbBg:'linear-gradient(135deg,#1a1020,#0d1526)', catLabel:'Education', catColor:'var(--gold)', catBg:'var(--gold-dim)', title:'Options Greeks explained without the maths degree', excerpt:'Delta, gamma, theta, vega — in plain English with visual examples. The foundation you need before trading any AlphaEdge options signal.', author:'DT', authorName:'David Torres', date:'Jun 3, 2026', read:'14 min' },
+];
+
+function renderPosts(posts) {
+  document.getElementById('posts-grid').innerHTML = posts.map(p => `
+    <div class="post-card" onclick="openPost('${p.id}')">
+      <div class="post-thumb" style="background:${p.thumbBg}">${p.thumb}</div>
+      <div class="post-body">
+        <span class="post-cat" style="color:${p.catColor};background:${p.catBg};border:1px solid ${p.catColor}33;">${p.catLabel}</span>
+        <h3>${p.title}</h3>
+        <p>${p.excerpt}</p>
+        <div class="post-footer">
+          <div class="post-meta">
+            <div class="author-avatar" style="width:20px;height:20px;border-radius:50%;background:var(--cyan-dim);color:var(--cyan);font-size:0.55rem;font-weight:700;display:flex;align-items:center;justify-content:center;">${p.author}</div>
+            <span style="margin-left:4px">${p.authorName}</span>
+            <span class="dot" style="width:3px;height:3px;border-radius:50%;background:var(--text-dim);display:inline-block;"></span>
+            <span>${p.date}</span>
+          </div>
+          <span class="read-more">${p.read} →</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterPosts(cat, btn) {
+  if (btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  const filtered = cat === 'all' ? POSTS : POSTS.filter(p => p.cat === cat || p.catLabel.toLowerCase().includes(cat));
+  renderPosts(filtered);
+}
+
+function searchPosts(q) {
+  const filtered = q.length < 2 ? POSTS : POSTS.filter(p =>
+    p.title.toLowerCase().includes(q.toLowerCase()) ||
+    p.excerpt.toLowerCase().includes(q.toLowerCase())
+  );
+  renderPosts(filtered);
+}
+
+function openPost(id) {
+  // TODO: navigate to individual post page
+  // window.location.href = `alphaedge-post-${id}.html`;
+  alert(`Opening article: ${id}\n\nIn production this navigates to the full article page.\nConnect to a CMS (Ghost, Contentful, or Sanity) to manage posts.`);
+}
+
+function subscribeNewsletter() {
+  const email = document.getElementById('nl-email').value;
+  if (!email || !email.includes('@')) { alert('Enter a valid email.'); return; }
+  // TODO: POST /api/newsletter/subscribe
+  alert(`✓ Subscribed! You'll receive the Sunday market brief at ${email}`);
+}
+
+// Build featured chart bars
+const chartData = [42,38,45,41,50,48,55,52,60,58,65,62,70,68,72,75,73,78,80,76,82,85,83,88,90,88,92,95,91,94];
+document.getElementById('featured-chart').innerHTML = chartData.map((h, i) => {
+  const isUp = i === 0 || h >= chartData[i-1];
+  return `<div class="mini-bar" style="height:${h * 0.75}%;background:${isUp ? 'var(--green)' : 'var(--red)'};opacity:${0.5 + (i/chartData.length)*0.5};"></div>`;
+}).join('');
+
+renderPosts(POSTS);
+</script>
+
+<script src="alphaedge-auth-modal.js"></script>
+</body>
+</html>

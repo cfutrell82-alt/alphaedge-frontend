@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlphaEdge — Join Telegram</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0A0F1E;--navy-card:#111827;--navy-card2:#0D1526;--navy-border:#1E2D45;--navy-hover:#1A2640;--cyan:#00D4FF;--cyan-dim:rgba(0,212,255,0.08);--gold:#F4B942;--gold-dim:rgba(244,185,66,0.10);--green:#00E676;--green-dim:rgba(0,230,118,0.10);--red:#FF4B4B;--purple:#9B6DFF;--tg:#229ED9;--text:#E8EDF5;--text-muted:#6B7FA3;--text-dim:#3A4A6B}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;background:rgba(10,15,30,0.95);border-bottom:1px solid var(--navy-border);backdrop-filter:blur(12px)}
+.nav-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.2rem;color:var(--text);text-decoration:none}
+.nav-logo span{color:var(--cyan)}
+.nav-links{display:flex;gap:28px}
+.nav-links a{color:var(--text-muted);text-decoration:none;font-size:0.875rem;transition:color 0.2s}
+.nav-links a:hover{color:var(--text)}
+.btn{padding:8px 20px;border-radius:7px;font-size:0.875rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s;display:inline-block;border:none}
+.btn-primary{background:var(--cyan);color:var(--navy)}
+.btn-primary:hover{background:#33DDFF}
+.btn-ghost{background:none;border:1px solid var(--navy-border);color:var(--text-muted)}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+.btn-tg{background:var(--tg);color:#fff}
+.btn-tg:hover{background:#1e8dc4}
+
+/* HERO */
+.hero{max-width:1000px;margin:0 auto;padding:80px 40px 60px;display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;background:rgba(34,158,217,0.1);border:1px solid rgba(34,158,217,0.25);color:var(--tg);font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;padding:5px 14px;border-radius:100px;margin-bottom:20px}
+h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(2rem,4vw,3rem);font-weight:700;letter-spacing:-0.03em;line-height:1.1;margin-bottom:18px}
+.sub{color:var(--text-muted);font-size:1rem;line-height:1.7;margin-bottom:28px}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+
+/* PHONE MOCKUP */
+.phone-wrap{display:flex;justify-content:center}
+.phone{width:240px;background:var(--navy-card2);border:1px solid var(--navy-border);border-radius:28px;overflow:hidden;position:relative}
+.phone-header{background:#1c2b3a;padding:10px 16px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--navy-border)}
+.phone-avatar{width:32px;height:32px;border-radius:50%;background:rgba(34,158,217,0.2);display:flex;align-items:center;justify-content:center;font-size:0.9rem}
+.phone-ch-name{font-size:0.78rem;font-weight:700}
+.phone-ch-count{font-size:0.65rem;color:var(--text-muted)}
+.phone-messages{padding:12px;display:flex;flex-direction:column;gap:10px}
+.msg{background:#1c2b3a;border-radius:10px 10px 10px 2px;padding:10px 12px;font-size:0.72rem;line-height:1.5;max-width:90%}
+.msg.signal{background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.15)}
+.msg.analyst{background:rgba(0,212,255,0.06);border:1px solid rgba(0,212,255,0.12);align-self:flex-end;border-radius:10px 10px 2px 10px}
+.msg-label{font-size:0.6rem;color:var(--text-dim);margin-bottom:4px;font-weight:700;text-transform:uppercase;letter-spacing:0.04em}
+.msg-sym{font-family:'Space Mono',monospace;font-weight:700;font-size:0.78rem}
+.msg-dir.buy{color:var(--green)}
+.msg-dir.sell{color:var(--red)}
+.msg-meta{font-size:0.63rem;color:var(--text-muted);margin-top:4px}
+.phone-footer{padding:10px 12px;background:#1c2b3a;border-top:1px solid var(--navy-border);display:flex;align-items:center;gap:8px}
+.ph-input{flex:1;background:var(--navy-card);border:1px solid var(--navy-border);border-radius:100px;padding:6px 12px;font-size:0.65rem;color:var(--text-muted)}
+.ph-send{background:var(--tg);width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.8rem;cursor:pointer;flex-shrink:0}
+
+/* SECTION */
+.section{max-width:1000px;margin:0 auto;padding:60px 40px}
+.section-label{font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--cyan);margin-bottom:10px}
+.section-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.5rem,3vw,2rem);font-weight:700;letter-spacing:-0.02em;margin-bottom:12px}
+.section-sub{color:var(--text-muted);max-width:560px;font-size:0.9rem;margin-bottom:36px;line-height:1.7}
+.divider{border:none;border-top:1px solid var(--navy-border)}
+
+/* CHANNELS */
+.channels-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.ch-card{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:14px;padding:24px;position:relative;overflow:hidden}
+.ch-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.ch-card.pro::before{background:var(--cyan)}
+.ch-card.elite::before{background:var(--gold)}
+.ch-card.free::before{background:var(--green)}
+.ch-card.disc::before{background:var(--purple)}
+.ch-plan-badge{display:inline-flex;align-items:center;gap:5px;font-size:0.65rem;font-weight:700;padding:3px 8px;border-radius:4px;margin-bottom:12px}
+.ch-icon{font-size:2rem;margin-bottom:10px}
+.ch-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;margin-bottom:6px}
+.ch-desc{font-size:0.82rem;color:var(--text-muted);line-height:1.5;margin-bottom:14px}
+.ch-features{display:flex;flex-direction:column;gap:6px}
+.ch-feat{font-size:0.78rem;color:var(--text-muted);display:flex;align-items:center;gap:7px}
+.ch-feat .ck{color:var(--green);font-size:0.72rem}
+.ch-join-btn{display:block;width:100%;padding:10px;margin-top:16px;text-align:center;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer;border:none;transition:all 0.2s;text-decoration:none}
+
+/* HOW TO JOIN */
+.steps-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative;margin-top:32px}
+.steps-grid::before{content:'';position:absolute;top:22px;left:12%;right:12%;height:1px;background:linear-gradient(90deg,var(--tg),var(--cyan));z-index:0}
+.step-item{text-align:center;position:relative;z-index:1;padding:0 8px}
+.step-circle{width:44px;height:44px;border-radius:50%;margin:0 auto 12px;display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.85rem;border:2px solid;background:var(--navy)}
+.step-circle.s1{border-color:var(--tg);color:var(--tg)}
+.step-circle.s2{border-color:var(--cyan);color:var(--cyan)}
+.step-circle.s3{border-color:var(--gold);color:var(--gold)}
+.step-circle.s4{border-color:var(--green);color:var(--green)}
+.step-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.82rem;margin-bottom:5px}
+.step-desc{font-size:0.75rem;color:var(--text-muted);line-height:1.5}
+
+/* RULES */
+.rules-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.rule-card{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:10px;padding:16px;display:flex;gap:12px;align-items:flex-start}
+.rule-icon{font-size:1.1rem;flex-shrink:0;margin-top:2px}
+.rule-title{font-weight:600;font-size:0.85rem;margin-bottom:3px}
+.rule-desc{font-size:0.78rem;color:var(--text-muted);line-height:1.5}
+
+/* BIG CTA */
+.big-cta{background:linear-gradient(135deg,rgba(34,158,217,0.1),rgba(0,212,255,0.05));border-top:1px solid rgba(34,158,217,0.2);border-bottom:1px solid rgba(34,158,217,0.2);padding:72px 40px;text-align:center}
+.big-cta h2{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.6rem,4vw,2.5rem);font-weight:700;letter-spacing:-0.03em;margin-bottom:12px}
+.big-cta p{color:var(--text-muted);margin-bottom:28px;font-size:0.95rem;max-width:480px;margin-left:auto;margin-right:auto}
+.tg-big-btn{display:inline-flex;align-items:center;gap:10px;background:var(--tg);color:#fff;border:none;padding:16px 36px;border-radius:12px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.05rem;cursor:pointer;transition:opacity 0.2s;text-decoration:none}
+.tg-big-btn:hover{opacity:0.88}
+
+footer{background:var(--navy-card2);border-top:1px solid var(--navy-border);padding:32px 40px}
+.footer-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--text);text-decoration:none}
+.footer-logo span{color:var(--cyan)}
+.footer-links{display:flex;gap:20px}
+.footer-links a{color:var(--text-muted);text-decoration:none;font-size:0.82rem}
+.footer-links a:hover{color:var(--text)}
+.footer-copy{font-size:0.78rem;color:var(--text-dim);width:100%}
+
+@media(max-width:900px){
+  nav{padding:0 20px}.nav-links{display:none}
+  .hero{grid-template-columns:1fr;padding:60px 20px 40px;gap:40px}
+  .phone-wrap{order:-1}
+  .section{padding:48px 20px}
+  .channels-grid,.rules-grid{grid-template-columns:1fr}
+  .steps-grid{grid-template-columns:1fr 1fr;gap:24px}
+  .steps-grid::before{display:none}
+  .big-cta{padding:52px 20px}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="alphaedge-trading.html" class="nav-logo">Alpha<span>Edge</span></a>
+  <div class="nav-links">
+    <a href="alphaedge-community.html">Community</a>
+    <a href="alphaedge-trading.html#pricing">Pricing</a>
+    <a href="alphaedge-support.html">Support</a>
+  </div>
+  <div style="display:flex;gap:10px">
+    <a href="alphaedge-checkout.html" class="btn btn-ghost">Sign up</a>
+    <a href="https://t.me/AlphaEdgeBot" target="_blank" class="btn btn-tg">Open Telegram</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <div class="hero-eyebrow">Telegram community</div>
+    <h1>Real-time signals. Real community.</h1>
+    <p class="sub">AlphaEdge delivers every signal through Telegram — the fastest, most reliable messaging platform for traders. Join 14,000+ members getting live alerts the moment they're published.</p>
+    <div class="hero-ctas">
+      <a href="https://t.me/AlphaEdgeBot" target="_blank" class="btn btn-tg" style="padding:12px 28px;font-size:1rem;">💬 Start on Telegram</a>
+      <a href="alphaedge-checkout.html" class="btn btn-ghost" style="padding:12px 28px;font-size:1rem;">View plans →</a>
+    </div>
+    <div style="margin-top:20px;display:flex;gap:20px;flex-wrap:wrap">
+      <div style="font-size:0.78rem;color:var(--text-muted);display:flex;align-items:center;gap:6px"><span style="color:var(--green)">●</span>14,200+ members</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);display:flex;align-items:center;gap:6px"><span style="color:var(--green)">●</span>480+ messages / day</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);display:flex;align-items:center;gap:6px"><span style="color:var(--green)">●</span>3ms avg delivery</div>
+    </div>
+  </div>
+
+  <!-- PHONE MOCKUP -->
+  <div class="phone-wrap">
+    <div class="phone">
+      <div class="phone-header">
+        <div class="phone-avatar">⚡</div>
+        <div>
+          <div class="phone-ch-name">AlphaEdge Pro Signals</div>
+          <div class="phone-ch-count">9,200 members</div>
+        </div>
+      </div>
+      <div class="phone-messages">
+        <div class="msg signal">
+          <div class="msg-label">New signal</div>
+          <div class="msg-sym"><span class="msg-dir buy">BUY</span> NVDA</div>
+          <div style="font-size:0.68rem;color:var(--text-muted);margin-top:4px">Entry $1,142 · TP $1,185 · SL $1,110</div>
+          <div style="font-size:0.65rem;color:var(--text-muted);margin-top:4px">Momentum Breakout · R/R 1:2.8</div>
+          <div class="msg-meta">AlphaEdge · Just now</div>
+        </div>
+        <div class="msg analyst">
+          <div class="msg-label">Analyst note</div>
+          <div style="font-size:0.7rem;line-height:1.5">NVDA above 20-day high with volume confirm. RSI 58 — room to run. TP1 near resistance at $1,185.</div>
+          <div class="msg-meta">Marcus Reed · Just now</div>
+        </div>
+        <div class="msg signal">
+          <div class="msg-label">Signal update</div>
+          <div class="msg-sym" style="color:var(--green)">✓ EUR/USD TP1 HIT</div>
+          <div style="font-size:0.68rem;color:var(--green);margin-top:3px">+48 pips · Position: half closed</div>
+          <div class="msg-meta">AlphaEdge · 2h ago</div>
+        </div>
+        <div class="msg">
+          <div style="font-size:0.7rem;line-height:1.5;color:var(--text-muted)">Trailing stop now moved to breakeven on remaining EUR/USD position. Let it run to TP2.</div>
+          <div class="msg-meta">Sophie Kim · 2h ago</div>
+        </div>
+      </div>
+      <div class="phone-footer">
+        <div class="ph-input">Message...</div>
+        <div class="ph-send">➤</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<!-- CHANNELS -->
+<section class="section">
+  <div class="section-label">Our channels</div>
+  <div class="section-title">Four channels. One community.</div>
+  <p class="section-sub">Each channel has a specific purpose. We keep them clean and focused — no noise, no spam, no off-topic chatter.</p>
+  <div class="channels-grid">
+    <div class="ch-card pro">
+      <span class="ch-plan-badge" style="background:var(--cyan-dim);color:var(--cyan);border:1px solid rgba(0,212,255,0.2)">⚡ Pro & Elite</span>
+      <div class="ch-icon">📡</div>
+      <div class="ch-name">AlphaEdge Pro Signals</div>
+      <div class="ch-desc">Every signal the moment it's published — all four markets in real-time. Entry, SL, TP, and rationale in every post.</div>
+      <div class="ch-features">
+        <div class="ch-feat"><span class="ck">✓</span>Real-time delivery (avg 3ms)</div>
+        <div class="ch-feat"><span class="ck">✓</span>All 4 markets: stocks, forex, crypto, options</div>
+        <div class="ch-feat"><span class="ck">✓</span>Signal updates and position management</div>
+        <div class="ch-feat"><span class="ck">✓</span>Analyst commentary on every signal</div>
+      </div>
+      <a href="alphaedge-checkout.html?plan=pro" class="ch-join-btn" style="background:var(--cyan);color:var(--navy)">Get Pro access →</a>
+    </div>
+    <div class="ch-card elite">
+      <span class="ch-plan-badge" style="background:var(--gold-dim);color:var(--gold);border:1px solid rgba(244,185,66,0.2)">👑 Elite only</span>
+      <div class="ch-icon">👑</div>
+      <div class="ch-name">AlphaEdge Elite</div>
+      <div class="ch-desc">Priority signal delivery, deeper pre-market analysis, and a tighter community of serious traders. Elite signals before they reach the Pro channel.</div>
+      <div class="ch-features">
+        <div class="ch-feat"><span class="ck">✓</span>Signals arrive before the Pro channel</div>
+        <div class="ch-feat"><span class="ck">✓</span>Extended analysis and trade management</div>
+        <div class="ch-feat"><span class="ck">✓</span>Pre-market watchlist every trading day</div>
+        <div class="ch-feat"><span class="ck">✓</span>Direct Q&A with analysts</div>
+      </div>
+      <a href="alphaedge-checkout.html?plan=elite" class="ch-join-btn" style="background:var(--gold);color:var(--navy)">Get Elite access →</a>
+    </div>
+    <div class="ch-card disc">
+      <span class="ch-plan-badge" style="background:var(--purple-dim);color:var(--purple);border:1px solid rgba(155,109,255,0.2)">💬 Pro & Elite</span>
+      <div class="ch-icon">💬</div>
+      <div class="ch-name">Trader Discussion</div>
+      <div class="ch-desc">An active group for sharing setups, asking questions, and learning from other traders. Moderated to stay on topic and valuable.</div>
+      <div class="ch-features">
+        <div class="ch-feat"><span class="ck">✓</span>Share and discuss your own setups</div>
+        <div class="ch-feat"><span class="ck">✓</span>Ask questions — analysts check in daily</div>
+        <div class="ch-feat"><span class="ck">✓</span>Weekly market preview discussion</div>
+        <div class="ch-feat"><span class="ck">✓</span>Heavily moderated — zero spam</div>
+      </div>
+      <a href="alphaedge-checkout.html?plan=pro" class="ch-join-btn" style="background:var(--purple);color:#fff">Join the discussion →</a>
+    </div>
+    <div class="ch-card free">
+      <span class="ch-plan-badge" style="background:var(--green-dim);color:var(--green);border:1px solid rgba(0,230,118,0.2)">🆓 Free plan</span>
+      <div class="ch-icon">🆓</div>
+      <div class="ch-name">AlphaEdge Free</div>
+      <div class="ch-desc">Two signals per day — stocks and crypto only, delayed 4 hours. A genuine taste of what Pro and Elite members receive in real-time.</div>
+      <div class="ch-features">
+        <div class="ch-feat"><span class="ck">✓</span>2 signals per day (stocks & crypto)</div>
+        <div class="ch-feat"><span class="ck">✓</span>Full signal format: entry, SL, TP, rationale</div>
+        <div class="ch-feat"><span class="ck">✓</span>Weekly market recap</div>
+        <div class="ch-feat" style="opacity:0.4"><span>✗</span>4-hour delay vs. Pro</div>
+      </div>
+      <a href="alphaedge-checkout.html?plan=free" class="ch-join-btn" style="background:var(--navy-border);color:var(--text-muted)">Start for free →</a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- HOW TO JOIN -->
+<section class="section">
+  <div class="section-label">Getting started</div>
+  <div class="section-title">How to join in 4 steps.</div>
+  <p class="section-sub">The whole process takes about 3 minutes. Your invite link is personalised and one-time use.</p>
+  <div class="steps-grid">
+    <div class="step-item">
+      <div class="step-circle s1">1</div>
+      <div class="step-title">Subscribe</div>
+      <div class="step-desc">Choose Free, Pro, or Elite and create your AlphaEdge account.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-circle s2">2</div>
+      <div class="step-title">Open bot</div>
+      <div class="step-desc">Message <strong style="color:var(--cyan)">@AlphaEdgeBot</strong> on Telegram and send <strong>/start</strong>.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-circle s3">3</div>
+      <div class="step-title">Enter code</div>
+      <div class="step-desc">The bot sends a 6-digit code. Paste it in your dashboard to link your account.</div>
+    </div>
+    <div class="step-item">
+      <div class="step-circle s4">4</div>
+      <div class="step-title">You're in</div>
+      <div class="step-desc">Your personalised invite link arrives instantly. Click to join your channel.</div>
+    </div>
+  </div>
+  <div style="margin-top:36px;text-align:center">
+    <a href="https://t.me/AlphaEdgeBot" target="_blank" class="btn btn-tg" style="padding:13px 32px;font-size:0.95rem;display:inline-flex;align-items:center;gap:8px">💬 Open @AlphaEdgeBot</a>
+    <div style="font-size:0.78rem;color:var(--text-dim);margin-top:10px">Make sure you have a Telegram account first. It's free at telegram.org.</div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- RULES -->
+<section class="section">
+  <div class="section-label">Community standards</div>
+  <div class="section-title">Channel rules.</div>
+  <p class="section-sub">We moderate strictly. High quality beats high volume every time.</p>
+  <div class="rules-grid">
+    <div class="rule-card"><div class="rule-icon">🚫</div><div><div class="rule-title">No signal redistribution</div><div class="rule-desc">Sharing AlphaEdge signals in public groups or other services violates our Terms and results in an immediate ban.</div></div></div>
+    <div class="rule-card"><div class="rule-icon">📵</div><div><div class="rule-title">No promotion or advertising</div><div class="rule-desc">Zero tolerance for promoting other services, bots, groups, or courses. First offence = permanent ban.</div></div></div>
+    <div class="rule-card"><div class="rule-icon">⚠️</div><div><div class="rule-title">No financial advice</div><div class="rule-desc">Share setups and opinions. Don't tell others to buy or sell. We are not licensed advisers and neither are you.</div></div></div>
+    <div class="rule-card"><div class="rule-icon">🤝</div><div><div class="rule-title">Respect always</div><div class="rule-desc">Debate market views, not personalities. Toxic behaviour, harassment, or abuse results in an immediate ban.</div></div></div>
+  </div>
+</section>
+
+<!-- BIG CTA -->
+<div class="big-cta">
+  <h2>Ready to trade with 14,000 others?</h2>
+  <p>Start free — no credit card required for the free plan. Upgrade when you're ready for real-time signals.</p>
+  <a href="alphaedge-checkout.html" class="tg-big-btn">Join AlphaEdge free →</a>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a href="alphaedge-trading.html" class="footer-logo">Alpha<span>Edge</span></a>
+    <div class="footer-links">
+      <a href="alphaedge-community.html">Community</a>
+      <a href="alphaedge-support.html">Support</a>
+      <a href="alphaedge-terms.html">Terms</a>
+    </div>
+    <div class="footer-copy">© 2026 AlphaEdge LLC. All rights reserved. Not financial advice.</div>
+  </div>
+</footer>
+</body>
+</html>

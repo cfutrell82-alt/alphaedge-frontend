@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlphaEdge — Support & Help Center</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0A0F1E;--navy-card:#111827;--navy-card2:#0D1526;--navy-border:#1E2D45;--navy-hover:#1A2640;
+  --cyan:#00D4FF;--cyan-dim:rgba(0,212,255,0.08);--gold:#F4B942;--gold-dim:rgba(244,185,66,0.10);
+  --green:#00E676;--green-dim:rgba(0,230,118,0.10);--red:#FF4B4B;--purple:#9B6DFF;
+  --text:#E8EDF5;--text-muted:#6B7FA3;--text-dim:#3A4A6B;
+}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;background:rgba(10,15,30,0.95);border-bottom:1px solid var(--navy-border);backdrop-filter:blur(12px)}
+.nav-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.2rem;color:var(--text);text-decoration:none}
+.nav-logo span{color:var(--cyan)}
+.btn{padding:8px 20px;border-radius:7px;font-size:0.875rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s;display:inline-block;border:none}
+.btn-primary{background:var(--cyan);color:var(--navy)}
+.btn-primary:hover{background:#33DDFF}
+.btn-ghost{background:none;border:1px solid var(--navy-border);color:var(--text-muted)}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+
+/* HERO */
+.support-hero{background:var(--navy-card);border-bottom:1px solid var(--navy-border);padding:60px 40px;text-align:center;position:relative;overflow:hidden}
+.support-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--cyan),var(--green))}
+.support-hero h1{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;letter-spacing:-0.03em;margin-bottom:12px}
+.support-hero p{color:var(--text-muted);font-size:0.95rem;margin-bottom:28px;max-width:480px;margin-left:auto;margin-right:auto}
+.search-wrap{max-width:520px;margin:0 auto;display:flex;gap:10px}
+.search-input{flex:1;background:var(--navy);border:1px solid var(--navy-border);border-radius:9px;padding:12px 16px;color:var(--text);font-family:'Inter',sans-serif;font-size:0.9rem;outline:none;transition:border-color 0.2s}
+.search-input:focus{border-color:var(--cyan)}
+.search-input::placeholder{color:var(--text-dim)}
+.search-btn{padding:12px 20px;background:var(--cyan);color:var(--navy);border:none;border-radius:9px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.88rem;cursor:pointer;transition:background 0.2s}
+.search-btn:hover{background:#33DDFF}
+
+/* STATUS */
+.status-bar{max-width:1100px;margin:0 auto;padding:16px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.status-item{display:flex;align-items:center;gap:8px;font-size:0.82rem}
+.status-dot{width:8px;height:8px;border-radius:50%}
+.status-dot.green{background:var(--green)}
+.status-dot.gold{background:var(--gold)}
+.status-dot.red{background:var(--red)}
+.status-label.green{color:var(--green);font-weight:600}
+.status-label.gold{color:var(--gold);font-weight:600}
+.status-label.red{color:var(--red);font-weight:600}
+.status-meta{font-size:0.72rem;color:var(--text-dim)}
+
+/* LAYOUT */
+.page{max-width:1100px;margin:0 auto;padding:48px 40px 80px;display:grid;grid-template-columns:1fr 320px;gap:40px;align-items:start}
+.section-label{font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--cyan);margin-bottom:10px}
+.section-title{font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:24px}
+
+/* CATEGORIES */
+.cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:40px}
+.cat-card{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:12px;padding:18px;cursor:pointer;transition:all 0.2s;text-decoration:none;display:block}
+.cat-card:hover{border-color:rgba(0,212,255,0.3);transform:translateY(-2px)}
+.cat-icon{font-size:1.6rem;margin-bottom:10px}
+.cat-name{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.85rem;margin-bottom:4px}
+.cat-count{font-size:0.72rem;color:var(--text-muted)}
+
+/* FAQ */
+.faq-section{margin-bottom:40px}
+.faq-group-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.92rem;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--navy-border);color:var(--cyan)}
+.faq-item{border-bottom:1px solid rgba(30,45,69,0.5)}
+.faq-q{display:flex;justify-content:space-between;align-items:center;padding:14px 0;cursor:pointer;font-size:0.875rem;font-weight:600;gap:12px}
+.faq-q:hover{color:var(--cyan)}
+.faq-arrow{color:var(--text-dim);font-size:0.75rem;flex-shrink:0;transition:transform 0.2s}
+.faq-a{display:none;font-size:0.85rem;color:var(--text-muted);padding-bottom:14px;line-height:1.7}
+.faq-a.open{display:block}
+.faq-a a{color:var(--cyan)}
+.faq-arrow.open{transform:rotate(180deg)}
+
+/* CONTACT SIDEBAR */
+.contact-card{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:14px;padding:22px;margin-bottom:16px}
+.contact-card h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.88rem;margin-bottom:14px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em}
+.contact-option{display:flex;align-items:flex-start;gap:12px;padding:12px 0;border-bottom:1px solid rgba(30,45,69,0.4)}
+.contact-option:last-child{border-bottom:none}
+.co-icon{font-size:1.2rem;flex-shrink:0;margin-top:2px}
+.co-label{font-weight:600;font-size:0.85rem;margin-bottom:2px}
+.co-sub{font-size:0.75rem;color:var(--text-muted);line-height:1.4}
+.co-link{color:var(--cyan);text-decoration:none;font-size:0.78rem;margin-top:4px;display:block}
+.co-link:hover{text-decoration:underline}
+.co-response{font-size:0.68rem;color:var(--text-dim);margin-top:3px}
+
+/* CONTACT FORM */
+.form-group{margin-bottom:14px}
+.form-label{display:block;font-size:0.76rem;font-weight:600;color:var(--text-muted);margin-bottom:5px}
+.form-input,.form-textarea,.form-select{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--navy-border);border-radius:8px;padding:10px 13px;color:var(--text);font-family:'Inter',sans-serif;font-size:0.875rem;outline:none;transition:border-color 0.2s}
+.form-input:focus,.form-textarea:focus,.form-select:focus{border-color:var(--cyan)}
+.form-input::placeholder,.form-textarea::placeholder{color:var(--text-dim)}
+.form-textarea{height:100px;resize:vertical}
+.submit-btn{width:100%;padding:12px;background:var(--cyan);color:var(--navy);border:none;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.9rem;cursor:pointer;transition:background 0.2s;margin-top:4px}
+.submit-btn:hover{background:#33DDFF}
+.form-success{display:none;background:var(--green-dim);border:1px solid rgba(0,230,118,0.2);border-radius:8px;padding:14px;color:var(--green);font-size:0.85rem;text-align:center;margin-top:10px}
+
+footer{background:var(--navy-card2);border-top:1px solid var(--navy-border);padding:32px 40px}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--text);text-decoration:none}
+.footer-logo span{color:var(--cyan)}
+.footer-links{display:flex;gap:20px}
+.footer-links a{color:var(--text-muted);text-decoration:none;font-size:0.82rem;transition:color 0.2s}
+.footer-links a:hover{color:var(--text)}
+.footer-copy{font-size:0.78rem;color:var(--text-dim);width:100%}
+
+@media(max-width:900px){
+  nav{padding:0 20px}
+  .support-hero{padding:48px 20px}
+  .page{grid-template-columns:1fr;padding:32px 20px 60px}
+  .cat-grid{grid-template-columns:repeat(2,1fr)}
+  .status-bar{padding:12px 20px}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="alphaedge-trading.html" class="nav-logo">Alpha<span>Edge</span></a>
+  <div style="display:flex;gap:10px">
+    <a href="alphaedge-dashboard.html" class="btn btn-ghost">Dashboard</a>
+    <a href="alphaedge-checkout.html" class="btn btn-primary">Start free</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="support-hero">
+  <h1>How can we help?</h1>
+  <p>Search our help center or browse by category. Most questions are answered in under 2 minutes.</p>
+  <div class="search-wrap">
+    <input class="search-input" type="text" placeholder="Search for answers..." oninput="searchFAQ(this.value)">
+    <button class="search-btn">Search</button>
+  </div>
+</div>
+
+<!-- STATUS -->
+<div style="border-bottom:1px solid var(--navy-border)">
+  <div class="status-bar">
+    <div style="font-size:0.72rem;color:var(--text-dim);font-weight:700;letter-spacing:0.06em;text-transform:uppercase">Platform status</div>
+    <div class="status-item"><div class="status-dot green"></div><span class="status-label green">All systems operational</span></div>
+    <div class="status-item"><div class="status-dot green"></div><span style="color:var(--text-muted);font-size:0.78rem">Signal delivery</span> <span class="status-label green" style="font-size:0.75rem">Online</span></div>
+    <div class="status-item"><div class="status-dot green"></div><span style="color:var(--text-muted);font-size:0.78rem">Telegram channels</span> <span class="status-label green" style="font-size:0.75rem">Online</span></div>
+    <div class="status-item"><div class="status-dot green"></div><span style="color:var(--text-muted);font-size:0.78rem">Dashboard</span> <span class="status-label green" style="font-size:0.75rem">Online</span></div>
+    <div class="status-meta">Last checked 2 min ago</div>
+  </div>
+</div>
+
+<div class="page">
+  <!-- MAIN -->
+  <div>
+    <div class="section-label">Browse by topic</div>
+    <div class="section-title">Help center.</div>
+
+    <!-- CATEGORIES -->
+    <div class="cat-grid">
+      <a class="cat-card" href="#signals-faq"><div class="cat-icon">⚡</div><div class="cat-name">Signals</div><div class="cat-count">12 articles</div></a>
+      <a class="cat-card" href="#account-faq"><div class="cat-icon">👤</div><div class="cat-name">Account & login</div><div class="cat-count">8 articles</div></a>
+      <a class="cat-card" href="#billing-faq"><div class="cat-icon">💳</div><div class="cat-name">Billing & plans</div><div class="cat-count">10 articles</div></a>
+      <a class="cat-card" href="#telegram-faq"><div class="cat-icon">💬</div><div class="cat-name">Telegram access</div><div class="cat-count">6 articles</div></a>
+      <a class="cat-card" href="#wallet-faq"><div class="cat-icon">💰</div><div class="cat-name">Wallet & tokens</div><div class="cat-count">9 articles</div></a>
+      <a class="cat-card" href="#technical-faq"><div class="cat-icon">🔧</div><div class="cat-name">Technical issues</div><div class="cat-count">7 articles</div></a>
+    </div>
+
+    <!-- FAQS -->
+    <div id="faq-container">
+
+      <div class="faq-section" id="signals-faq">
+        <div class="faq-group-title">⚡ Signals</div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>How do I read an AlphaEdge signal?</span><span class="faq-arrow">▼</span></div><div class="faq-a">Each signal contains: <strong>Entry</strong> (the price to enter), <strong>Stop Loss</strong> (where to exit if wrong), <strong>Take Profit levels</strong> (TP1, TP2, TP3), and <strong>Rationale</strong> (why we're taking the trade). We recommend entering at or near the entry price, setting your stop loss immediately, and taking partial profits at TP1. See our <a href="alphaedge-education.html">Education Vault</a> for a full walkthrough.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>What markets do your signals cover?</span><span class="faq-arrow">▼</span></div><div class="faq-a">We publish signals across four markets: US equities and ETFs (stocks), major forex pairs (EUR/USD, GBP/USD, USD/JPY, and more), cryptocurrency (BTC, ETH, and major altcoins), and options (weekly plays on SPY, QQQ, and individual names). Free plan covers stocks and crypto only (delayed 4 hours). Pro and Elite cover all four markets in real-time.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>How many signals do you publish per day?</span><span class="faq-arrow">▼</span></div><div class="faq-a">We publish between 8–20 signals per day depending on market conditions. We don't force signals — if the market isn't giving us high-probability setups, we'll say so. Quality over quantity is the rule.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>What is your verified win rate?</span><span class="faq-arrow">▼</span></div><div class="faq-a">Our 90-day verified win rate is 87%. Every signal is logged — wins and losses — in our public signal history. You can view the full record from your <a href="alphaedge-dashboard.html">dashboard</a>. We never delete losing trades.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>What should I do if a signal is already past the entry price?</span><span class="faq-arrow">▼</span></div><div class="faq-a">If price has moved significantly past the entry price, do not chase. Skip the signal and wait for the next one. Entering late changes the risk/reward ratio in an unfavourable way. We publish enough signals that missing one is never worth chasing.</div></div>
+      </div>
+
+      <div class="faq-section" id="account-faq">
+        <div class="faq-group-title">👤 Account & Login</div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>How do I reset my password?</span><span class="faq-arrow">▼</span></div><div class="faq-a">Click "Sign in" on any page, then click "Forgot password?" Enter your email address and we'll send a reset link within a few minutes. The link expires in 30 minutes. If you don't receive it, check your spam folder or contact <a href="mailto:support@alphaedge.com">support@alphaedge.com</a>.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>Can I change my email address?</span><span class="faq-arrow">▼</span></div><div class="faq-a">Yes. Go to Dashboard → My Account → Personal Info and update your email address. You'll receive a verification email at the new address before the change takes effect.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>How do I delete my account?</span><span class="faq-arrow">▼</span></div><div class="faq-a">Go to Dashboard → My Account → scroll to the bottom. You'll find the account deletion option there. Deleting your account cancels any active subscription and removes your personal data in accordance with our <a href="alphaedge-privacy.html">Privacy Policy</a>. Billing records are retained for 7 years as required by law.</div></div>
+      </div>
+
+      <div class="faq-section" id="billing-faq">
+        <div class="faq-group-title">💳 Billing & Plans</div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>How do I upgrade from Pro to Elite?</span><span class="faq-arrow">▼</span></div><div class="faq-a">Go to Dashboard → Billing → click "Upgrade to Elite". The price difference is prorated — you'll only be charged for the remaining days in your billing period. Upgrade takes effect immediately.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>Can I cancel at any time?</span><span class="faq-arrow">▼</span></div><div class="faq-a">Yes. Cancel anytime from Dashboard → Billing → Manage Subscription. You keep full access until your current billing period ends. We don't charge cancellation fees and we don't hide the cancel button.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>Do you offer refunds?</span><span class="faq-arrow">▼</span></div><div class="faq-a">Due to the nature of digital signal services, we generally do not offer refunds for subscription fees already charged. We may make exceptions for technical failures preventing access for 72+ consecutive hours. Contact <a href="mailto:support@alphaedge.com">support@alphaedge.com</a> within 7 days.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>Is my payment information secure?</span><span class="faq-arrow">▼</span></div><div class="faq-a">Yes. All payments are processed by <strong>Stripe</strong>, a PCI DSS Level 1 certified processor. AlphaEdge never stores your card number, expiry date, or CVV. We only store a Stripe customer ID.</div></div>
+      </div>
+
+      <div class="faq-section" id="telegram-faq">
+        <div class="faq-group-title">💬 Telegram Access</div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>How do I join the Telegram channel?</span><span class="faq-arrow">▼</span></div><div class="faq-a">After subscribing, go to your <a href="alphaedge-dashboard.html">dashboard</a> and click "Telegram Access" in the sidebar. Message <a href="https://t.me/AlphaEdgeBot" target="_blank">@AlphaEdgeBot</a> with /start to receive a 6-digit code, then paste it in the dashboard to link your account. You'll receive a private invite link automatically.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>I didn't receive my Telegram invite link.</span><span class="faq-arrow">▼</span></div><div class="faq-a">Make sure you've completed the 6-digit code step in the dashboard. If you've done this and still haven't received the link, contact <a href="mailto:support@alphaedge.com">support@alphaedge.com</a> with your account email and Telegram username. We'll resolve it within 2 hours.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>I was removed from the channel — why?</span><span class="faq-arrow">▼</span></div><div class="faq-a">This is usually due to a subscription payment failure, cancellation, or a violation of our community rules. Check your billing status in the dashboard. If you believe it was a technical error, contact support with your Telegram username.</div></div>
+      </div>
+
+      <div class="faq-section" id="wallet-faq">
+        <div class="faq-group-title">💰 Wallet & Tokens</div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>What are Fortunex and Cloutium tokens?</span><span class="faq-arrow">▼</span></div><div class="faq-a">Fortunex (FTX) and Cloutium (CLT) are AlphaEdge's exclusive tokens, currently in pre-launch phase. FTX is the platform utility token; CLT is the community reputation token. Subscribers can reserve an allocation in the <a href="alphaedge-airdrops.html">Airdrops</a> section. Both tokens require regulatory approval before official launch.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>Which wallets are supported?</span><span class="faq-arrow">▼</span></div><div class="faq-a">We support MetaMask and any WalletConnect-compatible wallet (Rainbow, Coinbase Wallet, Trust Wallet, etc.). Do not use an exchange deposit address to claim tokens — use a self-custodial wallet where you hold the private keys.</div></div>
+      </div>
+
+      <div class="faq-section" id="technical-faq">
+        <div class="faq-group-title">🔧 Technical Issues</div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>I'm not receiving signal notifications.</span><span class="faq-arrow">▼</span></div><div class="faq-a">First check that Telegram notifications are enabled for the AlphaEdge channel on your device (Settings → Notifications in Telegram). Also ensure you haven't muted the channel. If notifications are on and you're still missing signals, contact support with your Telegram username.</div></div>
+        <div class="faq-item"><div class="faq-q" onclick="toggleFAQ(this)"><span>The dashboard isn't loading correctly.</span><span class="faq-arrow">▼</span></div><div class="faq-a">Try a hard refresh (Ctrl+Shift+R or Cmd+Shift+R). Clear your browser cache and cookies. If the issue persists, try a different browser. Check our <a href="#status">platform status</a> above for any known outages, then contact support if needed.</div></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SIDEBAR -->
+  <div>
+    <!-- Contact options -->
+    <div class="contact-card">
+      <h3>Contact us</h3>
+      <div class="contact-option">
+        <div class="co-icon">💬</div>
+        <div>
+          <div class="co-label">Live chat</div>
+          <div class="co-sub">Fastest option. Available Mon–Fri 9am–6pm ET via Telegram.</div>
+          <a class="co-link" href="https://t.me/AlphaEdgeSupport" target="_blank">@AlphaEdgeSupport →</a>
+          <div class="co-response">Response in minutes</div>
+        </div>
+      </div>
+      <div class="contact-option">
+        <div class="co-icon">📧</div>
+        <div>
+          <div class="co-label">Email support</div>
+          <div class="co-sub">For account issues, billing, and detailed questions.</div>
+          <a class="co-link" href="mailto:support@alphaedge.com">support@alphaedge.com →</a>
+          <div class="co-response">Response within 24 hours</div>
+        </div>
+      </div>
+      <div class="contact-option">
+        <div class="co-icon">⚖️</div>
+        <div>
+          <div class="co-label">Legal & DMCA</div>
+          <div class="co-sub">Copyright, trademark, and legal inquiries.</div>
+          <a class="co-link" href="mailto:legal@alphaedge.com">legal@alphaedge.com →</a>
+          <div class="co-response">Response within 48 hours</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact form -->
+    <div class="contact-card">
+      <h3>Send a message</h3>
+      <div class="form-group">
+        <label class="form-label">Your email *</label>
+        <input class="form-input" id="ct-email" type="email" placeholder="you@example.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Category</label>
+        <select class="form-select" id="ct-cat">
+          <option>Signals</option>
+          <option>Account / Login</option>
+          <option>Billing & Plans</option>
+          <option>Telegram Access</option>
+          <option>Wallet & Tokens</option>
+          <option>Technical Issue</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message *</label>
+        <textarea class="form-textarea" id="ct-msg" placeholder="Describe your issue..."></textarea>
+      </div>
+      <button class="submit-btn" onclick="submitContact()">Send message →</button>
+      <div class="form-success" id="ct-success">✓ Message sent! We'll reply to your email within 24 hours.</div>
+    </div>
+
+    <!-- Quick links -->
+    <div class="contact-card">
+      <h3>Quick links</h3>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <a href="alphaedge-dashboard.html" style="font-size:0.82rem;color:var(--cyan);text-decoration:none">→ Go to dashboard</a>
+        <a href="alphaedge-checkout.html" style="font-size:0.82rem;color:var(--cyan);text-decoration:none">→ Manage subscription</a>
+        <a href="alphaedge-terms.html" style="font-size:0.82rem;color:var(--text-muted);text-decoration:none">→ Terms of Service</a>
+        <a href="alphaedge-privacy.html" style="font-size:0.82rem;color:var(--text-muted);text-decoration:none">→ Privacy Policy</a>
+        <a href="alphaedge-copyright.html" style="font-size:0.82rem;color:var(--text-muted);text-decoration:none">→ Copyright & DMCA</a>
+        <a href="alphaedge-legal.html" style="font-size:0.82rem;color:var(--text-muted);text-decoration:none">→ Legal hub</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a href="alphaedge-trading.html" class="footer-logo">Alpha<span>Edge</span></a>
+    <div class="footer-links">
+      <a href="alphaedge-trading.html">Home</a>
+      <a href="alphaedge-terms.html">Terms</a>
+      <a href="alphaedge-privacy.html">Privacy</a>
+      <a href="alphaedge-legal.html">Legal</a>
+    </div>
+    <div class="footer-copy">© 2026 AlphaEdge LLC. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+function toggleFAQ(el){
+  const a=el.nextElementSibling;
+  const arr=el.querySelector('.faq-arrow');
+  a.classList.toggle('open');
+  arr.classList.toggle('open');
+}
+function searchFAQ(q){
+  if(q.length<2)return;
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    const text=item.textContent.toLowerCase();
+    item.style.display=text.includes(q.toLowerCase())?'block':'none';
+  });
+}
+function submitContact(){
+  const email=document.getElementById('ct-email').value.trim();
+  const msg=document.getElementById('ct-msg').value.trim();
+  if(!email||!msg){alert('Please fill in your email and message.');return}
+  document.getElementById('ct-success').style.display='block';
+}
+</script>
+</body>
+</html>

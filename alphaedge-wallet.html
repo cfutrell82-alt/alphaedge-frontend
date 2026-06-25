@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlphaEdge — Wallet</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy:        #0A0F1E;
+  --navy-card:   #111827;
+  --navy-card2:  #0D1526;
+  --navy-border: #1E2D45;
+  --navy-hover:  #1A2640;
+  --cyan:        #00D4FF;
+  --cyan-dim:    rgba(0,212,255,0.08);
+  --gold:        #F4B942;
+  --gold-dim:    rgba(244,185,66,0.10);
+  --green:       #00E676;
+  --green-dim:   rgba(0,230,118,0.10);
+  --red:         #FF4B4B;
+  --red-dim:     rgba(255,75,75,0.10);
+  --purple:      #9B6DFF;
+  --purple-dim:  rgba(155,109,255,0.10);
+  --text:        #E8EDF5;
+  --text-muted:  #6B7FA3;
+  --text-dim:    #3A4A6B;
+}
+
+html { scroll-behavior: smooth; }
+body {
+  background: var(--navy);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* NAV */
+nav {
+  height: 60px; padding: 0 28px;
+  border-bottom: 1px solid var(--navy-border);
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(10,15,30,0.95); backdrop-filter: blur(8px);
+  position: sticky; top: 0; z-index: 50;
+}
+.nav-logo {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 1.1rem;
+  color: var(--text); text-decoration: none;
+}
+.nav-logo span { color: var(--cyan); }
+.nav-right { display: flex; align-items: center; gap: 12px; }
+.nav-btn {
+  padding: 7px 16px; border-radius: 7px; font-size: 0.82rem;
+  font-weight: 600; font-family: 'Inter', sans-serif;
+  border: 1px solid var(--navy-border); background: none;
+  color: var(--text-muted); cursor: pointer; text-decoration: none;
+  transition: all 0.2s; display: inline-block;
+}
+.nav-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+.nav-btn.primary { background: var(--cyan); color: var(--navy); border-color: var(--cyan); }
+.nav-btn.primary:hover { background: #33DDFF; }
+
+/* LAYOUT */
+.page { max-width: 1100px; margin: 0 auto; padding: 32px 24px 80px; }
+
+/* WALLET HERO CARD */
+.wallet-hero {
+  background: var(--navy-card);
+  border: 1px solid var(--navy-border);
+  border-radius: 20px; padding: 32px;
+  margin-bottom: 24px; position: relative; overflow: hidden;
+}
+.wallet-hero::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--cyan), var(--purple), var(--gold));
+}
+.wallet-hero-top {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 28px; flex-wrap: wrap; gap: 16px;
+}
+.wallet-address-wrap { flex: 1; min-width: 0; }
+.wallet-label {
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;
+}
+.wallet-address {
+  font-family: 'Space Mono', monospace; font-size: 0.88rem;
+  color: var(--text); display: flex; align-items: center; gap: 10px;
+  flex-wrap: wrap;
+}
+.wallet-address .addr { color: var(--cyan); }
+.copy-btn {
+  background: none; border: 1px solid var(--navy-border); color: var(--text-muted);
+  padding: 3px 10px; border-radius: 5px; cursor: pointer; font-size: 0.72rem;
+  font-family: 'Inter', sans-serif; transition: all 0.15s; white-space: nowrap;
+}
+.copy-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+
+.wallet-connect-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+.connect-btn {
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 18px; border-radius: 10px; cursor: pointer;
+  font-size: 0.85rem; font-weight: 600; font-family: 'Space Grotesk', sans-serif;
+  border: 1px solid var(--navy-border); background: var(--navy-card2);
+  color: var(--text); transition: all 0.2s;
+}
+.connect-btn:hover { border-color: var(--cyan); background: var(--navy-hover); }
+.connect-btn.connected {
+  background: var(--green-dim); border-color: rgba(0,230,118,0.3); color: var(--green);
+}
+.connect-btn .dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--text-dim);
+  flex-shrink: 0;
+}
+.connect-btn.connected .dot { background: var(--green); animation: pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
+
+/* TOTAL BALANCE */
+.total-balance { text-align: center; margin-bottom: 28px; }
+.total-balance .lbl {
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px;
+}
+.total-balance .amount {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 700; letter-spacing: -0.03em; color: var(--text);
+}
+.total-balance .change {
+  font-size: 0.88rem; margin-top: 4px;
+}
+.total-balance .change.up { color: var(--green); }
+.total-balance .change.dn { color: var(--red); }
+
+/* ACTION BUTTONS */
+.wallet-actions {
+  display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+}
+.action-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  padding: 14px 22px; border-radius: 12px; cursor: pointer;
+  font-size: 0.78rem; font-weight: 600; font-family: 'Space Grotesk', sans-serif;
+  border: 1px solid var(--navy-border); background: var(--navy-card2);
+  color: var(--text-muted); transition: all 0.2s; min-width: 80px;
+}
+.action-btn:hover { background: var(--navy-hover); color: var(--text); border-color: rgba(0,212,255,0.3); }
+.action-btn .icon { font-size: 1.3rem; }
+.action-btn.cyan-btn { background: var(--cyan-dim); border-color: rgba(0,212,255,0.25); color: var(--cyan); }
+.action-btn.cyan-btn:hover { background: rgba(0,212,255,0.15); }
+
+/* GRID */
+.wallet-grid {
+  display: grid; grid-template-columns: 1fr 380px; gap: 20px;
+}
+.wallet-col { display: flex; flex-direction: column; gap: 20px; }
+
+/* CARD */
+.card {
+  background: var(--navy-card); border: 1px solid var(--navy-border);
+  border-radius: 16px; overflow: hidden;
+}
+.card-header {
+  padding: 14px 20px; border-bottom: 1px solid var(--navy-border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.card-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 0.88rem;
+}
+.card-action {
+  font-size: 0.75rem; color: var(--cyan); background: none;
+  border: none; cursor: pointer; font-family: 'Inter', sans-serif;
+}
+
+/* TOKEN LIST */
+.token-row {
+  display: flex; align-items: center; gap: 14px; padding: 13px 20px;
+  border-bottom: 1px solid var(--navy-border); transition: background 0.15s;
+  cursor: pointer;
+}
+.token-row:last-child { border-bottom: none; }
+.token-row:hover { background: var(--navy-hover); }
+.token-icon {
+  width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem; font-weight: 700; font-family: 'Space Grotesk', sans-serif;
+}
+.token-info { flex: 1; min-width: 0; }
+.token-name { font-weight: 600; font-size: 0.88rem; }
+.token-sym { font-size: 0.72rem; color: var(--text-muted); margin-top: 1px; }
+.token-bal { text-align: right; }
+.token-bal .amount {
+  font-family: 'Space Mono', monospace; font-size: 0.85rem; font-weight: 700;
+}
+.token-bal .usd { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+.token-chg { font-size: 0.75rem; font-weight: 600; min-width: 54px; text-align: right; }
+.token-chg.up { color: var(--green); }
+.token-chg.dn { color: var(--red); }
+
+/* ALPHAEDGE TOKENS SPECIAL */
+.ae-token-badge {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; padding: 2px 6px; border-radius: 3px;
+  margin-left: 6px; vertical-align: middle;
+}
+.ae-token-badge.exclusive {
+  background: var(--gold-dim); color: var(--gold); border: 1px solid rgba(244,185,66,0.25);
+}
+
+/* TX LIST */
+.tx-row {
+  display: flex; align-items: center; gap: 12px; padding: 12px 20px;
+  border-bottom: 1px solid var(--navy-border); transition: background 0.15s;
+}
+.tx-row:last-child { border-bottom: none; }
+.tx-row:hover { background: var(--navy-hover); }
+.tx-icon {
+  width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
+}
+.tx-icon.received { background: var(--green-dim); }
+.tx-icon.sent     { background: var(--red-dim); }
+.tx-icon.airdrop  { background: var(--purple-dim); }
+.tx-icon.swap     { background: var(--cyan-dim); }
+.tx-info { flex: 1; min-width: 0; }
+.tx-type { font-weight: 600; font-size: 0.82rem; }
+.tx-meta { font-size: 0.7rem; color: var(--text-muted); margin-top: 1px; }
+.tx-hash { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: var(--text-dim); }
+.tx-amount { text-align: right; flex-shrink: 0; }
+.tx-amount .val { font-family: 'Space Mono', monospace; font-size: 0.82rem; font-weight: 700; }
+.tx-amount .val.up { color: var(--green); }
+.tx-amount .val.dn { color: var(--red); }
+.tx-amount .val.purple { color: var(--purple); }
+.tx-amount .usd { font-size: 0.68rem; color: var(--text-muted); margin-top: 1px; }
+
+/* AIRDROP CARD */
+.airdrop-card {
+  background: linear-gradient(135deg, rgba(155,109,255,0.08), rgba(0,212,255,0.05));
+  border: 1px solid rgba(155,109,255,0.25);
+  border-radius: 14px; padding: 20px; margin-bottom: 20px;
+  position: relative; overflow: hidden;
+}
+.airdrop-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--purple), var(--cyan));
+}
+.airdrop-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--purple-dim); border: 1px solid rgba(155,109,255,0.25);
+  color: var(--purple); font-size: 0.7rem; font-weight: 700;
+  padding: 4px 10px; border-radius: 100px; margin-bottom: 10px;
+  letter-spacing: 0.04em;
+}
+.airdrop-badge::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--purple); animation: pulse 1.2s ease-in-out infinite;
+}
+.airdrop-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 1rem; margin-bottom: 6px;
+}
+.airdrop-desc { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.5; }
+.airdrop-tokens {
+  display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap;
+}
+.airdrop-token-pill {
+  display: flex; align-items: center; gap: 6px;
+  background: var(--navy-card); border: 1px solid var(--navy-border);
+  border-radius: 8px; padding: 8px 12px;
+}
+.airdrop-token-pill .sym {
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.85rem;
+}
+.airdrop-token-pill .amt { font-size: 0.72rem; color: var(--text-muted); }
+.airdrop-claim-btn {
+  width: 100%; padding: 11px; border: none; border-radius: 9px;
+  background: var(--purple); color: #fff;
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+  font-size: 0.9rem; cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.airdrop-claim-btn:hover { background: #B48AFF; }
+.airdrop-claim-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.airdrop-claim-btn.claimed {
+  background: var(--green-dim); color: var(--green);
+  border: 1px solid rgba(0,230,118,0.2);
+}
+
+/* SEND/RECEIVE MODAL */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 500;
+  background: rgba(5,8,18,0.85); backdrop-filter: blur(6px);
+  align-items: center; justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--navy-card); border: 1px solid var(--navy-border);
+  border-radius: 18px; padding: 28px; width: 100%; max-width: 400px; margin: 16px;
+  animation: modalIn 0.22s ease; position: relative;
+}
+@keyframes modalIn { from{opacity:0;transform:scale(0.94)}to{opacity:1;transform:scale(1)} }
+.modal-close {
+  position: absolute; top: 14px; right: 16px;
+  background: none; border: none; cursor: pointer;
+  color: var(--text-muted); font-size: 1.2rem;
+}
+.modal-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700; font-size: 1rem; margin-bottom: 20px;
+}
+.m-group { margin-bottom: 14px; }
+.m-label { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 5px; }
+.m-input {
+  width: 100%; background: rgba(255,255,255,0.04);
+  border: 1px solid var(--navy-border); border-radius: 8px;
+  padding: 10px 13px; color: var(--text);
+  font-family: 'Space Mono', monospace; font-size: 0.85rem;
+  outline: none; transition: border-color 0.2s;
+}
+.m-input:focus { border-color: var(--cyan); }
+.m-select {
+  width: 100%; background: rgba(255,255,255,0.04);
+  border: 1px solid var(--navy-border); border-radius: 8px;
+  padding: 10px 13px; color: var(--text);
+  font-family: 'Inter', sans-serif; font-size: 0.85rem; outline: none;
+}
+.m-btn {
+  width: 100%; padding: 12px; border: none; border-radius: 9px;
+  font-family: 'Space Grotesk', sans-serif; font-weight: 700;
+  font-size: 0.9rem; cursor: pointer; transition: all 0.2s; margin-top: 6px;
+}
+.m-btn.cyan  { background: var(--cyan); color: var(--navy); }
+.m-btn.cyan:hover  { background: #33DDFF; }
+.m-btn.green { background: var(--green); color: var(--navy); }
+.m-btn.green:hover { background: #33EF8E; }
+
+/* QR placeholder */
+.qr-box {
+  width: 160px; height: 160px; margin: 0 auto 16px;
+  background: #fff; border-radius: 12px; padding: 12px;
+  display: flex; align-items: center; justify-content: center;
+}
+.qr-inner {
+  width: 100%; height: 100%;
+  background: repeating-linear-gradient(
+    0deg, #000 0px, #000 4px, #fff 4px, #fff 8px
+  ),
+  repeating-linear-gradient(
+    90deg, #000 0px, #000 4px, #fff 4px, #fff 8px
+  );
+  background-blend-mode: multiply;
+  border-radius: 4px;
+  opacity: 0.85;
+}
+
+/* NETWORK BADGE */
+.network-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  font-size: 0.68rem; font-weight: 700; padding: 3px 8px; border-radius: 4px;
+  background: rgba(0,212,255,0.1); color: var(--cyan);
+  border: 1px solid rgba(0,212,255,0.2);
+}
+
+/* STATS */
+.wallet-stats {
+  display: grid; grid-template-columns: repeat(3,1fr); gap: 12px;
+  margin-bottom: 20px;
+}
+.wallet-stat {
+  background: var(--navy-card); border: 1px solid var(--navy-border);
+  border-radius: 12px; padding: 16px;
+}
+.wallet-stat .lbl { font-size: 0.68rem; color: var(--text-muted); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 700; }
+.wallet-stat .val { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 700; }
+
+/* TOAST */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+  z-index: 9999; background: var(--navy-card);
+  border: 1px solid var(--navy-border); border-radius: 9px;
+  padding: 11px 18px; font-size: 0.82rem; white-space: nowrap;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4); animation: toastIn 0.25s ease;
+}
+@keyframes toastIn { from{opacity:0;transform:translateX(-50%) translateY(8px)}to{opacity:1;transform:translateX(-50%) translateY(0)} }
+
+@media(max-width:860px) {
+  .wallet-grid { grid-template-columns: 1fr; }
+  nav { padding: 0 16px; }
+  .page { padding: 20px 14px 60px; }
+  .wallet-stats { grid-template-columns: repeat(2,1fr); }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="alphaedge-dashboard.html" class="nav-logo">Alpha<span>Edge</span></a>
+  <div class="nav-right">
+    <span class="network-badge">⬡ Ethereum Mainnet</span>
+    <a href="alphaedge-dashboard.html" class="nav-btn">← Dashboard</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <!-- WALLET HERO -->
+  <div class="wallet-hero">
+    <div class="wallet-hero-top">
+      <div class="wallet-address-wrap" id="address-section">
+        <div class="wallet-label">Wallet address</div>
+        <div class="wallet-address" id="wallet-addr-display">
+          <span style="color:var(--text-muted);">Not connected</span>
+        </div>
+      </div>
+      <div class="wallet-connect-btns">
+        <button class="connect-btn" id="metamask-btn" onclick="connectWallet('metamask')">
+          <div class="dot" id="metamask-dot"></div>
+          <span>🦊 MetaMask</span>
+        </button>
+        <button class="connect-btn" id="walletconnect-btn" onclick="connectWallet('walletconnect')">
+          <div class="dot" id="wc-dot"></div>
+          <span>🔗 WalletConnect</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="total-balance">
+      <div class="lbl">Total Portfolio Value</div>
+      <div class="amount" id="total-balance">$0.00</div>
+      <div class="change up" id="total-change">Connect wallet to view balance</div>
+    </div>
+
+    <div class="wallet-actions">
+      <button class="action-btn cyan-btn" onclick="openModal('receive')">
+        <span class="icon">⬇</span> Receive
+      </button>
+      <button class="action-btn" onclick="openModal('send')">
+        <span class="icon">⬆</span> Send
+      </button>
+      <button class="action-btn" onclick="openModal('swap')">
+        <span class="icon">⇄</span> Swap
+      </button>
+      <button class="action-btn" onclick="showSection('airdrops')">
+        <span class="icon">🪂</span> Airdrops
+      </button>
+      <a href="alphaedge-terminal.html" class="action-btn" style="text-decoration:none;">
+        <span class="icon">🖥</span> Trade
+      </a>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="wallet-stats" id="wallet-stats" style="display:none;">
+    <div class="wallet-stat">
+      <div class="lbl">Airdrops received</div>
+      <div class="val" style="color:var(--purple)" id="stat-airdrops">0</div>
+    </div>
+    <div class="wallet-stat">
+      <div class="lbl">AE Tokens held</div>
+      <div class="val" style="color:var(--gold)" id="stat-ae-tokens">0</div>
+    </div>
+    <div class="wallet-stat">
+      <div class="lbl">Network</div>
+      <div class="val" style="color:var(--cyan);font-size:0.9rem">Ethereum</div>
+    </div>
+  </div>
+
+  <!-- AIRDROP BANNER -->
+  <div class="airdrop-card" id="airdrop-banner" style="display:none;">
+    <div class="airdrop-badge">Active Airdrop</div>
+    <div class="airdrop-title">🎁 AlphaEdge Genesis Airdrop</div>
+    <div class="airdrop-desc">
+      As an early AlphaEdge subscriber you qualify for the Genesis Airdrop.
+      Tokens will be claimable once Fortunex and Cloutium launch officially.
+      Connect your wallet now to reserve your allocation.
+    </div>
+    <div class="airdrop-tokens">
+      <div class="airdrop-token-pill">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--gold-dim);border:1px solid rgba(244,185,66,0.3);display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;color:var(--gold);">FTX</div>
+        <div>
+          <div class="sym" style="color:var(--gold)">Fortunex</div>
+          <div class="amt">500 FTX reserved</div>
+        </div>
+      </div>
+      <div class="airdrop-token-pill">
+        <div style="width:28px;height:28px;border-radius:50%;background:var(--purple-dim);border:1px solid rgba(155,109,255,0.3);display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;color:var(--purple);">CLT</div>
+        <div>
+          <div class="sym" style="color:var(--purple)">Cloutium</div>
+          <div class="amt">250 CLT reserved</div>
+        </div>
+      </div>
+    </div>
+    <button class="airdrop-claim-btn" id="airdrop-claim-btn" onclick="claimAirdrop()">
+      🪂 Reserve my allocation
+    </button>
+    <p style="font-size:0.7rem;color:var(--text-dim);margin-top:8px;text-align:center;">
+      Tokens distributed upon official launch. Subject to availability.
+    </p>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="wallet-grid" id="main-grid">
+
+    <!-- LEFT: TOKENS + TRANSACTIONS -->
+    <div class="wallet-col">
+
+      <!-- Token balances -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">💰 Token Balances</div>
+          <button class="card-action" onclick="addToken()">+ Add token</button>
+        </div>
+        <div id="token-list">
+          <div style="padding:32px;text-align:center;color:var(--text-dim);font-size:0.85rem;">
+            Connect your wallet to view token balances.
+          </div>
+        </div>
+      </div>
+
+      <!-- Transactions -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">📋 Transaction History</div>
+          <button class="card-action" id="view-etherscan" style="display:none;" onclick="openEtherscan()">Etherscan ↗</button>
+        </div>
+        <div id="tx-list">
+          <div style="padding:32px;text-align:center;color:var(--text-dim);font-size:0.85rem;">
+            Connect your wallet to view transaction history.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT: AIRDROP ELIGIBILITY + INFO -->
+    <div class="wallet-col">
+
+      <!-- Airdrop eligibility -->
+      <div class="card" id="airdrop-eligibility-card">
+        <div class="card-header">
+          <div class="card-title">🪂 Airdrop Eligibility</div>
+          <a href="alphaedge-airdrops.html" class="card-action">View all →</a>
+        </div>
+        <div style="padding:16px;display:flex;flex-direction:column;gap:12px;" id="eligibility-list">
+          <div style="padding:24px;text-align:center;color:var(--text-dim);font-size:0.82rem;">
+            Connect wallet to check eligibility.
+          </div>
+        </div>
+      </div>
+
+      <!-- Rewards progress -->
+      <div class="card">
+        <div class="card-header"><div class="card-title">⭐ Rewards Progress</div></div>
+        <div style="padding:16px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+            <div>
+              <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.95rem;">Pro Member</div>
+              <div style="font-size:0.75rem;color:var(--text-muted);">Next: Elite tier</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-family:'Space Mono',monospace;font-size:0.88rem;color:var(--gold);">840 pts</div>
+              <div style="font-size:0.7rem;color:var(--text-muted);">of 1,000 to Elite</div>
+            </div>
+          </div>
+          <div style="height:6px;background:var(--navy-border);border-radius:3px;overflow:hidden;margin-bottom:12px;">
+            <div style="width:84%;height:100%;background:linear-gradient(90deg,var(--cyan),var(--gold));border-radius:3px;transition:width 0.4s;"></div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.78rem;">
+              <span style="color:var(--text-muted)">✓ Account created</span>
+              <span style="color:var(--green);font-weight:600;">+100 pts</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.78rem;">
+              <span style="color:var(--text-muted)">✓ Pro subscription</span>
+              <span style="color:var(--green);font-weight:600;">+300 pts</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.78rem;">
+              <span style="color:var(--text-muted)">✓ Wallet connected</span>
+              <span style="color:var(--green);font-weight:600;">+200 pts</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.78rem;">
+              <span style="color:var(--text-muted)">✓ 30 days active</span>
+              <span style="color:var(--green);font-weight:600;">+240 pts</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.78rem;opacity:0.5;">
+              <span style="color:var(--text-muted)">◻ Refer a friend</span>
+              <span style="color:var(--text-muted)">+100 pts</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.78rem;opacity:0.5;">
+              <span style="color:var(--text-muted)">◻ Upgrade to Elite</span>
+              <span style="color:var(--text-muted)">+500 pts</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Supported networks -->
+      <div class="card">
+        <div class="card-header"><div class="card-title">🌐 Supported Networks</div></div>
+        <div style="padding:14px;display:flex;flex-direction:column;gap:8px;" id="network-list"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- RECEIVE MODAL -->
+<div class="modal-overlay" id="modal-receive">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('receive')">✕</button>
+    <div class="modal-title">⬇ Receive Crypto</div>
+    <div class="qr-box"><div class="qr-inner"></div></div>
+    <div style="text-align:center;margin-bottom:14px;">
+      <div style="font-size:0.72rem;color:var(--text-muted);margin-bottom:6px;">Your wallet address</div>
+      <div style="font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--cyan);word-break:break-all;" id="receive-addr">—</div>
+    </div>
+    <button class="m-btn cyan" onclick="copyAddress()">📋 Copy address</button>
+    <p style="text-align:center;font-size:0.72rem;color:var(--text-dim);margin-top:10px;">Only send ERC-20 compatible tokens to this address.</p>
+  </div>
+</div>
+
+<!-- SEND MODAL -->
+<div class="modal-overlay" id="modal-send">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('send')">✕</button>
+    <div class="modal-title">⬆ Send Crypto</div>
+    <div class="m-group">
+      <div class="m-label">Token</div>
+      <select class="m-select" id="send-token"></select>
+    </div>
+    <div class="m-group">
+      <div class="m-label">Recipient address</div>
+      <input class="m-input" id="send-to" placeholder="0x..." type="text">
+    </div>
+    <div class="m-group">
+      <div class="m-label">Amount</div>
+      <input class="m-input" id="send-amount" placeholder="0.00" type="number" step="any">
+    </div>
+    <div style="background:var(--navy);border:1px solid var(--navy-border);border-radius:8px;padding:12px;margin-bottom:12px;font-size:0.78rem;">
+      <div style="display:flex;justify-content:space-between;padding:3px 0;"><span style="color:var(--text-dim)">Est. gas fee</span><span style="font-family:'Space Mono',monospace">~$2.40</span></div>
+      <div style="display:flex;justify-content:space-between;padding:3px 0;"><span style="color:var(--text-dim)">Network</span><span style="color:var(--cyan)">Ethereum</span></div>
+    </div>
+    <button class="m-btn cyan" onclick="sendTransaction()">Send →</button>
+  </div>
+</div>
+
+<!-- SWAP MODAL -->
+<div class="modal-overlay" id="modal-swap">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('swap')">✕</button>
+    <div class="modal-title">⇄ Swap Tokens</div>
+    <div class="m-group">
+      <div class="m-label">From</div>
+      <select class="m-select" id="swap-from"></select>
+      <input class="m-input" id="swap-from-amt" placeholder="0.00" type="number" step="any" style="margin-top:6px;" oninput="updateSwapEstimate()">
+    </div>
+    <div style="text-align:center;margin:8px 0;font-size:1.2rem;color:var(--text-muted);">⬇</div>
+    <div class="m-group">
+      <div class="m-label">To (estimated)</div>
+      <select class="m-select" id="swap-to"></select>
+      <input class="m-input" id="swap-to-amt" placeholder="0.00" type="number" step="any" style="margin-top:6px;" readonly>
+    </div>
+    <div style="font-size:0.72rem;color:var(--text-dim);margin-bottom:12px;text-align:center;" id="swap-rate">—</div>
+    <button class="m-btn green" onclick="executeSwap()">Swap via Uniswap →</button>
+    <p style="text-align:center;font-size:0.7rem;color:var(--text-dim);margin-top:8px;">Swaps route through Uniswap v3. Slippage: 0.5%</p>
+  </div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────
+const WALLET = {
+  connected: false,
+  address: null,
+  provider: null,
+  tokens: [],
+  transactions: [],
+  airdropClaimed: false,
+};
+
+// Demo token data (replace with real on-chain data via ethers.js / web3.js)
+const DEMO_TOKENS = [
+  { sym:'ETH',  name:'Ethereum',      icon:'Ξ',  iconBg:'#1c2e4a', iconColor:'#627EEA', balance:1.842,  price:3420,  chg:+2.1  },
+  { sym:'USDC', name:'USD Coin',       icon:'$',  iconBg:'#1a2d3d', iconColor:'#2775CA', balance:4250,   price:1.00,  chg:0     },
+  { sym:'WBTC', name:'Wrapped Bitcoin',icon:'₿',  iconBg:'#2a1f0a', iconColor:'#F7931A', balance:0.0412, price:68420, chg:+3.6  },
+  { sym:'LINK', name:'Chainlink',      icon:'⬡',  iconBg:'#0d1f3c', iconColor:'#2A5ADA', balance:142.5,  price:14.20, chg:-1.4  },
+  { sym:'FTX',  name:'Fortunex',       icon:'F',  iconBg:'#2a1f0a', iconColor:'#F4B942', balance:500,    price:0,     chg:0,    ae:true },
+  { sym:'CLT',  name:'Cloutium',       icon:'C',  iconBg:'#1a0f2e', iconColor:'#9B6DFF', balance:250,    price:0,     chg:0,    ae:true },
+];
+
+const DEMO_TXS = [
+  { type:'airdrop',   sym:'FTX',  amount:'+500 FTX',  usd:'(reserved)',  hash:'0x4a2f...e91c', time:'Pending', desc:'Fortunex Genesis Airdrop' },
+  { type:'airdrop',   sym:'CLT',  amount:'+250 CLT',  usd:'(reserved)',  hash:'0x9b3d...f44a', time:'Pending', desc:'Cloutium Genesis Airdrop' },
+  { type:'received',  sym:'ETH',  amount:'+0.5 ETH',  usd:'$1,710',      hash:'0x7c1a...b23d', time:'2h ago',  desc:'Received from 0x8f2...3e1' },
+  { type:'sent',      sym:'USDC', amount:'-1,000 USDC',usd:'$1,000',     hash:'0x2e8b...d19f', time:'1d ago',  desc:'Sent to 0x4a9...7f2' },
+  { type:'swap',      sym:'ETH',  amount:'0.2 ETH → 684 USDC', usd:'$684', hash:'0x6d4c...a82e', time:'3d ago', desc:'Swap via Uniswap v3' },
+  { type:'received',  sym:'ETH',  amount:'+1.342 ETH', usd:'$4,590',     hash:'0x1f7e...c44b', time:'5d ago',  desc:'Received from Coinbase' },
+];
+
+const NETWORKS = [
+  { name:'Ethereum',  sym:'ETH',  color:'#627EEA', status:'connected' },
+  { name:'Polygon',   sym:'MATIC',color:'#8247E5', status:'available' },
+  { name:'BNB Chain', sym:'BNB',  color:'#F4B942', status:'available' },
+  { name:'Arbitrum',  sym:'ARB',  color:'#28A0F0', status:'available' },
+  { name:'Optimism',  sym:'OP',   color:'#FF0420', status:'available' },
+  { name:'Base',      sym:'BASE', color:'#0052FF', status:'available' },
+];
+
+// ─────────────────────────────────────────────
+// CONNECT WALLET
+// ─────────────────────────────────────────────
+async function connectWallet(type) {
+  if (type === 'metamask') {
+    // REAL METAMASK INTEGRATION:
+    // if (typeof window.ethereum !== 'undefined') {
+    //   try {
+    //     const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+    //     const address = accounts[0];
+    //     const provider = new ethers.BrowserProvider(window.ethereum);
+    //     onWalletConnected(address, provider, 'metamask');
+    //   } catch (err) {
+    //     toast('MetaMask connection rejected.'); return;
+    //   }
+    // } else {
+    //   window.open('https://metamask.io', '_blank'); return;
+    // }
+
+    // DEMO: simulate connection
+    const demoAddr = '0x' + Array(40).fill(0).map(() => Math.floor(Math.random()*16).toString(16)).join('');
+    onWalletConnected(demoAddr, 'metamask');
+
+  } else if (type === 'walletconnect') {
+    // REAL WALLETCONNECT:
+    // const provider = await EthereumProvider.init({
+    //   projectId: 'YOUR_WALLETCONNECT_PROJECT_ID',
+    //   chains: [1],
+    //   showQrModal: true,
+    // });
+    // await provider.connect();
+    // const accounts = provider.accounts;
+    // onWalletConnected(accounts[0], provider, 'walletconnect');
+
+    toast('WalletConnect: add your Project ID from cloud.walletconnect.com');
+  }
+}
+
+function onWalletConnected(address, provider) {
+  WALLET.connected = true;
+  WALLET.address = address;
+  WALLET.provider = provider;
+
+  // Update UI
+  const short = `${address.slice(0,6)}...${address.slice(-4)}`;
+  document.getElementById('wallet-addr-display').innerHTML =
+    `<span class="addr">${short}</span>
+     <button class="copy-btn" onclick="copyAddress()">📋 Copy</button>
+     <span style="font-size:0.65rem;padding:2px 6px;border-radius:3px;background:var(--green-dim);color:var(--green);">● Connected</span>`;
+
+  document.getElementById('receive-addr').textContent = address;
+  document.getElementById('metamask-btn').classList.add('connected');
+  document.getElementById('metamask-dot').style.background = 'var(--green)';
+  document.getElementById('view-etherscan').style.display = 'inline';
+  document.getElementById('wallet-stats').style.display = 'grid';
+  document.getElementById('airdrop-banner').style.display = 'block';
+
+  // Load data
+  loadTokenBalances();
+  loadTransactions();
+  loadEligibility();
+  renderNetworks();
+  updatePortfolioValue();
+  toast('✓ Wallet connected successfully');
+}
+
+// ─────────────────────────────────────────────
+// TOKEN BALANCES
+// ─────────────────────────────────────────────
+// REAL: use ethers.js to fetch ERC-20 balances:
+// const provider = new ethers.BrowserProvider(window.ethereum);
+// const erc20ABI = ['function balanceOf(address) view returns (uint256)', 'function decimals() view returns (uint8)'];
+// const contract = new ethers.Contract(TOKEN_ADDRESS, erc20ABI, provider);
+// const rawBalance = await contract.balanceOf(walletAddress);
+// const decimals = await contract.decimals();
+// const balance = ethers.formatUnits(rawBalance, decimals);
+
+function loadTokenBalances() {
+  const list = document.getElementById('token-list');
+  const tokenOptions = [];
+
+  list.innerHTML = DEMO_TOKENS.map(t => {
+    const usdVal = (t.balance * t.price).toLocaleString('en-US', {minimumFractionDigits:2,maximumFractionDigits:2});
+    tokenOptions.push(`<option value="${t.sym}">${t.sym} — ${t.balance} (${t.name})</option>`);
+    return `
+      <div class="token-row">
+        <div class="token-icon" style="background:${t.iconBg};color:${t.iconColor};border:1px solid ${t.iconColor}22;">
+          ${t.icon}
+        </div>
+        <div class="token-info">
+          <div class="token-name">
+            ${t.name}
+            ${t.ae ? `<span class="ae-token-badge exclusive">AE Exclusive</span>` : ''}
+          </div>
+          <div class="token-sym">${t.sym}</div>
+        </div>
+        <div style="text-align:right;flex:1;">
+          ${t.chg !== 0 ? `<div class="token-chg ${t.chg > 0 ? 'up':'dn'}">${t.chg > 0 ? '+':''}${t.chg}%</div>` : ''}
+          ${t.price > 0 ? `<div style="font-size:0.7rem;color:var(--text-dim);">$${t.price.toLocaleString()}</div>` : '<div style="font-size:0.7rem;color:var(--gold);">Pre-launch</div>'}
+        </div>
+        <div class="token-bal">
+          <div class="amount">${t.balance.toLocaleString()}</div>
+          <div class="usd">${t.price > 0 ? '$'+usdVal : '—'}</div>
+        </div>
+      </div>`;
+  }).join('');
+
+  // Populate send/swap selects
+  const html = tokenOptions.join('');
+  document.getElementById('send-token').innerHTML = html;
+  document.getElementById('swap-from').innerHTML = html;
+  document.getElementById('swap-to').innerHTML = html;
+}
+
+// ─────────────────────────────────────────────
+// TRANSACTIONS
+// ─────────────────────────────────────────────
+// REAL: fetch from Etherscan API:
+// const res = await fetch(`https://api.etherscan.io/api?module=account&action=txlist&address=${address}&apikey=YOUR_KEY`);
+
+function loadTransactions() {
+  const icons = { received:'⬇', sent:'⬆', airdrop:'🪂', swap:'⇄' };
+  const colors = { received:'received', sent:'sent', airdrop:'airdrop', swap:'swap' };
+  const amtColors = { received:'up', sent:'dn', airdrop:'purple', swap:'up' };
+
+  document.getElementById('tx-list').innerHTML = DEMO_TXS.map(tx => `
+    <div class="tx-row">
+      <div class="tx-icon ${colors[tx.type]}">${icons[tx.type]}</div>
+      <div class="tx-info">
+        <div class="tx-type">${tx.desc}</div>
+        <div class="tx-meta">${tx.time}</div>
+        <div class="tx-hash">${tx.hash}</div>
+      </div>
+      <div class="tx-amount">
+        <div class="val ${amtColors[tx.type]}">${tx.amount}</div>
+        <div class="usd">${tx.usd}</div>
+      </div>
+    </div>
+  `).join('');
+
+  document.getElementById('stat-airdrops').textContent = '2';
+  document.getElementById('stat-ae-tokens').textContent = '750';
+}
+
+// ─────────────────────────────────────────────
+// AIRDROP ELIGIBILITY
+// ─────────────────────────────────────────────
+function loadEligibility() {
+  const criteria = [
+    { label:'Active Pro/Elite subscriber', met:true,  reward:'500 FTX + 250 CLT' },
+    { label:'Wallet connected',            met:true,  reward:'+50 FTX bonus' },
+    { label:'Member for 30+ days',         met:true,  reward:'+100 FTX bonus' },
+    { label:'Referred 1+ friend',          met:false, reward:'+200 FTX bonus' },
+    { label:'Elite subscriber',            met:false, reward:'2x multiplier' },
+  ];
+
+  document.getElementById('eligibility-list').innerHTML = criteria.map(c => `
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--navy-border);">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <span style="color:${c.met ? 'var(--green)':'var(--text-dim)'};font-size:0.9rem;">${c.met ? '✓':'○'}</span>
+        <span style="font-size:0.82rem;color:${c.met ? 'var(--text)':'var(--text-muted)'};">${c.label}</span>
+      </div>
+      <span style="font-size:0.72rem;color:${c.met ? 'var(--gold)':'var(--text-dim)'};font-weight:600;">${c.reward}</span>
+    </div>
+  `).join('') +
+  `<div style="padding:10px 0;text-align:center;">
+    <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;color:var(--gold);">Total: 650 FTX + 250 CLT</div>
+    <div style="font-size:0.72rem;color:var(--text-muted);margin-top:2px;">Your current allocation</div>
+  </div>`;
+}
+
+// ─────────────────────────────────────────────
+// PORTFOLIO VALUE
+// ─────────────────────────────────────────────
+function updatePortfolioValue() {
+  const total = DEMO_TOKENS.reduce((sum, t) => sum + t.balance * t.price, 0);
+  document.getElementById('total-balance').textContent =
+    '$' + total.toLocaleString('en-US', {minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById('total-change').textContent = '+$324.40 (+2.1%) today';
+  document.getElementById('total-change').className = 'change up';
+}
+
+// ─────────────────────────────────────────────
+// NETWORKS
+// ─────────────────────────────────────────────
+function renderNetworks() {
+  document.getElementById('network-list').innerHTML = NETWORKS.map(n => `
+    <div style="display:flex;align-items:center;gap:10px;padding:8px;border-radius:7px;
+      background:${n.status==='connected'?'var(--navy-hover)':'none'};
+      border:1px solid ${n.status==='connected'?'rgba(0,212,255,0.2)':'transparent'};">
+      <div style="width:28px;height:28px;border-radius:50%;background:${n.color}22;
+        border:1px solid ${n.color}44;display:flex;align-items:center;justify-content:center;
+        font-size:0.65rem;font-weight:700;color:${n.color};">${n.sym.slice(0,3)}</div>
+      <div style="flex:1;">
+        <div style="font-size:0.82rem;font-weight:600;">${n.name}</div>
+        <div style="font-size:0.68rem;color:var(--text-dim);">${n.sym}</div>
+      </div>
+      <div style="font-size:0.68rem;font-weight:600;color:${n.status==='connected'?'var(--green)':'var(--text-dim)'};">
+        ${n.status === 'connected' ? '● Active' : '+ Add'}
+      </div>
+    </div>
+  `).join('');
+}
+
+// ─────────────────────────────────────────────
+// CLAIM AIRDROP
+// ─────────────────────────────────────────────
+function claimAirdrop() {
+  if (!WALLET.connected) { toast('Connect your wallet first.'); return; }
+  if (WALLET.airdropClaimed) return;
+
+  // REAL: call smart contract claimAirdrop() function:
+  // const provider = new ethers.BrowserProvider(window.ethereum);
+  // const signer = await provider.getSigner();
+  // const contract = new ethers.Contract(AIRDROP_CONTRACT_ADDRESS, AIRDROP_ABI, signer);
+  // const tx = await contract.claimAirdrop();
+  // await tx.wait();
+
+  const btn = document.getElementById('airdrop-claim-btn');
+  btn.disabled = true;
+  btn.textContent = 'Processing...';
+
+  setTimeout(() => {
+    WALLET.airdropClaimed = true;
+    btn.textContent = '✓ Allocation reserved!';
+    btn.classList.add('claimed');
+    btn.disabled = false;
+    toast('🪂 Genesis airdrop allocation reserved! Tokens distributed at launch.');
+  }, 1800);
+}
+
+// ─────────────────────────────────────────────
+// SEND / SWAP
+// ─────────────────────────────────────────────
+function sendTransaction() {
+  const to     = document.getElementById('send-to').value.trim();
+  const amount = document.getElementById('send-amount').value;
+  const token  = document.getElementById('send-token').value;
+  if (!to || !to.startsWith('0x')) { toast('Enter a valid wallet address.'); return; }
+  if (!amount || amount <= 0) { toast('Enter an amount.'); return; }
+
+  // REAL: use ethers.js to send transaction
+  // const provider = new ethers.BrowserProvider(window.ethereum);
+  // const signer = await provider.getSigner();
+  // if (token === 'ETH') {
+  //   const tx = await signer.sendTransaction({ to, value: ethers.parseEther(amount) });
+  // } else {
+  //   const contract = new ethers.Contract(TOKEN_ADDRESSES[token], ERC20_ABI, signer);
+  //   const tx = await contract.transfer(to, ethers.parseUnits(amount, 18));
+  // }
+
+  toast(`Demo: ${amount} ${token} sent to ${to.slice(0,8)}...`);
+  closeModal('send');
+}
+
+function updateSwapEstimate() {
+  const from  = document.getElementById('swap-from').value;
+  const to    = document.getElementById('swap-to').value;
+  const amt   = parseFloat(document.getElementById('swap-from-amt').value) || 0;
+  const fromToken = DEMO_TOKENS.find(t => t.sym === from);
+  const toToken   = DEMO_TOKENS.find(t => t.sym === to);
+  if (!fromToken || !toToken || !toToken.price) return;
+  const est = (amt * fromToken.price) / toToken.price;
+  document.getElementById('swap-to-amt').value = est.toFixed(6);
+  document.getElementById('swap-rate').textContent =
+    `1 ${from} ≈ ${(fromToken.price / toToken.price).toFixed(6)} ${to} · 0.3% fee`;
+}
+
+function executeSwap() {
+  // REAL: route through Uniswap SDK or 1inch API
+  toast('Demo: Swap would route through Uniswap v3.');
+  closeModal('swap');
+}
+
+// ─────────────────────────────────────────────
+// UTILITIES
+// ─────────────────────────────────────────────
+function openModal(id) {
+  if (!WALLET.connected && id !== 'receive') {
+    toast('Connect your wallet first.'); return;
+  }
+  document.getElementById(`modal-${id}`).classList.add('open');
+}
+function closeModal(id) { document.getElementById(`modal-${id}`).classList.remove('open'); }
+
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) m.classList.remove('open'); });
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+});
+
+function copyAddress() {
+  const addr = WALLET.address || '—';
+  navigator.clipboard?.writeText(addr).catch(() => {});
+  toast('📋 Address copied to clipboard');
+}
+
+function openEtherscan() {
+  window.open(`https://etherscan.io/address/${WALLET.address}`, '_blank');
+}
+
+function addToken() {
+  const addr = prompt('Enter ERC-20 token contract address (0x...):');
+  if (addr && addr.startsWith('0x')) {
+    toast(`Token ${addr.slice(0,8)}... added to watchlist`);
+  }
+}
+
+function showSection(id) {
+  document.getElementById('airdrop-banner').scrollIntoView({ behavior: 'smooth' });
+}
+
+function toast(msg) {
+  const el = document.createElement('div');
+  el.className = 'toast'; el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 3000);
+}
+</script>
+</body>
+</html>

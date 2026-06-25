@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlphaEdge — Copyright & DMCA Policy</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy: #0A0F1E; --navy-card: #111827; --navy-border: #1E2D45;
+  --cyan: #00D4FF; --gold: #F4B942; --green: #00E676; --red: #FF4B4B;
+  --text: #E8EDF5; --text-muted: #6B7FA3; --text-dim: #3A4A6B;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--navy); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.7; }
+nav {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 64px;
+  background: rgba(10,15,30,0.95); border-bottom: 1px solid var(--navy-border);
+  backdrop-filter: blur(12px);
+}
+.nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; color: var(--text); text-decoration: none; }
+.nav-logo span { color: var(--cyan); }
+.nav-btn { padding: 7px 18px; border-radius: 6px; font-size: 0.85rem; font-weight: 600; font-family: 'Inter', sans-serif; background: var(--cyan); color: var(--navy); border: none; cursor: pointer; text-decoration: none; }
+.page-wrap { max-width: 800px; margin: 0 auto; padding: 64px 24px 96px; }
+.page-eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cyan); margin-bottom: 12px; display: block; }
+.page-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem,4vw,2.5rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 16px; }
+.page-meta { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 40px; padding-bottom: 32px; border-bottom: 1px solid var(--navy-border); }
+.section { margin-bottom: 48px; scroll-margin-top: 80px; }
+.section-num { font-family: 'Space Grotesk', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cyan); margin-bottom: 8px; }
+.section h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.3rem; font-weight: 700; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--navy-border); }
+.section p { color: var(--text-muted); margin-bottom: 14px; font-size: 0.9rem; }
+.section ul { color: var(--text-muted); font-size: 0.9rem; padding-left: 20px; margin-bottom: 14px; }
+.section li { margin-bottom: 8px; line-height: 1.6; }
+.section strong { color: var(--text); font-weight: 600; }
+.section a { color: var(--cyan); text-decoration: none; }
+.section a:hover { text-decoration: underline; }
+.notice-box { background: rgba(0,212,255,0.06); border: 1px solid rgba(0,212,255,0.2); border-radius: 10px; padding: 20px 24px; margin-bottom: 40px; }
+.notice-box .copy-line { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+.notice-box p { font-size: 0.82rem; color: var(--text-muted); margin: 0; }
+.dmca-form { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 14px; padding: 28px; margin-top: 20px; }
+.form-group { margin-bottom: 16px; }
+.form-label { display: block; font-size: 0.78rem; font-weight: 600; color: var(--text-muted); margin-bottom: 5px; }
+.form-input, .form-textarea {
+  width: 100%; background: rgba(255,255,255,0.04); border: 1px solid var(--navy-border);
+  border-radius: 8px; padding: 10px 13px; color: var(--text);
+  font-family: 'Inter', sans-serif; font-size: 0.875rem; outline: none;
+  transition: border-color 0.2s;
+}
+.form-input:focus, .form-textarea:focus { border-color: var(--cyan); }
+.form-textarea { height: 100px; resize: vertical; }
+.form-check { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 16px; }
+.form-check input { margin-top: 3px; accent-color: var(--cyan); }
+.form-check label { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+.submit-btn { background: var(--cyan); color: var(--navy); border: none; padding: 12px 28px; border-radius: 8px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: background 0.2s; }
+.submit-btn:hover { background: #33DDFF; }
+.success-msg { display: none; background: rgba(0,230,118,0.08); border: 1px solid rgba(0,230,118,0.2); border-radius: 8px; padding: 14px 18px; color: var(--green); font-size: 0.875rem; margin-top: 12px; }
+footer { background: var(--navy-card); border-top: 1px solid var(--navy-border); padding: 32px 40px; }
+.footer-inner { max-width: 800px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.footer-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: var(--text); text-decoration: none; }
+.footer-logo span { color: var(--cyan); }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.82rem; transition: color 0.2s; }
+.footer-links a:hover { color: var(--text); }
+.footer-copy { font-size: 0.78rem; color: var(--text-dim); width: 100%; }
+@media(max-width:600px) { nav { padding: 0 16px; } .page-wrap { padding: 40px 16px 64px; } footer { padding: 24px 16px; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="alphaedge-trading.html" class="nav-logo">Alpha<span>Edge</span></a>
+  <a href="alphaedge-trading.html" class="nav-btn">Back to site</a>
+</nav>
+
+<div class="page-wrap">
+
+  <span class="page-eyebrow">Legal</span>
+  <h1 class="page-title">Copyright & DMCA Policy</h1>
+  <div class="page-meta">
+    Effective date: June 16, 2026 &nbsp;·&nbsp; Last updated: June 16, 2026
+  </div>
+
+  <!-- COPYRIGHT NOTICE -->
+  <div class="notice-box">
+    <div class="copy-line">© 2026 AlphaEdge LLC. All Rights Reserved.</div>
+    <p>AlphaEdge, Fortunex (FTX), and Cloutium (CLT) are trademarks of AlphaEdge LLC. All platform content, signals, methodologies, educational materials, software, designs, and branding are protected by US and international copyright and trademark law.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-num">01</div>
+    <h2>Ownership of Content</h2>
+    <p>All content on the AlphaEdge platform is the exclusive intellectual property of <strong>AlphaEdge LLC</strong>, including but not limited to:</p>
+    <ul>
+      <li>Trade signals, analysis, and market commentary</li>
+      <li>Educational courses, webinars, and written guides</li>
+      <li>The AlphaEdge brand, logo, and visual design system</li>
+      <li>The Fortunex (FTX) and Cloutium (CLT) token names, designs, and smart contracts</li>
+      <li>Platform software, source code, algorithms, and screener methodologies</li>
+      <li>Community content created by AlphaEdge staff and analysts</li>
+    </ul>
+    <p>This content is protected under the <strong>US Copyright Act (17 U.S.C.)</strong>, the <strong>Lanham Act (trademark)</strong>, and applicable international intellectual property treaties including the Berne Convention.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-num">02</div>
+    <h2>Permitted Use</h2>
+    <p>Your subscription grants you a personal, non-exclusive, non-transferable license to access and use AlphaEdge content for your own personal, non-commercial trading decisions only.</p>
+    <p>You may <strong>not</strong>:</p>
+    <ul>
+      <li>Reproduce, republish, or redistribute any signals or analysis publicly</li>
+      <li>Share signal content on social media, forums, or competing platforms</li>
+      <li>Create derivative works based on our methodologies or educational content</li>
+      <li>Use our brand name, logo, or token names without written permission</li>
+      <li>Scrape, copy, or archive our platform content by automated means</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <div class="section-num">03</div>
+    <h2>DMCA Notice & Takedown Procedure</h2>
+    <p>AlphaEdge complies with the Digital Millennium Copyright Act (DMCA), 17 U.S.C. § 512. If you believe that content on our platform infringes your copyright, please submit a takedown notice using the form below or by emailing <a href="mailto:dmca@alphaedge.com">dmca@alphaedge.com</a>.</p>
+
+    <p>A valid DMCA notice must include:</p>
+    <ul>
+      <li>Your full legal name, address, phone number, and email</li>
+      <li>A description of the copyrighted work you believe has been infringed</li>
+      <li>The URL of the allegedly infringing content on our platform</li>
+      <li>A statement that you have a good faith belief the use is not authorized</li>
+      <li>A statement that the information in the notice is accurate and, under penalty of perjury, that you are authorized to act on behalf of the copyright owner</li>
+      <li>Your physical or electronic signature</li>
+    </ul>
+
+    <p>Our designated DMCA agent:</p>
+    <ul>
+      <li><strong>Name:</strong> AlphaEdge LLC — Legal Department</li>
+      <li><strong>Email:</strong> <a href="mailto:dmca@alphaedge.com">dmca@alphaedge.com</a></li>
+      <li><strong>Address:</strong> AlphaEdge LLC, [Your Business Address], United States</li>
+    </ul>
+
+    <p>We will respond to valid DMCA notices within <strong>24–48 hours</strong> and will remove or disable access to infringing content promptly upon verification.</p>
+
+    <!-- DMCA FORM -->
+    <div class="dmca-form">
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:20px;color:var(--text);">Submit a DMCA Takedown Notice</h3>
+      <div class="form-group">
+        <label class="form-label">Your full legal name *</label>
+        <input class="form-input" type="text" id="d-name" placeholder="Jane Smith">
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+        <div class="form-group">
+          <label class="form-label">Email address *</label>
+          <input class="form-input" type="email" id="d-email" placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phone number</label>
+          <input class="form-input" type="tel" id="d-phone" placeholder="+1 (555) 000-0000">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">URL of infringing content on AlphaEdge *</label>
+        <input class="form-input" type="url" id="d-url" placeholder="https://alphaedge.com/...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description of original copyrighted work *</label>
+        <textarea class="form-textarea" id="d-work" placeholder="Describe the original work and where it is published..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Additional details</label>
+        <textarea class="form-textarea" id="d-details" placeholder="Any additional context..."></textarea>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" id="d-goodfaith">
+        <label for="d-goodfaith">I have a good faith belief that the use of the material described above is not authorized by the copyright owner, its agent, or the law. *</label>
+      </div>
+      <div class="form-check">
+        <input type="checkbox" id="d-accuracy">
+        <label for="d-accuracy">I declare, under penalty of perjury, that the information in this notice is accurate and that I am the copyright owner or am authorized to act on behalf of the copyright owner. *</label>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Electronic signature (type your full name) *</label>
+        <input class="form-input" type="text" id="d-sig" placeholder="Your full legal name as signature">
+      </div>
+      <button class="submit-btn" onclick="submitDmca()">Submit DMCA Notice</button>
+      <div class="success-msg" id="dmca-success">
+        ✓ Your DMCA notice has been received. We will respond within 24–48 hours. A confirmation has been sent to your email.
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-num">04</div>
+    <h2>Counter-Notice Procedure</h2>
+    <p>If you believe content was wrongly removed as a result of a DMCA takedown, you may file a counter-notice by emailing <a href="mailto:dmca@alphaedge.com">dmca@alphaedge.com</a> with:</p>
+    <ul>
+      <li>Your name, address, phone number, and email</li>
+      <li>Identification of the removed content and its location before removal</li>
+      <li>A statement under penalty of perjury that you believe the content was wrongly removed</li>
+      <li>Your consent to the jurisdiction of the federal court in your district</li>
+      <li>Your physical or electronic signature</li>
+    </ul>
+    <p>Upon receiving a valid counter-notice, we will forward it to the original complainant and may restore the content within 10–14 business days.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-num">05</div>
+    <h2>Repeat Infringer Policy</h2>
+    <p>In accordance with DMCA Section 512(i), AlphaEdge will terminate the accounts of subscribers who are repeat copyright infringers. We maintain records of all DMCA notices received and will take appropriate action against accounts with multiple valid infringement complaints.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-num">06</div>
+    <h2>Trademark Notice</h2>
+    <p><strong>AlphaEdge™</strong>, <strong>Fortunex™</strong>, and <strong>Cloutium™</strong> are trademarks of AlphaEdge LLC. These names, logos, and token identifiers may not be used in connection with any product or service without prior written authorization from AlphaEdge LLC.</p>
+    <p>Use of these marks in a way that is likely to cause confusion, or in a manner that disparages or discredits AlphaEdge, is strictly prohibited and may result in legal action.</p>
+    <p>To request a trademark license, contact <a href="mailto:legal@alphaedge.com">legal@alphaedge.com</a>.</p>
+  </div>
+
+  <div class="section">
+    <div class="section-num">07</div>
+    <h2>Contact</h2>
+    <ul>
+      <li><strong>DMCA & Copyright:</strong> <a href="mailto:dmca@alphaedge.com">dmca@alphaedge.com</a></li>
+      <li><strong>Trademark & Legal:</strong> <a href="mailto:legal@alphaedge.com">legal@alphaedge.com</a></li>
+      <li><strong>General:</strong> <a href="mailto:support@alphaedge.com">support@alphaedge.com</a></li>
+    </ul>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a href="alphaedge-trading.html" class="footer-logo">Alpha<span>Edge</span></a>
+    <div class="footer-links">
+      <a href="alphaedge-trading.html">Home</a>
+      <a href="alphaedge-terms.html">Terms</a>
+      <a href="alphaedge-privacy.html">Privacy</a>
+      <a href="alphaedge-copyright.html">Copyright</a>
+    </div>
+    <div class="footer-copy">© 2026 AlphaEdge LLC. All rights reserved. AlphaEdge™, Fortunex™, and Cloutium™ are trademarks of AlphaEdge LLC.</div>
+  </div>
+</footer>
+
+<script>
+function submitDmca() {
+  const name    = document.getElementById('d-name').value.trim();
+  const email   = document.getElementById('d-email').value.trim();
+  const url     = document.getElementById('d-url').value.trim();
+  const work    = document.getElementById('d-work').value.trim();
+  const sig     = document.getElementById('d-sig').value.trim();
+  const gf      = document.getElementById('d-goodfaith').checked;
+  const acc     = document.getElementById('d-accuracy').checked;
+
+  if (!name || !email || !url || !work || !sig || !gf || !acc) {
+    alert('Please complete all required fields and check both declarations.'); return;
+  }
+
+  // TODO: POST to /api/dmca/takedown
+  // await fetch('/api/dmca/takedown', { method:'POST', headers:{'Content-Type':'application/json'},
+  //   body: JSON.stringify({ complainantName:name, complainantEmail:email, infringingUrl:url,
+  //     originalWorkUrl: work, statement: work, signature: sig }) });
+
+  document.getElementById('dmca-success').style.display = 'block';
+}
+</script>
+</body>
+</html>

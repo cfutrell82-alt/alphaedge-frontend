@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlphaEdge — Careers</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --navy:#0A0F1E; --navy-card:#111827; --navy-card2:#0D1526;
+  --navy-border:#1E2D45; --navy-hover:#1A2640;
+  --cyan:#00D4FF; --cyan-dim:rgba(0,212,255,0.08);
+  --gold:#F4B942; --gold-dim:rgba(244,185,66,0.10);
+  --green:#00E676; --green-dim:rgba(0,230,118,0.10);
+  --purple:#9B6DFF; --purple-dim:rgba(155,109,255,0.10);
+  --red:#FF4B4B;
+  --text:#E8EDF5; --text-muted:#6B7FA3; --text-dim:#3A4A6B;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--navy); color: var(--text); font-family: 'Inter', sans-serif; font-size: 15px; line-height: 1.7; }
+
+nav {
+  position: sticky; top: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 64px;
+  background: rgba(10,15,30,0.95); border-bottom: 1px solid var(--navy-border);
+  backdrop-filter: blur(12px);
+}
+.nav-logo { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.2rem; color:var(--text); text-decoration:none; }
+.nav-logo span { color:var(--cyan); }
+.nav-links { display:flex; gap:28px; }
+.nav-links a { color:var(--text-muted); text-decoration:none; font-size:0.875rem; transition:color 0.2s; }
+.nav-links a:hover { color:var(--text); }
+.btn { padding:8px 20px; border-radius:7px; font-size:0.875rem; font-weight:600; font-family:'Inter',sans-serif; cursor:pointer; text-decoration:none; transition:all 0.2s; display:inline-block; border:none; }
+.btn-primary { background:var(--cyan); color:var(--navy); }
+.btn-primary:hover { background:#33DDFF; }
+.btn-ghost { background:none; border:1px solid var(--navy-border); color:var(--text-muted); }
+.btn-ghost:hover { border-color:var(--cyan); color:var(--cyan); }
+
+/* HERO */
+.careers-hero {
+  max-width:1100px; margin:0 auto;
+  padding:90px 40px 80px;
+  display:grid; grid-template-columns:1fr 1fr; gap:72px; align-items:center;
+}
+.hero-eyebrow {
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--cyan-dim); border:1px solid rgba(0,212,255,0.2);
+  color:var(--cyan); font-size:0.72rem; font-weight:700;
+  letter-spacing:0.08em; text-transform:uppercase;
+  padding:5px 14px; border-radius:100px; margin-bottom:20px;
+}
+h1 { font-family:'Space Grotesk',sans-serif; font-size:clamp(2rem,4vw,3rem); font-weight:700; letter-spacing:-0.03em; line-height:1.1; margin-bottom:18px; }
+h1 .accent { color:var(--cyan); }
+.hero-sub { color:var(--text-muted); font-size:1rem; line-height:1.7; margin-bottom:28px; }
+
+/* OPEN ROLES COUNT */
+.roles-count {
+  display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+}
+.role-pill {
+  display:flex; align-items:center; gap:7px;
+  background:var(--navy-card); border:1px solid var(--navy-border);
+  border-radius:8px; padding:10px 16px; font-size:0.82rem;
+}
+.role-pill .dot { width:8px; height:8px; border-radius:50%; animation:pulse 1.5s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
+.role-pill .num { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.1rem; }
+
+/* HERO VISUAL */
+.hero-visual {
+  background:var(--navy-card); border:1px solid var(--navy-border);
+  border-radius:20px; padding:28px; position:relative; overflow:hidden;
+}
+.hero-visual::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:linear-gradient(90deg,var(--cyan),var(--purple),var(--gold)); }
+.perks-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.perk {
+  background:var(--navy-card2); border:1px solid var(--navy-border);
+  border-radius:10px; padding:14px; display:flex; align-items:flex-start; gap:10px;
+}
+.perk .icon { font-size:1.3rem; flex-shrink:0; }
+.perk .title { font-weight:600; font-size:0.82rem; margin-bottom:2px; }
+.perk .desc { font-size:0.72rem; color:var(--text-muted); line-height:1.4; }
+
+/* SECTIONS */
+.section { max-width:1100px; margin:0 auto; padding:64px 40px; }
+.section-label { font-size:0.7rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--cyan); margin-bottom:10px; }
+.section-title { font-family:'Space Grotesk',sans-serif; font-size:clamp(1.6rem,3vw,2.2rem); font-weight:700; letter-spacing:-0.02em; margin-bottom:12px; }
+.section-sub { color:var(--text-muted); max-width:580px; font-size:0.95rem; margin-bottom:40px; line-height:1.7; }
+.divider { border:none; border-top:1px solid var(--navy-border); }
+
+/* CULTURE */
+.culture-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; }
+.culture-card {
+  background:var(--navy-card); border:1px solid var(--navy-border);
+  border-radius:14px; padding:22px; transition:all 0.2s;
+}
+.culture-card:hover { border-color:rgba(0,212,255,0.2); transform:translateY(-2px); }
+.culture-icon { font-size:1.8rem; margin-bottom:12px; }
+.culture-title { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:0.95rem; margin-bottom:7px; }
+.culture-desc { font-size:0.82rem; color:var(--text-muted); line-height:1.6; }
+
+/* JOB LISTINGS */
+.jobs-filter { display:flex; gap:8px; margin-bottom:24px; flex-wrap:wrap; }
+.job-filter-btn {
+  padding:7px 16px; border-radius:100px; cursor:pointer;
+  font-size:0.78rem; font-weight:600; font-family:'Inter',sans-serif;
+  border:1px solid var(--navy-border); background:none; color:var(--text-muted); transition:all 0.15s;
+}
+.job-filter-btn:hover { color:var(--text); border-color:rgba(0,212,255,0.3); }
+.job-filter-btn.active { background:var(--cyan-dim); color:var(--cyan); border-color:rgba(0,212,255,0.3); }
+
+.job-card {
+  background:var(--navy-card); border:1px solid var(--navy-border);
+  border-radius:14px; padding:24px 28px; margin-bottom:14px;
+  display:flex; align-items:center; gap:20px;
+  cursor:pointer; transition:all 0.2s;
+}
+.job-card:hover { border-color:rgba(0,212,255,0.25); transform:translateX(4px); }
+.job-dept-icon {
+  width:48px; height:48px; border-radius:12px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:1.3rem;
+}
+.job-info { flex:1; min-width:0; }
+.job-title { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1rem; margin-bottom:5px; }
+.job-meta { display:flex; gap:12px; flex-wrap:wrap; }
+.job-tag {
+  font-size:0.7rem; padding:3px 9px; border-radius:4px;
+  font-weight:600; letter-spacing:0.04em;
+}
+.job-tag.dept  { background:var(--cyan-dim);   color:var(--cyan);  border:1px solid rgba(0,212,255,0.2); }
+.job-tag.type  { background:var(--green-dim);  color:var(--green); border:1px solid rgba(0,230,118,0.2); }
+.job-tag.loc   { background:rgba(255,255,255,0.04); color:var(--text-muted); border:1px solid var(--navy-border); }
+.job-tag.new   { background:var(--gold-dim);   color:var(--gold);  border:1px solid rgba(244,185,66,0.2); }
+.job-salary { font-family:'Space Mono',monospace; font-size:0.82rem; color:var(--text-muted); white-space:nowrap; flex-shrink:0; }
+.job-arrow { color:var(--cyan); font-size:1.2rem; flex-shrink:0; }
+
+/* JOB DETAIL PANEL */
+.job-detail {
+  background:var(--navy-card); border:1px solid rgba(0,212,255,0.25);
+  border-radius:14px; padding:28px; margin-bottom:14px;
+  display:none;
+}
+.job-detail.open { display:block; }
+.job-detail h3 { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.05rem; margin-bottom:10px; margin-top:18px; }
+.job-detail h3:first-child { margin-top:0; }
+.job-detail p { color:var(--text-muted); font-size:0.875rem; line-height:1.7; margin-bottom:10px; }
+.job-detail ul { color:var(--text-muted); font-size:0.875rem; padding-left:20px; margin-bottom:14px; }
+.job-detail li { margin-bottom:7px; line-height:1.6; }
+.job-detail strong { color:var(--text); font-weight:600; }
+.apply-btn {
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--cyan); color:var(--navy);
+  border:none; padding:12px 24px; border-radius:9px;
+  font-family:'Space Grotesk',sans-serif; font-weight:700;
+  font-size:0.9rem; cursor:pointer; transition:all 0.2s; margin-top:6px;
+}
+.apply-btn:hover { background:#33DDFF; }
+
+/* APPLICATION MODAL */
+.modal-overlay {
+  display:none; position:fixed; inset:0; z-index:500;
+  background:rgba(5,8,18,0.87); backdrop-filter:blur(6px);
+  align-items:center; justify-content:center;
+}
+.modal-overlay.open { display:flex; }
+.modal {
+  background:var(--navy-card); border:1px solid var(--navy-border);
+  border-radius:18px; padding:32px; width:100%; max-width:520px; margin:16px;
+  animation:modalIn 0.22s ease; position:relative; max-height:90vh; overflow-y:auto;
+}
+@keyframes modalIn { from{opacity:0;transform:scale(0.94)}to{opacity:1;transform:scale(1)} }
+.modal::before { content:''; display:block; height:3px; margin:-32px -32px 24px; border-radius:18px 18px 0 0; background:linear-gradient(90deg,var(--cyan),var(--purple)); }
+.modal-close { position:absolute; top:16px; right:18px; background:none; border:none; cursor:pointer; color:var(--text-muted); font-size:1.2rem; }
+.modal-title { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.05rem; margin-bottom:6px; }
+.modal-subtitle { font-size:0.82rem; color:var(--text-muted); margin-bottom:22px; }
+.form-row-2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+.form-group { margin-bottom:14px; }
+.form-label { display:block; font-size:0.76rem; font-weight:600; color:var(--text-muted); margin-bottom:5px; letter-spacing:0.02em; }
+.form-input, .form-textarea, .form-select {
+  width:100%; background:rgba(255,255,255,0.04);
+  border:1px solid var(--navy-border); border-radius:8px;
+  padding:10px 13px; color:var(--text);
+  font-family:'Inter',sans-serif; font-size:0.875rem; outline:none; transition:border-color 0.2s;
+}
+.form-input:focus, .form-textarea:focus, .form-select:focus { border-color:var(--cyan); }
+.form-input::placeholder, .form-textarea::placeholder { color:var(--text-dim); }
+.form-textarea { height:90px; resize:vertical; }
+.upload-area {
+  border:1px dashed var(--navy-border); border-radius:8px; padding:20px;
+  text-align:center; cursor:pointer; transition:border-color 0.2s;
+  font-size:0.82rem; color:var(--text-muted);
+}
+.upload-area:hover { border-color:var(--cyan); color:var(--cyan); }
+.upload-area input { display:none; }
+.submit-btn {
+  width:100%; padding:13px; background:var(--cyan); color:var(--navy);
+  border:none; border-radius:9px; font-family:'Space Grotesk',sans-serif;
+  font-weight:700; font-size:0.95rem; cursor:pointer; transition:background 0.2s; margin-top:6px;
+}
+.submit-btn:hover { background:#33DDFF; }
+.success-msg { display:none; text-align:center; padding:20px 0 8px; }
+.success-icon { font-size:2.5rem; margin-bottom:12px; animation:pop 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+@keyframes pop { from{transform:scale(0.5);opacity:0}to{transform:scale(1);opacity:1} }
+.success-title { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.1rem; margin-bottom:6px; }
+.success-sub { font-size:0.85rem; color:var(--text-muted); }
+
+/* PROCESS */
+.process-steps { display:grid; grid-template-columns:repeat(4,1fr); gap:0; position:relative; margin-top:40px; }
+.process-steps::before {
+  content:''; position:absolute; top:24px; left:12%; right:12%; height:1px;
+  background:linear-gradient(90deg,var(--cyan),var(--purple),var(--gold),var(--green));
+  z-index:0;
+}
+.process-step { text-align:center; position:relative; z-index:1; padding:0 10px; }
+.step-circle {
+  width:48px; height:48px; border-radius:50%; margin:0 auto 14px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:0.88rem;
+  border:2px solid var(--navy-border); background:var(--navy);
+}
+.step-circle.s1 { border-color:var(--cyan);   color:var(--cyan); }
+.step-circle.s2 { border-color:var(--purple); color:var(--purple); }
+.step-circle.s3 { border-color:var(--gold);   color:var(--gold); }
+.step-circle.s4 { border-color:var(--green);  color:var(--green); }
+.step-title { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:0.88rem; margin-bottom:6px; }
+.step-desc { font-size:0.78rem; color:var(--text-muted); line-height:1.5; }
+
+/* BENEFITS */
+.benefits-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; }
+.benefit-card {
+  background:var(--navy-card); border:1px solid var(--navy-border);
+  border-radius:12px; padding:20px; text-align:center;
+}
+.benefit-icon { font-size:1.8rem; margin-bottom:10px; }
+.benefit-title { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:0.85rem; margin-bottom:5px; }
+.benefit-desc { font-size:0.75rem; color:var(--text-muted); line-height:1.5; }
+
+/* NO ROLES */
+.no-roles-card {
+  background:var(--navy-card); border:1px solid var(--navy-border);
+  border-radius:14px; padding:40px; text-align:center;
+}
+
+footer { background:var(--navy-card2); border-top:1px solid var(--navy-border); padding:36px 40px; }
+.footer-inner { max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+.footer-logo { font-family:'Space Grotesk',sans-serif; font-weight:700; color:var(--text); text-decoration:none; }
+.footer-logo span { color:var(--cyan); }
+.footer-links { display:flex; gap:20px; }
+.footer-links a { color:var(--text-muted); text-decoration:none; font-size:0.82rem; transition:color 0.2s; }
+.footer-links a:hover { color:var(--text); }
+.footer-copy { font-size:0.78rem; color:var(--text-dim); width:100%; }
+
+@media(max-width:900px) {
+  nav { padding:0 20px; } .nav-links { display:none; }
+  .careers-hero { grid-template-columns:1fr; padding:60px 20px 40px; gap:36px; }
+  .culture-grid { grid-template-columns:1fr 1fr; }
+  .process-steps { grid-template-columns:1fr 1fr; gap:24px; }
+  .process-steps::before { display:none; }
+  .benefits-grid { grid-template-columns:1fr 1fr; }
+  .section { padding:48px 20px; }
+}
+@media(max-width:600px) {
+  .culture-grid, .benefits-grid { grid-template-columns:1fr; }
+  .form-row-2 { grid-template-columns:1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="alphaedge-trading.html" class="nav-logo">Alpha<span>Edge</span></a>
+  <div class="nav-links">
+    <a href="alphaedge-about.html">About</a>
+    <a href="alphaedge-blog.html">Blog</a>
+    <a href="alphaedge-trading.html#pricing">Pricing</a>
+  </div>
+  <div style="display:flex;gap:10px;">
+    <a href="alphaedge-about.html#team" class="btn btn-ghost">Meet the team</a>
+    <a href="alphaedge-checkout.html" class="btn btn-primary">Start free</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="careers-hero">
+  <div>
+    <div class="hero-eyebrow">We're hiring</div>
+    <h1>Build the future of <span class="accent">independent trading.</span></h1>
+    <p class="hero-sub">AlphaEdge is a remote-first team of traders, engineers, and educators. We move fast, we're transparent about everything, and we genuinely care about helping people trade better.</p>
+    <div class="roles-count">
+      <div class="role-pill"><div class="dot" style="background:var(--green)"></div><div class="num" style="color:var(--green)">8</div><span style="color:var(--text-muted);font-size:0.82rem">open roles</span></div>
+      <div class="role-pill"><span style="font-size:0.9rem">🌍</span><span style="color:var(--text-muted);font-size:0.82rem">Remote — worldwide</span></div>
+      <div class="role-pill"><span style="font-size:0.9rem">⚡</span><span style="color:var(--text-muted);font-size:0.82rem">Fast hiring process</span></div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px;">Why people join us</div>
+    <div class="perks-grid">
+      <div class="perk"><div class="icon">🌍</div><div><div class="title">Fully remote</div><div class="desc">Work from anywhere, any timezone. We've been remote-first since day one.</div></div></div>
+      <div class="perk"><div class="icon">📈</div><div><div class="title">Trade alongside us</div><div class="desc">All staff get Elite access and can follow the same signals we publish.</div></div></div>
+      <div class="perk"><div class="icon">⚡</div><div><div class="title">Move fast</div><div class="desc">Small team, real ownership. Your work ships to 14,000+ members quickly.</div></div></div>
+      <div class="perk"><div class="icon">💰</div><div><div class="title">Competitive pay</div><div class="desc">Market-rate salaries plus equity. We share the upside with the team.</div></div></div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- CULTURE -->
+<section class="section">
+  <div class="section-label">Who we are</div>
+  <div class="section-title">Our culture.</div>
+  <p class="section-sub">We're a small team that punches well above our weight. Here's what that actually looks like day to day.</p>
+  <div class="culture-grid">
+    <div class="culture-card">
+      <div class="culture-icon">🔍</div>
+      <div class="culture-title">Transparency is the default</div>
+      <div class="culture-desc">We publish every signal win and loss publicly. That same honesty runs internally. We share financials with the whole team, flag mistakes openly, and don't spin bad news.</div>
+    </div>
+    <div class="culture-card">
+      <div class="culture-icon">🚢</div>
+      <div class="culture-title">Ship fast, learn faster</div>
+      <div class="culture-desc">We have 14,000 real users. That means feedback within hours of shipping. We move in small, fast cycles — weekly deploys, rapid iteration, no death-by-committee.</div>
+    </div>
+    <div class="culture-card">
+      <div class="culture-icon">🧠</div>
+      <div class="culture-title">Everyone is a trader</div>
+      <div class="culture-desc">Whether you're in engineering, design, or support — you'll be expected to understand our product from the inside. We cover education and provide access to all signals.</div>
+    </div>
+    <div class="culture-card">
+      <div class="culture-icon">🤝</div>
+      <div class="culture-title">No politics, no hierarchy</div>
+      <div class="culture-desc">We're a team of adults. You'll talk directly to founders. Ideas don't need to pass through three layers of management. Good work speaks for itself.</div>
+    </div>
+    <div class="culture-card">
+      <div class="culture-icon">⚖️</div>
+      <div class="culture-title">Ownership over oversight</div>
+      <div class="culture-desc">We hire people we trust and get out of their way. You'll own whole projects, not just tasks. We measure outcomes, not hours.</div>
+    </div>
+    <div class="culture-card">
+      <div class="culture-icon">🌱</div>
+      <div class="culture-title">We invest in growth</div>
+      <div class="culture-desc">Annual learning budget, access to industry events, and a dedicated growth conversation each quarter. We grow as AlphaEdge grows.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- OPEN ROLES -->
+<section class="section" id="roles">
+  <div class="section-label">Open positions</div>
+  <div class="section-title">Join the team.</div>
+  <p class="section-sub">All roles are remote unless stated otherwise. We welcome applicants from all countries.</p>
+
+  <div class="jobs-filter">
+    <button class="job-filter-btn active" onclick="filterJobs('all',this)">All departments</button>
+    <button class="job-filter-btn" onclick="filterJobs('Engineering',this)">Engineering</button>
+    <button class="job-filter-btn" onclick="filterJobs('Analyst',this)">Analyst</button>
+    <button class="job-filter-btn" onclick="filterJobs('Product',this)">Product</button>
+    <button class="job-filter-btn" onclick="filterJobs('Growth',this)">Growth</button>
+    <button class="job-filter-btn" onclick="filterJobs('Education',this)">Education</button>
+  </div>
+
+  <div id="jobs-list"></div>
+</section>
+
+<hr class="divider">
+
+<!-- PROCESS -->
+<section class="section">
+  <div class="section-label">What to expect</div>
+  <div class="section-title">Our hiring process.</div>
+  <p class="section-sub">We move fast and respect your time. Most roles are filled within 3 weeks of application.</p>
+  <div class="process-steps">
+    <div class="process-step">
+      <div class="step-circle s1">1</div>
+      <div class="step-title">Apply</div>
+      <div class="step-desc">Send your application. We read every one — no ATS black hole. Response within 3 business days.</div>
+    </div>
+    <div class="process-step">
+      <div class="step-circle s2">2</div>
+      <div class="step-title">Intro call</div>
+      <div class="step-desc">30-minute video call with your hiring manager. We talk about the role, the team, and your background.</div>
+    </div>
+    <div class="process-step">
+      <div class="step-circle s3">3</div>
+      <div class="step-title">Skills task</div>
+      <div class="step-desc">A focused take-home task — maximum 3 hours. We pay you for your time on any task over 2 hours.</div>
+    </div>
+    <div class="process-step">
+      <div class="step-circle s4">4</div>
+      <div class="step-title">Final interview</div>
+      <div class="step-desc">Meet the founders and one or two team members. Decision within 48 hours of the final interview.</div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- BENEFITS -->
+<section class="section" style="padding-bottom:80px;">
+  <div class="section-label">Compensation & benefits</div>
+  <div class="section-title">What we offer.</div>
+  <p class="section-sub">We benchmark salaries against market rates for your location and adjust annually.</p>
+  <div class="benefits-grid">
+    <div class="benefit-card"><div class="benefit-icon">💵</div><div class="benefit-title">Competitive salary</div><div class="benefit-desc">Market-rate pay benchmarked to your location, reviewed annually.</div></div>
+    <div class="benefit-card"><div class="benefit-icon">📊</div><div class="benefit-title">Equity</div><div class="benefit-desc">Share in AlphaEdge's growth. All full-time hires receive equity.</div></div>
+    <div class="benefit-card"><div class="benefit-icon">🌍</div><div class="benefit-title">Work from anywhere</div><div class="benefit-desc">Fully remote. We have team members across 12 countries.</div></div>
+    <div class="benefit-card"><div class="benefit-icon">📅</div><div class="benefit-title">Flexible hours</div><div class="benefit-desc">Core overlap hours for collaboration. The rest is yours to structure.</div></div>
+    <div class="benefit-card"><div class="benefit-icon">🎓</div><div class="benefit-title">Learning budget</div><div class="benefit-desc">$2,000/year for courses, books, conferences, or certifications.</div></div>
+    <div class="benefit-card"><div class="benefit-icon">💻</div><div class="benefit-title">Home office setup</div><div class="benefit-desc">$1,500 equipment budget for your home office when you join.</div></div>
+    <div class="benefit-card"><div class="benefit-icon">⚡</div><div class="benefit-title">Elite subscription</div><div class="benefit-desc">Full AlphaEdge Elite access for all staff — signals, courses, everything.</div></div>
+    <div class="benefit-card"><div class="benefit-icon">✈️</div><div class="benefit-title">Annual team retreat</div><div class="benefit-desc">Paid team retreat once per year. Previous locations: Lisbon, Tokyo, Miami.</div></div>
+  </div>
+</section>
+
+<!-- APPLICATION MODAL -->
+<div class="modal-overlay" id="apply-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeApply()">✕</button>
+    <div class="modal-title" id="modal-job-title">Apply for role</div>
+    <div class="modal-subtitle" id="modal-job-sub">AlphaEdge · Remote · Full-time</div>
+
+    <div id="apply-form">
+      <div class="form-row-2">
+        <div class="form-group">
+          <label class="form-label">First name *</label>
+          <input class="form-input" id="a-fname" type="text" placeholder="Jane">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Last name *</label>
+          <input class="form-input" id="a-lname" type="text" placeholder="Smith">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email address *</label>
+        <input class="form-input" id="a-email" type="email" placeholder="jane@example.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">LinkedIn or portfolio URL</label>
+        <input class="form-input" id="a-url" type="url" placeholder="https://linkedin.com/in/...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Why do you want to work at AlphaEdge? *</label>
+        <textarea class="form-textarea" id="a-why" placeholder="Tell us what excites you about this role and AlphaEdge..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Most relevant experience *</label>
+        <textarea class="form-textarea" id="a-exp" placeholder="Briefly describe your most relevant experience for this role..."></textarea>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Do you trade? If so, what markets?</label>
+        <input class="form-input" id="a-trade" type="text" placeholder="e.g. Equities and crypto, 3 years">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Upload CV / Resume</label>
+        <div class="upload-area" onclick="document.getElementById('cv-file').click()">
+          📄 Click to upload CV (PDF or Word, max 5MB)
+          <input id="cv-file" type="file" accept=".pdf,.doc,.docx" onchange="fileSelected(this)">
+        </div>
+        <div id="file-name" style="font-size:0.75rem;color:var(--cyan);margin-top:5px;"></div>
+      </div>
+      <button class="submit-btn" onclick="submitApplication()">Submit application →</button>
+    </div>
+
+    <div class="success-msg" id="apply-success">
+      <div class="success-icon">🎉</div>
+      <div class="success-title">Application received!</div>
+      <div class="success-sub">We'll review your application and get back to you within 3 business days. Check your email for a confirmation.</div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a href="alphaedge-trading.html" class="footer-logo">Alpha<span>Edge</span></a>
+    <div class="footer-links">
+      <a href="alphaedge-about.html">About</a>
+      <a href="alphaedge-blog.html">Blog</a>
+      <a href="alphaedge-terms.html">Terms</a>
+      <a href="alphaedge-privacy.html">Privacy</a>
+    </div>
+    <div class="footer-copy">© 2026 AlphaEdge LLC. All rights reserved. AlphaEdge™ is a trademark of AlphaEdge LLC.</div>
+  </div>
+</footer>
+
+<script>
+const JOBS = [
+  {
+    id:'senior-fe', dept:'Engineering', icon:'⚛️', iconBg:'var(--cyan-dim)',
+    title:'Senior Frontend Engineer', type:'Full-time', loc:'Remote — worldwide',
+    salary:'$120k–$155k', isNew:true,
+    summary:'Build the interfaces that 14,000 traders use every day. You\'ll own our trading terminal, dashboard, and signal delivery UI.',
+    responsibilities:[
+      'Lead development of the AlphaEdge trading terminal and member dashboard',
+      'Build fast, accessible, real-time UI components in React',
+      'Collaborate with the CTO on architecture and performance improvements',
+      'Own the component library and design system',
+      'Work directly with users to improve UX based on real feedback',
+    ],
+    requirements:[
+      '4+ years React experience — you know it deeply, not just the surface',
+      'Strong CSS and layout skills — pixel-perfect execution',
+      'Experience with WebSockets or real-time data feeds',
+      'Passion for financial products or trading (experience is a bonus, not required)',
+      'Excellent written communication — we\'re async-first',
+    ],
+    nice:['Experience with charting libraries (TradingView, Chart.js, Recharts)','Knowledge of ethers.js or Web3 development','Familiarity with Tailwind CSS'],
+  },
+  {
+    id:'backend-eng', dept:'Engineering', icon:'⚙️', iconBg:'rgba(0,212,255,0.08)',
+    title:'Backend Engineer — Signal Infrastructure', type:'Full-time', loc:'Remote — worldwide',
+    salary:'$115k–$145k', isNew:false,
+    summary:'Own the engine that powers every signal. You\'ll build and maintain the screener, delivery pipeline, and Telegram integration.',
+    responsibilities:[
+      'Maintain and extend the signal generation screener (Node.js)',
+      'Build reliable, low-latency Telegram delivery infrastructure',
+      'Integrate with market data APIs (Alpha Vantage, Polygon, Binance)',
+      'Design the broker API integrations (Alpaca, OANDA)',
+      'Build monitoring and alerting for signal uptime',
+    ],
+    requirements:[
+      '3+ years backend Node.js or Python experience',
+      'Experience with financial data APIs or real-time data systems',
+      'Solid understanding of reliability engineering and monitoring',
+      'Comfortable working with webhooks, queues, and async systems',
+    ],
+    nice:['Experience with Telegram Bot API','Knowledge of technical analysis or trading systems','Blockchain or smart contract experience'],
+  },
+  {
+    id:'market-analyst', dept:'Analyst', icon:'📊', iconBg:'var(--gold-dim)',
+    title:'Market Analyst — Equities & Options', type:'Full-time', loc:'Remote — US/EU timezone',
+    salary:'$85k–$115k + profit share', isNew:true,
+    summary:'Generate high-quality equity and options signals for our 14,000+ subscribers. Every signal you publish reaches real traders making real decisions.',
+    responsibilities:[
+      'Generate 5–10 high-conviction equity and options signals per week',
+      'Write clear, plain-English rationale for every signal',
+      'Participate in weekly live webinars with subscribers',
+      'Maintain a verified, public track record of all signals',
+      'Contribute market commentary to the blog and Telegram channels',
+    ],
+    requirements:[
+      '3+ years professional trading experience (prop desk, hedge fund, or equivalent)',
+      'Deep knowledge of technical analysis — not just indicators, but market structure',
+      'Strong written communication — you can explain a trade setup clearly to a beginner',
+      'Consistent verifiable track record',
+      'Options knowledge: Greeks, flow, unusual activity',
+    ],
+    nice:['Experience in public-facing analysis or content creation','CFA, CMT, or equivalent qualification','Multi-asset experience'],
+  },
+  {
+    id:'crypto-analyst', dept:'Analyst', icon:'₿', iconBg:'var(--purple-dim)',
+    title:'Crypto Analyst — On-chain & DeFi', type:'Full-time', loc:'Remote — worldwide',
+    salary:'$80k–$110k + profit share', isNew:false,
+    summary:'Cover the crypto desk alongside our Head of Crypto. Generate spot and futures signals with on-chain analysis support.',
+    responsibilities:[
+      'Generate 8–15 crypto signals per week across BTC, ETH, and major altcoins',
+      'Integrate on-chain data into signal rationale (Glassnode, Dune Analytics)',
+      'Monitor funding rates, OI, and exchange flows for early signals',
+      'Contribute to the crypto section of the education vault',
+    ],
+    requirements:[
+      '2+ years active crypto trading with verified results',
+      'Working knowledge of on-chain analytics tools',
+      'Understanding of DeFi mechanics and cross-chain ecosystem',
+      'Available during Asia and US session overlap',
+    ],
+    nice:['Experience with derivatives and perpetual futures','Content creation or community management experience'],
+  },
+  {
+    id:'product-manager', dept:'Product', icon:'🧭', iconBg:'rgba(0,230,118,0.08)',
+    title:'Product Manager', type:'Full-time', loc:'Remote — worldwide',
+    salary:'$100k–$135k', isNew:false,
+    summary:'Own the product roadmap for the world\'s most transparent signal platform. You\'ll sit at the intersection of trader needs and engineering capability.',
+    responsibilities:[
+      'Define and prioritise the product roadmap based on user feedback and data',
+      'Write clear, detailed specs that engineering can act on immediately',
+      'Run user interviews with subscribers to surface real pain points',
+      'Own the dashboard, terminal, and education vault product areas',
+      'Coordinate between analysts, engineers, and education team',
+    ],
+    requirements:[
+      '3+ years product management at a B2C SaaS or fintech company',
+      'Comfortable working with engineers at a technical level',
+      'Strong analytical skills — you make decisions with data',
+      'Experience managing a roadmap in a small, fast-moving team',
+    ],
+    nice:['Background in trading or financial products','Experience with crypto or Web3 products'],
+  },
+  {
+    id:'growth-marketer', dept:'Growth', icon:'📣', iconBg:'rgba(244,185,66,0.08)',
+    title:'Growth Marketer', type:'Full-time', loc:'Remote — worldwide',
+    salary:'$75k–$100k', isNew:true,
+    summary:'Own subscriber acquisition and retention across paid, organic, and community channels. You\'ll grow AlphaEdge from 14k to 100k members.',
+    responsibilities:[
+      'Build and execute paid acquisition strategy (Meta, Google, X)',
+      'Own SEO — from technical fundamentals to content strategy',
+      'Run email marketing campaigns including weekly market brief',
+      'Grow and manage our social presence across Twitter/X and YouTube',
+      'Build referral and affiliate programs',
+      'Analyse and report on funnel performance weekly',
+    ],
+    requirements:[
+      '3+ years growth or performance marketing experience',
+      'Proven track record of scaling a B2C subscription business',
+      'Hands-on with Meta Ads Manager and Google Ads',
+      'Comfortable with email marketing (Klaviyo, Mailchimp, or equivalent)',
+      'Strong copywriting skills — you understand our voice',
+    ],
+    nice:['Finance or trading content experience','SEO technical skills','Experience with creator/affiliate programs'],
+  },
+  {
+    id:'edu-content', dept:'Education', icon:'🎓', iconBg:'var(--gold-dim)',
+    title:'Education Content Creator', type:'Part-time / Contract', loc:'Remote — worldwide',
+    salary:'$40–$60/hr', isNew:false,
+    summary:'Create high-quality trading education content for our vault. Work alongside our Head of Education to produce courses that genuinely make traders better.',
+    responsibilities:[
+      'Script and record video lessons for the education vault (beginner to advanced)',
+      'Write supporting written guides and reference materials',
+      'Design practical exercises and knowledge checks',
+      'Collaborate with analysts to ensure technical accuracy',
+    ],
+    requirements:[
+      'Genuine trading knowledge — minimum 2 years active trading',
+      'Experience creating educational video content',
+      'Clear, engaging on-camera presence',
+      'Strong script writing and structured communication skills',
+    ],
+    nice:['Specialisation in a specific area: options, crypto, forex, or psychology','Previous online course creation experience'],
+  },
+  {
+    id:'community-mgr', dept:'Growth', icon:'💬', iconBg:'rgba(155,109,255,0.1)',
+    title:'Community Manager — Telegram', type:'Part-time', loc:'Remote — worldwide',
+    salary:'$35–$50/hr', isNew:true,
+    summary:'Manage and moderate our Telegram community of 14,000+ traders. Keep the conversation valuable, welcoming, and free of noise.',
+    responsibilities:[
+      'Moderate Pro and Elite Telegram channels daily',
+      'Answer subscriber questions and escalate to analysts when needed',
+      'Welcome new members and ensure they understand how to use signals',
+      'Surface member feedback to the product team',
+      'Identify and spotlight great community contributions',
+    ],
+    requirements:[
+      'Active trader — you need to understand what members are asking',
+      'Excellent written communication in English',
+      'Available across US and EU market hours',
+      'Experience managing online communities (Discord, Telegram, or similar)',
+      'Calm, patient, and unflappable — community management requires thick skin',
+    ],
+    nice:['Multiple language ability','Experience in fintech or trading communities'],
+  },
+];
+
+let openJob = null;
+let currentJobForApply = null;
+
+function renderJobs(jobs) {
+  const list = document.getElementById('jobs-list');
+  if (!jobs.length) {
+    list.innerHTML = `<div class="no-roles-card"><div style="font-size:2rem;margin-bottom:12px;">🔍</div><div style="font-family:'Space Grotesk',sans-serif;font-weight:700;margin-bottom:8px;">No roles in this department right now</div><p style="color:var(--text-muted);font-size:0.85rem;">Send a speculative application to <a href="mailto:careers@alphaedge.com" style="color:var(--cyan)">careers@alphaedge.com</a> and we'll keep you in mind.</p></div>`;
+    return;
+  }
+  list.innerHTML = jobs.map(j => `
+    <div class="job-card" id="card-${j.id}" onclick="toggleJob('${j.id}')">
+      <div class="job-dept-icon" style="background:${j.iconBg}">${j.icon}</div>
+      <div class="job-info">
+        <div class="job-title">${j.title}</div>
+        <div class="job-meta">
+          <span class="job-tag dept">${j.dept}</span>
+          <span class="job-tag type">${j.type}</span>
+          <span class="job-tag loc">🌍 ${j.loc}</span>
+          ${j.isNew ? '<span class="job-tag new">New</span>' : ''}
+        </div>
+      </div>
+      <div class="job-salary">${j.salary}</div>
+      <div class="job-arrow">${openJob === j.id ? '▲' : '▶'}</div>
+    </div>
+    <div class="job-detail ${openJob === j.id ? 'open' : ''}" id="detail-${j.id}">
+      <p>${j.summary}</p>
+      <h3>What you'll do</h3>
+      <ul>${j.responsibilities.map(r=>`<li>${r}</li>`).join('')}</ul>
+      <h3>What we're looking for</h3>
+      <ul>${j.requirements.map(r=>`<li>${r}</li>`).join('')}</ul>
+      ${j.nice ? `<h3>Nice to have</h3><ul>${j.nice.map(r=>`<li>${r}</li>`).join('')}</ul>` : ''}
+      <button class="apply-btn" onclick="openApply('${j.id}','${j.title}','${j.type}','${j.loc}');event.stopPropagation();">
+        Apply for this role →
+      </button>
+    </div>
+  `).join('');
+}
+
+function toggleJob(id) {
+  openJob = openJob === id ? null : id;
+  const dept = document.querySelector('.job-filter-btn.active').dataset.dept || 'all';
+  renderJobs(dept === 'all' ? JOBS : JOBS.filter(j => j.dept === dept));
+  if (openJob) {
+    setTimeout(() => document.getElementById(`detail-${id}`)?.scrollIntoView({ behavior:'smooth', block:'nearest' }), 50);
+  }
+}
+
+function filterJobs(dept, btn) {
+  document.querySelectorAll('.job-filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  btn.dataset.dept = dept;
+  openJob = null;
+  renderJobs(dept === 'all' ? JOBS : JOBS.filter(j => j.dept === dept));
+}
+
+function openApply(id, title, type, loc) {
+  currentJobForApply = id;
+  document.getElementById('modal-job-title').textContent = `Apply — ${title}`;
+  document.getElementById('modal-job-sub').textContent = `AlphaEdge · ${loc} · ${type}`;
+  document.getElementById('apply-form').style.display = 'block';
+  document.getElementById('apply-success').style.display = 'none';
+  document.getElementById('apply-modal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeApply() {
+  document.getElementById('apply-modal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('apply-modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('apply-modal')) closeApply();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeApply(); });
+
+function fileSelected(input) {
+  document.getElementById('file-name').textContent = input.files[0] ? `✓ ${input.files[0].name}` : '';
+}
+
+function submitApplication() {
+  const fname  = document.getElementById('a-fname').value.trim();
+  const email  = document.getElementById('a-email').value.trim();
+  const why    = document.getElementById('a-why').value.trim();
+  const exp    = document.getElementById('a-exp').value.trim();
+
+  if (!fname || !email || !why || !exp) {
+    alert('Please complete all required fields.'); return;
+  }
+  if (!email.includes('@')) { alert('Enter a valid email address.'); return; }
+
+  // TODO: POST /api/careers/apply
+  // await fetch('/api/careers/apply', { method:'POST', body: formData })
+
+  document.getElementById('apply-form').style.display = 'none';
+  document.getElementById('apply-success').style.display = 'block';
+}
+
+// Init
+renderJobs(JOBS);
+</script>
+</body>
+</html>

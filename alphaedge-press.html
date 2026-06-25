@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlphaEdge — Press & Media Kit</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#0A0F1E;--navy-card:#111827;--navy-card2:#0D1526;--navy-border:#1E2D45;--navy-hover:#1A2640;--cyan:#00D4FF;--cyan-dim:rgba(0,212,255,0.08);--gold:#F4B942;--gold-dim:rgba(244,185,66,0.10);--green:#00E676;--green-dim:rgba(0,230,118,0.10);--text:#E8EDF5;--text-muted:#6B7FA3;--text-dim:#3A4A6B}
+html{scroll-behavior:smooth}
+body{background:var(--navy);color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.7}
+nav{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:64px;background:rgba(10,15,30,0.95);border-bottom:1px solid var(--navy-border);backdrop-filter:blur(12px)}
+.nav-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.2rem;color:var(--text);text-decoration:none}
+.nav-logo span{color:var(--cyan)}
+.btn{padding:8px 20px;border-radius:7px;font-size:0.875rem;font-weight:600;font-family:'Inter',sans-serif;cursor:pointer;text-decoration:none;transition:all 0.2s;display:inline-block;border:none}
+.btn-primary{background:var(--cyan);color:var(--navy)}
+.btn-primary:hover{background:#33DDFF}
+.btn-ghost{background:none;border:1px solid var(--navy-border);color:var(--text-muted)}
+.btn-ghost:hover{border-color:var(--cyan);color:var(--cyan)}
+
+.page-wrap{max-width:1000px;margin:0 auto;padding:64px 40px 96px}
+.hero-eyebrow{font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px;display:block}
+.page-title{font-family:'Space Grotesk',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;letter-spacing:-0.03em;margin-bottom:14px}
+.page-sub{color:var(--text-muted);font-size:0.95rem;margin-bottom:20px;line-height:1.7;max-width:580px}
+
+/* MEDIA CONTACT */
+.media-contact-card{background:linear-gradient(135deg,rgba(0,212,255,0.07),rgba(0,212,255,0.03));border:1px solid rgba(0,212,255,0.2);border-radius:14px;padding:24px;margin-bottom:48px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.mc-left h3{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;margin-bottom:6px}
+.mc-left p{font-size:0.85rem;color:var(--text-muted);line-height:1.5}
+.mc-email{display:inline-flex;align-items:center;gap:8px;margin-top:12px;color:var(--cyan);font-weight:600;font-size:0.88rem;text-decoration:none}
+.mc-email:hover{text-decoration:underline}
+.mc-badge{background:var(--green-dim);border:1px solid rgba(0,230,118,0.2);color:var(--green);font-size:0.72rem;font-weight:700;padding:4px 12px;border-radius:100px}
+
+/* STATS */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:48px}
+.stat-card{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:12px;padding:20px;text-align:center}
+.stat-card .n{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;line-height:1;margin-bottom:6px}
+.stat-card .l{font-size:0.75rem;color:var(--text-muted);line-height:1.4}
+
+/* DIVIDER */
+.divider{border:none;border-top:1px solid var(--navy-border);margin:48px 0}
+.section-title{font-family:'Space Grotesk',sans-serif;font-size:1.3rem;font-weight:700;letter-spacing:-0.02em;margin-bottom:8px}
+.section-sub{color:var(--text-muted);font-size:0.875rem;margin-bottom:24px;line-height:1.6}
+
+/* BRAND ASSETS */
+.brand-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:12px}
+.brand-card{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:12px;overflow:hidden;cursor:pointer;transition:all 0.2s}
+.brand-card:hover{border-color:rgba(0,212,255,0.3)}
+.brand-preview{height:100px;display:flex;align-items:center;justify-content:center}
+.brand-footer{padding:12px 14px;border-top:1px solid var(--navy-border);display:flex;align-items:center;justify-content:space-between}
+.brand-name{font-size:0.78rem;font-weight:600}
+.brand-dl{font-size:0.72rem;color:var(--cyan);cursor:pointer}
+
+/* COLORS */
+.colors-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:24px}
+.color-swatch{border-radius:10px;padding:14px 16px;min-width:120px}
+.color-hex{font-family:'Space Mono',monospace;font-size:0.72rem;margin-top:6px;opacity:0.7}
+.color-name{font-size:0.75rem;font-weight:600;margin-top:2px}
+
+/* TYPOGRAPHY */
+.type-sample{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:12px;padding:24px;margin-bottom:16px}
+.type-label{font-size:0.68rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:8px}
+.type-display{font-family:'Space Grotesk',sans-serif;font-size:2rem;font-weight:700;letter-spacing:-0.03em}
+.type-body{font-size:0.95rem;color:var(--text-muted);line-height:1.7}
+.type-mono{font-family:'Space Mono',monospace;font-size:0.88rem;color:var(--cyan)}
+
+/* PRESS RELEASES */
+.pr-list{display:flex;flex-direction:column;gap:14px}
+.pr-card{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:12px;padding:20px 22px;display:flex;align-items:center;gap:18px;cursor:pointer;transition:all 0.2s;text-decoration:none}
+.pr-card:hover{border-color:rgba(0,212,255,0.25);transform:translateX(4px)}
+.pr-date{font-family:'Space Mono',monospace;font-size:0.75rem;color:var(--text-muted);white-space:nowrap;min-width:90px}
+.pr-info{flex:1}
+.pr-title{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.9rem;margin-bottom:4px;color:var(--text)}
+.pr-sub{font-size:0.78rem;color:var(--text-muted)}
+.pr-tag{font-size:0.65rem;font-weight:700;padding:3px 8px;border-radius:4px;background:var(--cyan-dim);color:var(--cyan);border:1px solid rgba(0,212,255,0.2);white-space:nowrap}
+
+/* COVERAGE */
+.coverage-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.coverage-card{background:var(--navy-card);border:1px solid var(--navy-border);border-radius:12px;padding:20px}
+.coverage-outlet{font-family:'Space Mono',monospace;font-size:0.78rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:8px}
+.coverage-headline{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.88rem;margin-bottom:6px;line-height:1.4}
+.coverage-date{font-size:0.72rem;color:var(--text-dim)}
+.coverage-link{font-size:0.75rem;color:var(--cyan);text-decoration:none;margin-top:8px;display:block}
+
+footer{background:var(--navy-card2);border-top:1px solid var(--navy-border);padding:32px 40px}
+.footer-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.footer-logo{font-family:'Space Grotesk',sans-serif;font-weight:700;color:var(--text);text-decoration:none}
+.footer-logo span{color:var(--cyan)}
+.footer-links{display:flex;gap:20px}
+.footer-links a{color:var(--text-muted);text-decoration:none;font-size:0.82rem}
+.footer-links a:hover{color:var(--text)}
+.footer-copy{font-size:0.78rem;color:var(--text-dim);width:100%}
+
+@media(max-width:900px){nav{padding:0 20px}.page-wrap{padding:40px 20px 64px}.stats-grid{grid-template-columns:repeat(2,1fr)}.brand-grid,.coverage-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.stats-grid,.brand-grid,.coverage-grid{grid-template-columns:1fr}.colors-row{flex-direction:column}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="alphaedge-trading.html" class="nav-logo">Alpha<span>Edge</span></a>
+  <div style="display:flex;gap:10px">
+    <a href="alphaedge-about.html" class="btn btn-ghost">About us</a>
+    <a href="mailto:press@alphaedge.com" class="btn btn-primary">Contact press</a>
+  </div>
+</nav>
+
+<div class="page-wrap">
+  <span class="hero-eyebrow">Media & Press</span>
+  <h1 class="page-title">Press Kit</h1>
+  <p class="page-sub">Everything journalists, podcasters, and content creators need to cover AlphaEdge. For interview requests, press releases, and media enquiries, contact our press team directly.</p>
+
+  <!-- MEDIA CONTACT -->
+  <div class="media-contact-card">
+    <div class="mc-left">
+      <h3>Press & media contact</h3>
+      <p>Our press team responds to media enquiries within 4 business hours. For urgent requests, include "URGENT" in your subject line.</p>
+      <a href="mailto:press@alphaedge.com" class="mc-email">📧 press@alphaedge.com</a>
+    </div>
+    <span class="mc-badge">⚡ Fast response</span>
+  </div>
+
+  <!-- STATS -->
+  <div style="font-size:0.7rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--cyan);margin-bottom:16px">Company at a glance</div>
+  <div class="stats-grid">
+    <div class="stat-card"><div class="n" style="color:var(--cyan)">14,200+</div><div class="l">Active subscribers across 60+ countries</div></div>
+    <div class="stat-card"><div class="n" style="color:var(--green)">87%</div><div class="l">Verified 90-day signal win rate</div></div>
+    <div class="stat-card"><div class="n" style="color:var(--gold)">2019</div><div class="l">Year founded — 5+ years operating</div></div>
+    <div class="stat-card"><div class="n" style="color:var(--cyan)">4,700+</div><div class="l">Signals published — every result on record</div></div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- COMPANY SUMMARY -->
+  <div class="section-title">Company overview</div>
+  <div class="section-sub">For use in articles, show notes, and media descriptions.</div>
+
+  <div style="background:var(--navy-card);border:1px solid var(--navy-border);border-radius:12px;padding:24px;margin-bottom:16px">
+    <div style="font-size:0.68rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">Short description (1 sentence)</div>
+    <div style="font-size:0.9rem;line-height:1.7;color:var(--text-muted)">AlphaEdge is a subscription-based trading signal platform that provides institutional-grade signals, live market analysis, and trading education across stocks, forex, cryptocurrency, and options to over 14,000 independent traders worldwide.</div>
+    <button onclick="copyText(this,'short-copy')" id="short-copy" style="margin-top:12px;background:var(--cyan-dim);border:1px solid rgba(0,212,255,0.2);color:var(--cyan);padding:5px 12px;border-radius:5px;font-size:0.72rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif">📋 Copy</button>
+  </div>
+
+  <div style="background:var(--navy-card);border:1px solid var(--navy-border);border-radius:12px;padding:24px;margin-bottom:12px">
+    <div style="font-size:0.68rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:10px">Full description (2 paragraphs)</div>
+    <div id="long-desc" style="font-size:0.875rem;line-height:1.75;color:var(--text-muted)">
+      <p style="margin-bottom:12px">AlphaEdge is a platform built by professional traders to give independent retail traders access to the same quality of analysis and signal infrastructure that institutional desks use. Founded in 2019 by a team of prop traders and engineers, AlphaEdge covers US equities, forex, cryptocurrency, and options markets, publishing every signal — win or loss — with full transparency and plain-English reasoning.</p>
+      <p>With over 14,200 subscribers across 60 countries, a verified 87% signal win rate over the past 90 days, and a 60+ course education vault, AlphaEdge is one of the most transparent and actively used signal platforms in the retail trading space. The platform also operates AlphaEdge Wallet, an on-site crypto wallet, and is in pre-launch for its native tokens Fortunex (FTX) and Cloutium (CLT).</p>
+    </div>
+    <button onclick="copyText(this,'long-copy')" id="long-copy" style="margin-top:12px;background:var(--cyan-dim);border:1px solid rgba(0,212,255,0.2);color:var(--cyan);padding:5px 12px;border-radius:5px;font-size:0.72rem;font-weight:700;cursor:pointer;font-family:'Inter',sans-serif">📋 Copy</button>
+  </div>
+
+  <hr class="divider">
+
+  <!-- BRAND ASSETS -->
+  <div class="section-title">Brand assets</div>
+  <div class="section-sub">All logos and assets are provided for editorial use only. Do not modify colours, proportions, or typography.</div>
+  <div class="brand-grid">
+    <div class="brand-card" onclick="downloadAsset('logo-dark')">
+      <div class="brand-preview" style="background:#0A0F1E"><span style="font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;color:#E8EDF5">Alpha<span style="color:#00D4FF">Edge</span></span></div>
+      <div class="brand-footer"><span class="brand-name">Logo — Dark</span><span class="brand-dl">↓ PNG + SVG</span></div>
+    </div>
+    <div class="brand-card" onclick="downloadAsset('logo-light')">
+      <div class="brand-preview" style="background:#ffffff"><span style="font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;color:#0A0F1E">Alpha<span style="color:#00D4FF">Edge</span></span></div>
+      <div class="brand-footer"><span class="brand-name">Logo — Light</span><span class="brand-dl">↓ PNG + SVG</span></div>
+    </div>
+    <div class="brand-card" onclick="downloadAsset('icon')">
+      <div class="brand-preview" style="background:#0A0F1E"><div style="width:56px;height:56px;border-radius:14px;background:rgba(0,212,255,0.15);border:1px solid rgba(0,212,255,0.3);display:flex;align-items:center;justify-content:center;font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;color:#00D4FF">A</div></div>
+      <div class="brand-footer"><span class="brand-name">App Icon</span><span class="brand-dl">↓ PNG</span></div>
+    </div>
+  </div>
+  <p style="font-size:0.78rem;color:var(--text-dim)">For high-resolution assets or alternate formats, email <a href="mailto:press@alphaedge.com" style="color:var(--cyan)">press@alphaedge.com</a>.</p>
+
+  <hr class="divider">
+
+  <!-- COLOURS -->
+  <div class="section-title">Brand colours</div>
+  <div class="colors-row">
+    <div class="color-swatch" style="background:#0A0F1E;border:1px solid #1E2D45"><div class="color-name" style="color:#E8EDF5">Navy</div><div class="color-hex" style="color:#6B7FA3">#0A0F1E</div></div>
+    <div class="color-swatch" style="background:#00D4FF"><div class="color-name" style="color:#0A0F1E">Cyan</div><div class="color-hex" style="color:#0A0F1E">#00D4FF</div></div>
+    <div class="color-swatch" style="background:#F4B942"><div class="color-name" style="color:#0A0F1E">Gold</div><div class="color-hex" style="color:#0A0F1E">#F4B942</div></div>
+    <div class="color-swatch" style="background:#00E676"><div class="color-name" style="color:#0A0F1E">Green</div><div class="color-hex" style="color:#0A0F1E">#00E676</div></div>
+    <div class="color-swatch" style="background:#9B6DFF"><div class="color-name" style="color:#fff">Purple</div><div class="color-hex" style="color:rgba(255,255,255,0.7)">#9B6DFF</div></div>
+  </div>
+
+  <!-- TYPOGRAPHY -->
+  <div style="margin-bottom:24px">
+    <div class="section-title">Brand typography</div>
+    <div class="section-sub">Space Grotesk for headings and display. Inter for body copy. Space Mono for data, prices, and code.</div>
+    <div class="type-sample">
+      <div class="type-label">Display — Space Grotesk 700</div>
+      <div class="type-display">Trade with an edge.</div>
+    </div>
+    <div class="type-sample">
+      <div class="type-label">Body — Inter 400</div>
+      <div class="type-body">AlphaEdge delivers institutional-grade signals with full transparency. Every trade, every result, every reason — published openly.</div>
+    </div>
+    <div class="type-sample">
+      <div class="type-label">Data — Space Mono 700</div>
+      <div class="type-mono">BUY NVDA @ $1,142.50 · TP $1,185 · SL $1,110 · R/R 1:2.8</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <!-- PRESS RELEASES -->
+  <div class="section-title">Press releases</div>
+  <div class="section-sub">Official announcements from AlphaEdge.</div>
+  <div class="pr-list">
+    <a class="pr-card" href="#">
+      <div class="pr-date">Jun 1, 2026</div>
+      <div class="pr-info"><div class="pr-title">AlphaEdge launches crypto wallet and airdrop program for 14,000+ subscribers</div><div class="pr-sub">AlphaEdge — San Francisco, CA</div></div>
+      <div class="pr-tag">Product</div>
+    </a>
+    <a class="pr-card" href="#">
+      <div class="pr-date">Mar 15, 2026</div>
+      <div class="pr-info"><div class="pr-title">AlphaEdge surpasses 14,000 subscribers with 87% verified win rate over 90 days</div><div class="pr-sub">AlphaEdge — San Francisco, CA</div></div>
+      <div class="pr-tag">Milestone</div>
+    </a>
+    <a class="pr-card" href="#">
+      <div class="pr-date">Jan 8, 2026</div>
+      <div class="pr-info"><div class="pr-title">AlphaEdge launches live trading terminal with paper trading and broker integration</div><div class="pr-sub">AlphaEdge — San Francisco, CA</div></div>
+      <div class="pr-tag">Product</div>
+    </a>
+    <a class="pr-card" href="#">
+      <div class="pr-date">Oct 22, 2025</div>
+      <div class="pr-info"><div class="pr-title">AlphaEdge Education Vault reaches 60+ courses across all major asset classes</div><div class="pr-sub">AlphaEdge — San Francisco, CA</div></div>
+      <div class="pr-tag">Education</div>
+    </a>
+  </div>
+
+  <hr class="divider">
+
+  <!-- MEDIA COVERAGE -->
+  <div class="section-title">Media coverage</div>
+  <div class="section-sub">Selected coverage from financial media.</div>
+  <div class="coverage-grid">
+    <div class="coverage-card"><div class="coverage-outlet">Bloomberg</div><div class="coverage-headline">"The signal platforms giving retail traders institutional tools"</div><div class="coverage-date">May 2026</div><a class="coverage-link" href="#">Read article →</a></div>
+    <div class="coverage-card"><div class="coverage-outlet">CoinDesk</div><div class="coverage-headline">"AlphaEdge's on-chain approach to crypto signal generation"</div><div class="coverage-date">Apr 2026</div><a class="coverage-link" href="#">Read article →</a></div>
+    <div class="coverage-card"><div class="coverage-outlet">Investopedia</div><div class="coverage-headline">"Best signal services for active traders in 2026"</div><div class="coverage-date">Mar 2026</div><a class="coverage-link" href="#">Read article →</a></div>
+    <div class="coverage-card"><div class="coverage-outlet">Benzinga</div><div class="coverage-headline">"Transparency in signal services: how AlphaEdge is different"</div><div class="coverage-date">Feb 2026</div><a class="coverage-link" href="#">Read article →</a></div>
+    <div class="coverage-card"><div class="coverage-outlet">The Block</div><div class="coverage-headline">"AlphaEdge enters crypto with on-chain signal generation"</div><div class="coverage-date">Jan 2026</div><a class="coverage-link" href="#">Read article →</a></div>
+    <div class="coverage-card"><div class="coverage-outlet">Benzinga</div><div class="coverage-headline">"How retail traders are closing the institutional gap"</div><div class="coverage-date">Dec 2025</div><a class="coverage-link" href="#">Read article →</a></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <a href="alphaedge-trading.html" class="footer-logo">Alpha<span>Edge</span></a>
+    <div class="footer-links">
+      <a href="alphaedge-about.html">About</a>
+      <a href="alphaedge-blog.html">Blog</a>
+      <a href="alphaedge-careers.html">Careers</a>
+      <a href="alphaedge-legal.html">Legal</a>
+    </div>
+    <div class="footer-copy">© 2026 AlphaEdge LLC. AlphaEdge™ is a trademark of AlphaEdge LLC. Press assets for editorial use only.</div>
+  </div>
+</footer>
+
+<script>
+function copyText(btn, id) {
+  const el = document.getElementById(id === 'short-copy' ? 'short-copy' : 'long-desc') ||
+             btn.previousElementSibling;
+  const text = btn.previousElementSibling.textContent.trim();
+  navigator.clipboard?.writeText(text).catch(()=>{});
+  btn.textContent = '✓ Copied!';
+  setTimeout(()=>btn.textContent='📋 Copy', 2000);
+}
+function downloadAsset(name) {
+  // TODO: link to real asset files in /assets/press/
+  alert(`In production this downloads ${name}.zip with PNG and SVG files.\nHost your brand assets at /assets/press/ and link here.`);
+}
+</script>
+</body>
+</html>
