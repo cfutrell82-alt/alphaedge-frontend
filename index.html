@@ -495,6 +495,20 @@
     .footer-inner { grid-template-columns: 1fr 1fr; }
     .cta-banner { padding: 60px 20px; }
   }
+  .market-card { text-decoration: none; display: block; cursor: pointer; transition: border-color 0.2s, background 0.2s; position: relative; overflow: hidden; }
+.market-card:hover { border-color: rgba(0,212,255,0.35); background: var(--navy-hover); }
+.signal-feed { border-top: 1px solid var(--navy-border); padding-top: 10px; height: 72px; overflow: hidden; position: relative; margin-top: 12px; }
+.signal-item { font-size: 11px; padding: 3px 0; display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+.signal-ticker { font-weight: 600; color: var(--text); min-width: 44px; }
+.signal-action { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 700; }
+.signal-buy { background: rgba(0,230,118,0.15); color: var(--green); }
+.signal-sell { background: rgba(255,75,75,0.15); color: var(--red); }
+.signal-time { font-size: 10px; color: var(--text-muted); }
+.signal-fade { position: absolute; bottom: 0; left: 0; right: 0; height: 24px; background: linear-gradient(transparent, var(--navy-card)); pointer-events: none; }
+.live-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin-right: 5px; animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.card-arrow { position: absolute; top: 1.25rem; right: 1.25rem; font-size: 14px; color: var(--text-muted); opacity: 0; transition: opacity 0.2s; }
+.market-card:hover .card-arrow { opacity: 1; }
 </style>
 </head>
 <body>
@@ -612,30 +626,43 @@
   <h2 class="section-title">Every market. One platform.</h2>
   <p class="section-sub">From pre-market equity movers to overnight crypto swings — AlphaEdge has analysts and algorithms working across every major asset class.</p>
   <div class="markets-grid">
-    <div class="market-card">
-      <div class="market-icon">📈</div>
+
+    <a class="market-card" href="alphaedge-markets-stocks.html">
+      <i class="ti ti-trending-up market-icon" aria-hidden="true"></i>
+      <i class="ti ti-arrow-right card-arrow" aria-hidden="true"></i>
       <div class="market-name">Stocks & Equities</div>
       <div class="market-desc">NYSE, NASDAQ, and S&P 500 signals with earnings, momentum, and technical setups.</div>
-      <div class="market-count">12–18 signals/day</div>
-    </div>
-    <div class="market-card">
-      <div class="market-icon">💱</div>
+      <div class="market-count"><span class="live-dot"></span>12–18 signals/day</div>
+      <div class="signal-feed" id="feed-stocks"><div class="signal-fade"></div></div>
+    </a>
+
+    <a class="market-card" href="alphaedge-markets-forex.html">
+      <i class="ti ti-currency-dollar market-icon" aria-hidden="true"></i>
+      <i class="ti ti-arrow-right card-arrow" aria-hidden="true"></i>
       <div class="market-name">Forex</div>
       <div class="market-desc">Major and minor pairs with macro-driven context and institutional flow tracking.</div>
-      <div class="market-count">8–14 signals/day</div>
-    </div>
-    <div class="market-card">
-      <div class="market-icon">₿</div>
+      <div class="market-count"><span class="live-dot"></span>8–14 signals/day</div>
+      <div class="signal-feed" id="feed-forex"><div class="signal-fade"></div></div>
+    </a>
+
+    <a class="market-card" href="alphaedge-markets-crypto.html">
+      <i class="ti ti-currency-bitcoin market-icon" aria-hidden="true"></i>
+      <i class="ti ti-arrow-right card-arrow" aria-hidden="true"></i>
       <div class="market-name">Crypto</div>
       <div class="market-desc">BTC, ETH, altcoins — spot and futures signals with on-chain data analysis.</div>
-      <div class="market-count">10–20 signals/day</div>
-    </div>
-    <div class="market-card">
-      <div class="market-icon">⚙️</div>
+      <div class="market-count"><span class="live-dot"></span>10–20 signals/day</div>
+      <div class="signal-feed" id="feed-crypto"><div class="signal-fade"></div></div>
+    </a>
+
+    <a class="market-card" href="alphaedge-markets-options.html">
+      <i class="ti ti-chart-candle market-icon" aria-hidden="true"></i>
+      <i class="ti ti-arrow-right card-arrow" aria-hidden="true"></i>
       <div class="market-name">Options & Futures</div>
       <div class="market-desc">Weekly options plays, unusual activity alerts, and commodity futures setups.</div>
-      <div class="market-count">5–10 signals/day</div>
-    </div>
+      <div class="market-count"><span class="live-dot"></span>5–10 signals/day</div>
+      <div class="signal-feed" id="feed-options"><div class="signal-fade"></div></div>
+    </a>
+
   </div>
 </section>
 
@@ -938,6 +965,53 @@
       document.getElementById('nav-dashboard-btn').style.display = 'inline-block';
     }
   })();
+</script>
+<script>
+const signals = {
+  stocks: [
+    {ticker:'AAPL',action:'BUY',time:'2m ago'},{ticker:'NVDA',action:'BUY',time:'5m ago'},
+    {ticker:'TSLA',action:'SELL',time:'8m ago'},{ticker:'SPY',action:'BUY',time:'11m ago'},
+    {ticker:'MSFT',action:'BUY',time:'14m ago'},{ticker:'AMZN',action:'SELL',time:'18m ago'}
+  ],
+  forex: [
+    {ticker:'EUR/USD',action:'BUY',time:'3m ago'},{ticker:'GBP/JPY',action:'SELL',time:'7m ago'},
+    {ticker:'USD/CHF',action:'SELL',time:'10m ago'},{ticker:'AUD/USD',action:'BUY',time:'15m ago'}
+  ],
+  crypto: [
+    {ticker:'BTC',action:'BUY',time:'1m ago'},{ticker:'ETH',action:'BUY',time:'4m ago'},
+    {ticker:'SOL',action:'SELL',time:'9m ago'},{ticker:'XRP',action:'BUY',time:'13m ago'},
+    {ticker:'DOGE',action:'SELL',time:'17m ago'}
+  ],
+  options: [
+    {ticker:'SPX 0DTE',action:'BUY',time:'6m ago'},{ticker:'QQQ PUT',action:'BUY',time:'12m ago'},
+    {ticker:'TSLA CALL',action:'SELL',time:'16m ago'},{ticker:'GLD',action:'BUY',time:'24m ago'}
+  ]
+};
+
+let offsets = {stocks:0,forex:0,crypto:0,options:0};
+
+function renderFeed(feedId, data, offset) {
+  const el = document.getElementById(feedId);
+  if (!el) return;
+  const fade = el.querySelector('.signal-fade');
+  while (el.children.length > 1) el.removeChild(el.firstChild);
+  data.forEach((s,i) => {
+    const idx = (i + offset) % data.length;
+    const item = document.createElement('div');
+    item.className = 'signal-item';
+    item.innerHTML = `<span class="signal-ticker">${data[idx].ticker}</span><span class="signal-action ${data[idx].action==='BUY'?'signal-buy':'signal-sell'}">${data[idx].action}</span><span class="signal-time">${data[idx].time}</span>`;
+    el.insertBefore(item, fade);
+  });
+}
+
+['stocks','forex','crypto','options'].forEach(m => renderFeed('feed-'+m, signals[m], 0));
+
+setInterval(() => {
+  ['stocks','forex','crypto','options'].forEach(m => {
+    offsets[m] = (offsets[m] + 1) % signals[m].length;
+    renderFeed('feed-'+m, signals[m], offsets[m]);
+  });
+}, 3000);
 </script>
 </body>
 </html>
