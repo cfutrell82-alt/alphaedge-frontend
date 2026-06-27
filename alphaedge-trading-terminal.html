@@ -9,8 +9,8 @@
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --bg: #0B0E17; --card: #12161F; --card2: #181D28;
-  --border: #1E2535; --hover: #1C2230;
+  --bg: #050816; --card: #0b1630; --card2: #0f1c35;
+  --border: #24335f; --hover: #0f1f40;
   --cyan: #00D4FF; --blue: #2563EB;
   --green: #16C784; --green-bg: rgba(22,199,132,0.15);
   --red: #EA3943; --red-bg: rgba(234,57,67,0.15);
@@ -21,7 +21,7 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
 body { display: flex; flex-direction: column; }
 
 /* ── TOPBAR ── */
-.topbar { height: 52px; display: flex; align-items: center; padding: 0 16px; gap: 12px; background: var(--card); border-bottom: 1px solid var(--border); flex-shrink: 0; z-index: 100; }
+.topbar { height: 52px; display: flex; align-items: center; padding: 0 16px; gap: 12px; background: linear-gradient(90deg,rgba(10,20,60,0.98),rgba(10,40,90,0.98)); border-bottom: 1px solid var(--border); flex-shrink: 0; z-index: 100; }
 .logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; color: var(--text); text-decoration: none; }
 .logo span { color: var(--cyan); }
 .search-bar { display: flex; align-items: center; gap: 8px; background: var(--card2); border: 1px solid var(--border); border-radius: 20px; padding: 6px 14px; flex: 1; max-width: 280px; }
@@ -40,7 +40,7 @@ body { display: flex; flex-direction: column; }
 .app { flex: 1; display: grid; grid-template-columns: 260px 1fr 300px; overflow: hidden; }
 
 /* ── LEFT: MARKET LIST ── */
-.market-panel { background: var(--card); border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+.market-panel { background: linear-gradient(90deg,rgba(10,20,60,0.98),rgba(10,40,90,0.98)); border-right: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
 .market-search { padding: 10px 12px; border-bottom: 1px solid var(--border); }
 .market-search-input { display: flex; align-items: center; gap: 8px; background: var(--card2); border: 1px solid var(--border); border-radius: 8px; padding: 7px 12px; }
 .market-search-input input { background: none; border: none; outline: none; color: var(--text); font-size: 0.8rem; font-family: 'Inter', sans-serif; flex: 1; }
@@ -75,14 +75,14 @@ body { display: flex; flex-direction: column; }
 .mkt-price { font-family: 'Space Mono', monospace; font-size: 0.78rem; text-align: right; }
 .mkt-price-sub { font-size: 0.62rem; color: var(--text-muted); text-align: right; margin-top: 1px; }
 .chg-badge { padding: 3px 8px; border-radius: 4px; font-size: 0.72rem; font-weight: 700; text-align: center; font-family: 'Space Mono', monospace; }
-.chg-up { background: var(--green); color: #fff; }
+.chg-up { background: linear-gradient(90deg,#00e5ff,#0099bb); color: #02040a; }
 .chg-dn { background: var(--red); color: #fff; }
 
 /* ── CENTER: CHART ── */
 .chart-panel { display: flex; flex-direction: column; background: var(--bg); overflow: hidden; }
 
 /* PRICE HEADER */
-.price-header { background: var(--card); border-bottom: 1px solid var(--border); padding: 12px 16px; flex-shrink: 0; }
+.price-header { background: linear-gradient(90deg,rgba(10,20,60,0.98),rgba(10,40,90,0.98)); border-bottom: 1px solid var(--border); padding: 12px 16px; flex-shrink: 0; }
 .price-header-top { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
 .ph-sym { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; }
 .ph-type { font-size: 0.65rem; color: var(--text-muted); background: var(--card2); border: 1px solid var(--border); padding: 2px 7px; border-radius: 4px; }
@@ -100,7 +100,7 @@ body { display: flex; flex-direction: column; }
 .pstat-val.dn { color: var(--red); }
 
 /* TF TABS */
-.tf-bar { display: flex; align-items: center; gap: 2px; padding: 6px 16px; border-bottom: 1px solid var(--border); background: var(--card); flex-shrink: 0; }
+.tf-bar { display: flex; align-items: center; gap: 2px; padding: 6px 16px; border-bottom: 1px solid var(--border); background: linear-gradient(90deg,rgba(10,20,60,0.98),rgba(10,40,90,0.98)); flex-shrink: 0; }
 .tf-btn { padding: 4px 10px; border-radius: 5px; font-size: 0.7rem; font-weight: 600; border: none; background: none; color: var(--text-muted); cursor: pointer; font-family: 'Space Mono', monospace; transition: all 0.15s; }
 .tf-btn:hover { color: var(--text); background: var(--hover); }
 .tf-btn.active { background: rgba(0,212,255,0.12); color: var(--cyan); }
@@ -113,14 +113,14 @@ body { display: flex; flex-direction: column; }
 #tv-chart { width: 100%; height: 100%; }
 
 /* POSITIONS BAR */
-.positions-bar { height: 160px; border-top: 1px solid var(--border); background: var(--card); display: flex; flex-direction: column; flex-shrink: 0; }
+.positions-bar { height: 160px; border-top: 1px solid var(--border); background: linear-gradient(90deg,rgba(10,20,60,0.98),rgba(10,40,90,0.98)); display: flex; flex-direction: column; flex-shrink: 0; }
 .pos-tabs { display: flex; border-bottom: 1px solid var(--border); }
 .pos-tab { padding: 8px 16px; font-size: 0.72rem; font-weight: 600; color: var(--text-muted); border-bottom: 2px solid transparent; cursor: pointer; background: none; border-top: none; border-left: none; border-right: none; font-family: 'Inter', sans-serif; transition: all 0.15s; }
 .pos-tab.active { color: var(--cyan); border-bottom-color: var(--cyan); }
 .pos-count-badge { background: var(--cyan); color: var(--bg); font-size: 0.58rem; font-weight: 700; padding: 1px 5px; border-radius: 100px; margin-left: 4px; }
 .pos-table-wrap { flex: 1; overflow-y: auto; }
 .pos-table { width: 100%; border-collapse: collapse; font-size: 0.72rem; }
-.pos-table th { padding: 5px 12px; text-align: left; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border); position: sticky; top: 0; background: var(--card); letter-spacing: 0.04em; }
+.pos-table th { padding: 5px 12px; text-align: left; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border); position: sticky; top: 0; background: linear-gradient(90deg,rgba(10,20,60,0.98),rgba(10,40,90,0.98)); letter-spacing: 0.04em; }
 .pos-table td { padding: 7px 12px; border-bottom: 1px solid rgba(30,37,53,0.5); }
 .pos-table tr:hover td { background: var(--hover); }
 .no-pos { padding: 20px; text-align: center; color: var(--text-muted); font-size: 0.8rem; }
@@ -130,7 +130,7 @@ body { display: flex; flex-direction: column; }
 .close-pos-btn:hover { border-color: var(--red); color: var(--red); }
 
 /* ── RIGHT: ORDER PANEL ── */
-.order-panel { background: var(--card); border-left: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
+.order-panel { background: linear-gradient(90deg,rgba(10,20,60,0.98),rgba(10,40,90,0.98)); border-left: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; }
 
 /* PORTFOLIO STRIP */
 .portfolio-strip { padding: 12px 16px; border-bottom: 1px solid var(--border); background: var(--card2); }
@@ -147,7 +147,7 @@ body { display: flex; flex-direction: column; }
 /* ACTION BUTTONS */
 .action-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 12px 16px; border-bottom: 1px solid var(--border); }
 .action-btn { padding: 10px; border-radius: 8px; font-family: 'Space Grotesk', sans-serif; font-size: 0.82rem; font-weight: 700; border: none; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px; }
-.btn-long { background: var(--green); color: #fff; }
+.btn-long { background: linear-gradient(90deg,#00e5ff,#0099bb); color: #02040a; }
 .btn-long:hover { background: #20E890; }
 .btn-short { background: var(--red); color: #fff; }
 .btn-short:hover { background: #FF4F59; }
@@ -180,7 +180,7 @@ body { display: flex; flex-direction: column; }
 
 /* EXECUTE BTN */
 .execute-btn { width: 100%; padding: 13px; border: none; border-radius: 10px; font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
-.exec-long { background: var(--green); color: #fff; }
+.exec-long { background: linear-gradient(90deg,#00e5ff,#0099bb); color: #02040a; }
 .exec-long:hover { background: #20E890; }
 .exec-short { background: var(--red); color: #fff; }
 .exec-short:hover { background: #FF4F59; }
@@ -201,7 +201,7 @@ body { display: flex; flex-direction: column; }
 .broker-status.paper { color: var(--gold); }
 
 /* SIGNAL ALERT */
-.signal-toast { position: fixed; bottom: 180px; right: 316px; z-index: 999; background: var(--card); border: 1px solid var(--border); border-left: 3px solid var(--cyan); border-radius: 10px; padding: 14px 16px; min-width: 240px; animation: slideIn 0.3s ease; box-shadow: 0 12px 40px rgba(0,0,0,0.6); }
+.signal-toast { position: fixed; bottom: 180px; right: 316px; z-index: 999; background: linear-gradient(90deg,rgba(10,20,60,0.98),rgba(10,40,90,0.98)); border: 1px solid var(--border); border-left: 3px solid var(--cyan); border-radius: 10px; padding: 14px 16px; min-width: 240px; animation: slideIn 0.3s ease; box-shadow: 0 12px 40px rgba(0,0,0,0.6); }
 @keyframes slideIn { from{opacity:0;transform:translateX(20px)} to{opacity:1;transform:translateX(0)} }
 .st-header { font-size: 0.65rem; color: var(--cyan); font-weight: 700; margin-bottom: 6px; letter-spacing: 0.05em; text-transform: uppercase; }
 .st-sym { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 700; margin-bottom: 4px; }
@@ -211,7 +211,7 @@ body { display: flex; flex-direction: column; }
 /* CONFIRM MODAL */
 .modal-bg { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(4px); z-index: 500; align-items: center; justify-content: center; }
 .modal-bg.open { display: flex; }
-.modal { background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px; width: 320px; }
+.modal { background: linear-gradient(90deg,rgba(10,20,60,0.98),rgba(10,40,90,0.98)); border: 1px solid var(--border); border-radius: 14px; padding: 24px; width: 320px; }
 .modal-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 16px; }
 .modal-detail { background: var(--card2); border: 1px solid var(--border); border-radius: 8px; padding: 12px; margin-bottom: 16px; }
 .modal-row { display: flex; justify-content: space-between; font-size: 0.8rem; padding: 3px 0; }
@@ -220,11 +220,11 @@ body { display: flex; flex-direction: column; }
 .modal-actions { display: flex; gap: 8px; }
 .modal-cancel { flex: 1; padding: 10px; border: 1px solid var(--border); background: none; color: var(--text-muted); border-radius: 8px; cursor: pointer; font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.85rem; }
 .modal-confirm { flex: 2; padding: 10px; border: none; border-radius: 8px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.85rem; cursor: pointer; }
-.modal-confirm.long { background: var(--green); color: #fff; }
+.modal-confirm.long { background: linear-gradient(90deg,#00e5ff,#0099bb); color: #02040a; }
 .modal-confirm.short { background: var(--red); color: #fff; }
 
 /* TOAST */
-.toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 10px 18px; font-size: 0.8rem; box-shadow: 0 8px 32px rgba(0,0,0,0.5); white-space: nowrap; animation: slideIn 0.3s ease; }
+.toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 9999; background: linear-gradient(90deg,rgba(10,20,60,0.98),rgba(10,40,90,0.98)); border: 1px solid var(--border); border-radius: 8px; padding: 10px 18px; font-size: 0.8rem; box-shadow: 0 8px 32px rgba(0,0,0,0.5); white-space: nowrap; animation: slideIn 0.3s ease; }
 
 @media (max-width: 1100px) {
   .app { grid-template-columns: 220px 1fr 270px; }
@@ -239,7 +239,7 @@ body { display: flex; flex-direction: column; }
 
 <!-- TOPBAR -->
 <div class="topbar">
-  <a href="alphaedge-dashboard.html" class="logo">Alpha<span>Edge</span></a>
+  <a href="alphaedge-dashboard.html" class="logo"><img src="alphaedge-coin.png" alt="AEC" style="width:24px;height:24px;border-radius:50%;box-shadow:0 0 8px rgba(247,201,72,0.8);">Alpha<span>Edge</span></a>
   <div class="search-bar">
     <span class="search-icon">🔍</span>
     <input type="text" placeholder="Search markets..." id="global-search" oninput="filterMarkets(this.value)">
