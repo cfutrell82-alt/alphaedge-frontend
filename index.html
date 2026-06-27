@@ -3,528 +3,237 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AlphaEdge — Live Trade Signals & Market Intelligence</title>
+<title>AlphaEdge — Live Trade Signals, Terminal & Market Intelligence</title>
+<meta name="description" content="AlphaEdge delivers institutional-grade trade signals across stocks, forex, crypto and options. Includes a full trading terminal, education vault, and Telegram alerts.">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
   :root {
-    --navy: #0A0F1E;
-    --navy-card: #111827;
-    --navy-border: #1E2D45;
-    --cyan: #00D4FF;
-    --cyan-dim: rgba(0, 212, 255, 0.12);
-    --gold: #F4B942;
-    --gold-dim: rgba(244, 185, 66, 0.12);
-    --green: #00E676;
-    --red: #FF4B4B;
-    --text: #E8EDF5;
-    --text-muted: #6B7FA3;
-    --text-dim: #3A4A6B;
+    --navy: #0A0F1E; --navy-card: #111827; --navy-border: #1E2D45;
+    --navy-hover: #1A2640; --cyan: #00D4FF; --cyan-dim: rgba(0,212,255,0.12);
+    --gold: #F4B942; --gold-dim: rgba(244,185,66,0.12);
+    --green: #00E676; --red: #FF4B4B;
+    --text: #E8EDF5; --text-muted: #6B7FA3; --text-dim: #3A4A6B;
   }
-
   html { scroll-behavior: smooth; }
+  body { background: var(--navy); color: var(--text); font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; }
 
-  body {
-    background: var(--navy);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    font-size: 16px;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 40px; height: 64px;
-    background: rgba(10, 15, 30, 0.92);
-    border-bottom: 1px solid var(--navy-border);
-    backdrop-filter: blur(12px);
-  }
-  .nav-logo {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700; font-size: 1.25rem;
-    letter-spacing: -0.02em; color: var(--text);
-  }
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 64px; background: rgba(10,15,30,0.92); border-bottom: 1px solid var(--navy-border); backdrop-filter: blur(12px); }
+  .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: -0.02em; color: var(--text); text-decoration: none; }
   .nav-logo span { color: var(--cyan); }
   .nav-links { display: flex; gap: 32px; }
-  .nav-links a {
-    color: var(--text-muted); text-decoration: none;
-    font-size: 0.875rem; font-weight: 500;
-    transition: color 0.2s;
-  }
+  .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
   .nav-links a:hover { color: var(--text); }
-  .nav-cta {
-    display: flex; gap: 12px; align-items: center;
-  }
-  .btn-ghost {
-    background: none; border: 1px solid var(--navy-border);
-    color: var(--text-muted); padding: 8px 20px; border-radius: 6px;
-    font-size: 0.875rem; font-weight: 500; cursor: pointer;
-    font-family: 'Inter', sans-serif; transition: all 0.2s;
-    text-decoration: none; display: inline-block;
-  }
+  .nav-cta { display: flex; gap: 12px; align-items: center; }
+  .btn-ghost { background: none; border: 1px solid var(--navy-border); color: var(--text-muted); padding: 8px 20px; border-radius: 6px; font-size: 0.875rem; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; text-decoration: none; display: inline-block; }
   .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
-  .btn-primary {
-    background: var(--cyan); color: var(--navy);
-    border: none; padding: 8px 20px; border-radius: 6px;
-    font-size: 0.875rem; font-weight: 600; cursor: pointer;
-    font-family: 'Inter', sans-serif; transition: all 0.2s;
-    text-decoration: none; display: inline-block;
-  }
+  .btn-primary { background: var(--cyan); color: var(--navy); border: none; padding: 8px 20px; border-radius: 6px; font-size: 0.875rem; font-weight: 700; cursor: pointer; font-family: 'Space Grotesk', sans-serif; transition: all 0.2s; text-decoration: none; display: inline-block; }
   .btn-primary:hover { background: #33DDFF; }
 
-  /* ── TICKER ── */
-  .ticker-wrap {
-    position: fixed; top: 64px; left: 0; right: 0; z-index: 99;
-    background: var(--navy-card);
-    border-bottom: 1px solid var(--navy-border);
-    overflow: hidden; height: 36px;
-    display: flex; align-items: center;
-  }
-  .ticker-label {
-    background: var(--cyan); color: var(--navy);
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem; font-weight: 700;
-    padding: 0 12px; height: 100%;
-    display: flex; align-items: center;
-    white-space: nowrap; flex-shrink: 0;
-    letter-spacing: 0.1em;
-  }
-  .ticker-track {
-    display: flex; gap: 0;
-    animation: ticker 40s linear infinite;
-    white-space: nowrap;
-  }
-  .ticker-item {
-    display: inline-flex; align-items: center; gap: 8px;
-    padding: 0 24px;
-    font-family: 'Space Mono', monospace; font-size: 0.72rem;
-    border-right: 1px solid var(--navy-border);
-  }
+  /* TICKER */
+  .ticker-wrap { position: fixed; top: 64px; left: 0; right: 0; z-index: 99; background: var(--navy-card); border-bottom: 1px solid var(--navy-border); overflow: hidden; height: 36px; display: flex; align-items: center; }
+  .ticker-label { background: var(--cyan); color: var(--navy); font-family: 'Space Mono', monospace; font-size: 0.65rem; font-weight: 700; padding: 0 12px; height: 100%; display: flex; align-items: center; white-space: nowrap; flex-shrink: 0; letter-spacing: 0.1em; }
+  .ticker-track { display: flex; gap: 0; animation: ticker 40s linear infinite; white-space: nowrap; }
+  .ticker-item { display: inline-flex; align-items: center; gap: 8px; padding: 0 24px; font-family: 'Space Mono', monospace; font-size: 0.72rem; border-right: 1px solid var(--navy-border); }
   .ticker-item .sym { color: var(--text); font-weight: 700; }
   .ticker-item .up { color: var(--green); }
   .ticker-item .dn { color: var(--red); }
-  .ticker-item .signal-badge {
-    background: var(--cyan-dim); color: var(--cyan);
-    border: 1px solid rgba(0,212,255,0.25);
-    font-size: 0.6rem; padding: 1px 5px; border-radius: 3px;
-  }
-  @keyframes ticker {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
+  .ticker-item .signal-badge { background: var(--cyan-dim); color: var(--cyan); border: 1px solid rgba(0,212,255,0.25); font-size: 0.6rem; padding: 1px 5px; border-radius: 3px; }
+  @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.7)} }
 
-  /* ── HERO ── */
-  .hero {
-    padding: 180px 40px 100px;
-    max-width: 1200px; margin: 0 auto;
-    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
-  }
-  .hero-eyebrow {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: var(--cyan-dim); border: 1px solid rgba(0,212,255,0.2);
-    color: var(--cyan); font-size: 0.75rem; font-weight: 600;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    padding: 6px 14px; border-radius: 100px; margin-bottom: 24px;
-  }
-  .hero-eyebrow::before {
-    content: ''; width: 6px; height: 6px; border-radius: 50%;
-    background: var(--cyan);
-    animation: pulse 1.5s ease-in-out infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.7); }
-  }
-  h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(2.2rem, 4vw, 3.5rem);
-    font-weight: 700; line-height: 1.1;
-    letter-spacing: -0.03em; margin-bottom: 20px;
-  }
+  /* HERO */
+  .hero { padding: 180px 40px 100px; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: var(--cyan-dim); border: 1px solid rgba(0,212,255,0.2); color: var(--cyan); font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 14px; border-radius: 100px; margin-bottom: 24px; }
+  .hero-eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); animation: pulse 1.5s ease-in-out infinite; }
+  h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.2rem, 4vw, 3.5rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.03em; margin-bottom: 20px; }
   h1 .accent { color: var(--cyan); }
-  .hero-sub {
-    color: var(--text-muted); font-size: 1.05rem;
-    line-height: 1.7; margin-bottom: 36px; max-width: 480px;
-  }
-  .hero-actions { display: flex; gap: 14px; align-items: center; }
-  .btn-large {
-    padding: 14px 32px; font-size: 1rem; border-radius: 8px;
-  }
-  .hero-note {
-    font-size: 0.8rem; color: var(--text-muted);
-    margin-top: 16px;
-  }
-  .hero-stats {
-    display: flex; gap: 32px; margin-top: 48px;
-    padding-top: 32px; border-top: 1px solid var(--navy-border);
-  }
-  .hero-stat .num {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.75rem; font-weight: 700; color: var(--text);
-  }
+  .hero-sub { color: var(--text-muted); font-size: 1.05rem; line-height: 1.7; margin-bottom: 36px; max-width: 480px; }
+  .hero-actions { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+  .btn-large { padding: 14px 32px; font-size: 1rem; border-radius: 8px; }
+  .hero-note { font-size: 0.8rem; color: var(--text-muted); margin-top: 16px; }
+  .hero-stats { display: flex; gap: 32px; margin-top: 48px; padding-top: 32px; border-top: 1px solid var(--navy-border); flex-wrap: wrap; }
+  .hero-stat .num { font-family: 'Space Grotesk', sans-serif; font-size: 1.75rem; font-weight: 700; color: var(--text); }
   .hero-stat .num span { color: var(--cyan); }
   .hero-stat .lbl { font-size: 0.8rem; color: var(--text-muted); margin-top: 2px; }
 
-  /* ── SIGNAL CARD (hero right) ── */
-  .signal-panel {
-    background: var(--navy-card);
-    border: 1px solid var(--navy-border);
-    border-radius: 16px; padding: 24px;
-    position: relative; overflow: hidden;
-  }
-  .signal-panel::before {
-    content: '';
-    position: absolute; top: 0; left: 0; right: 0; height: 2px;
-    background: linear-gradient(90deg, var(--cyan), transparent);
-  }
-  .panel-header {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  .panel-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.8rem; font-weight: 600;
-    letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted);
-  }
-  .live-dot {
-    display: flex; align-items: center; gap: 6px;
-    font-size: 0.7rem; color: var(--green); font-weight: 600;
-  }
-  .live-dot::before {
-    content: ''; width: 7px; height: 7px; border-radius: 50%;
-    background: var(--green);
-    animation: pulse 1.2s ease-in-out infinite;
-  }
-  .signal-card {
-    background: rgba(255,255,255,0.03);
-    border: 1px solid var(--navy-border);
-    border-radius: 10px; padding: 14px 16px;
-    margin-bottom: 10px; display: flex; align-items: center; gap: 14px;
-    transition: border-color 0.2s;
-  }
+  /* SIGNAL PANEL */
+  .signal-panel { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 16px; padding: 24px; position: relative; overflow: hidden; }
+  .signal-panel::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--cyan), transparent); }
+  .panel-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+  .panel-title { font-family: 'Space Grotesk', sans-serif; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-muted); }
+  .live-indicator { display: flex; align-items: center; gap: 6px; font-size: 0.7rem; color: var(--green); font-weight: 600; }
+  .live-indicator::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pulse 1.2s ease-in-out infinite; }
+  .signal-card { background: rgba(255,255,255,0.03); border: 1px solid var(--navy-border); border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; display: flex; align-items: center; gap: 14px; transition: border-color 0.2s; }
   .signal-card:hover { border-color: rgba(0,212,255,0.3); }
-  .signal-type {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.65rem; font-weight: 700;
-    padding: 4px 8px; border-radius: 4px;
-    min-width: 40px; text-align: center;
-  }
+  .signal-type { font-family: 'Space Mono', monospace; font-size: 0.65rem; font-weight: 700; padding: 4px 8px; border-radius: 4px; min-width: 40px; text-align: center; }
   .buy { background: rgba(0,230,118,0.12); color: var(--green); border: 1px solid rgba(0,230,118,0.25); }
   .sell { background: rgba(255,75,75,0.12); color: var(--red); border: 1px solid rgba(255,75,75,0.25); }
   .signal-info { flex: 1; }
-  .signal-sym {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700; font-size: 0.95rem;
-  }
+  .signal-sym { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.95rem; }
   .signal-meta { font-size: 0.75rem; color: var(--text-muted); margin-top: 2px; }
-  .signal-price {
-    text-align: right;
-  }
+  .signal-time { font-size: 0.65rem; color: var(--text-dim); }
+  .signal-price { text-align: right; }
   .signal-price .entry { font-family: 'Space Mono', monospace; font-size: 0.85rem; }
   .signal-price .tp { font-size: 0.7rem; color: var(--green); margin-top: 2px; }
   .signal-price .sl { font-size: 0.7rem; color: var(--red); }
-  .signal-time { font-size: 0.65rem; color: var(--text-dim); }
 
-  /* ── MARKETS ── */
-  .markets-section {
-    padding: 80px 40px;
-    max-width: 1200px; margin: 0 auto;
-    border-top: 1px solid var(--navy-border);
-  }
-  .section-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--cyan); margin-bottom: 12px;
-  }
-  .section-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(1.6rem, 3vw, 2.2rem);
-    font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px;
-  }
+  /* TERMINAL FEATURE */
+  .terminal-feature { max-width: 1200px; margin: 0 auto; padding: 0 40px 80px; }
+  .terminal-card { background: linear-gradient(135deg, rgba(0,212,255,0.05), rgba(244,185,66,0.03)); border: 1px solid rgba(0,212,255,0.2); border-radius: 20px; padding: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+  .terminal-preview { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 12px; overflow: hidden; }
+  .terminal-topbar { background: #0D1526; border-bottom: 1px solid var(--navy-border); padding: 10px 16px; display: flex; align-items: center; gap: 12px; }
+  .terminal-dots { display: flex; gap: 6px; }
+  .terminal-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .terminal-body { padding: 16px; }
+  .terminal-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-radius: 6px; margin-bottom: 4px; font-size: 0.78rem; font-family: 'Space Mono', monospace; }
+  .terminal-row:hover { background: rgba(255,255,255,0.03); }
+  .t-sym { font-weight: 700; min-width: 80px; }
+  .t-price { color: var(--text-muted); flex: 1; }
+  .t-chg-up { color: var(--green); min-width: 60px; text-align: right; }
+  .t-chg-dn { color: var(--red); min-width: 60px; text-align: right; }
+  .t-badge { font-size: 0.6rem; padding: 2px 6px; border-radius: 3px; font-weight: 700; }
+
+  /* SECTION COMMON */
+  .section-label { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cyan); margin-bottom: 12px; }
+  .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
   .section-sub { color: var(--text-muted); max-width: 560px; margin-bottom: 48px; }
-  .markets-grid {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
-  }
-  .market-card {
-    background: var(--navy-card);
-    border: 1px solid var(--navy-border);
-    border-radius: 12px; padding: 24px;
-    transition: all 0.25s;
-    cursor: default;
-  }
-  .market-card:hover {
-    border-color: rgba(0,212,255,0.3);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-  }
-  .market-icon { font-size: 2rem; margin-bottom: 14px; }
-  .market-name {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700; font-size: 1.05rem; margin-bottom: 6px;
-  }
-  .market-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
-  .market-count {
-    margin-top: 16px; padding-top: 16px;
-    border-top: 1px solid var(--navy-border);
-    font-family: 'Space Mono', monospace;
-    font-size: 0.7rem; color: var(--cyan);
-  }
 
-  /* ── HOW IT WORKS ── */
-  .how-section {
-    padding: 80px 40px;
-    max-width: 1200px; margin: 0 auto;
-  }
-  .how-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;
-    margin-top: 48px;
-  }
-  .how-step {
-    border-left: 2px solid var(--navy-border);
-    padding-left: 24px; position: relative;
-  }
-  .how-step::before {
-    content: attr(data-n);
-    position: absolute; left: -1px;
-    top: 0; transform: translateX(-50%);
-    background: var(--cyan); color: var(--navy);
-    width: 24px; height: 24px; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-family: 'Space Mono', monospace; font-size: 0.65rem; font-weight: 700;
-  }
-  .how-step-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700; font-size: 1.05rem; margin-bottom: 10px; margin-top: 4px;
-  }
+  /* MARKETS */
+  .markets-section { padding: 80px 40px; max-width: 1200px; margin: 0 auto; border-top: 1px solid var(--navy-border); }
+  .markets-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .market-card { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 12px; padding: 24px; transition: all 0.25s; cursor: pointer; text-decoration: none; display: block; position: relative; overflow: hidden; }
+  .market-card:hover { border-color: rgba(0,212,255,0.35); background: var(--navy-hover); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+  .market-icon { font-size: 2rem; margin-bottom: 14px; }
+  .market-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 6px; color: var(--text); }
+  .market-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; }
+  .market-count { margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--navy-border); font-family: 'Space Mono', monospace; font-size: 0.7rem; color: var(--cyan); }
+  .card-arrow { position: absolute; top: 1.25rem; right: 1.25rem; font-size: 14px; color: var(--text-muted); opacity: 0; transition: opacity 0.2s; }
+  .market-card:hover .card-arrow { opacity: 1; }
+  .signal-feed { border-top: 1px solid var(--navy-border); padding-top: 10px; height: 72px; overflow: hidden; position: relative; margin-top: 12px; }
+  .signal-item { font-size: 11px; padding: 3px 0; display: flex; justify-content: space-between; align-items: center; gap: 6px; }
+  .signal-ticker { font-weight: 600; color: var(--text); min-width: 44px; }
+  .signal-action { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 700; }
+  .signal-buy { background: rgba(0,230,118,0.15); color: var(--green); }
+  .signal-sell { background: rgba(255,75,75,0.15); color: var(--red); }
+  .signal-fade { position: absolute; bottom: 0; left: 0; right: 0; height: 24px; background: linear-gradient(transparent, var(--navy-card)); pointer-events: none; }
+  .live-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin-right: 5px; animation: blink 1.5s infinite; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* STATS BAR */
+  .stats-bar { background: var(--navy-card); border-top: 1px solid var(--navy-border); border-bottom: 1px solid var(--navy-border); padding: 32px 40px; }
+  .stats-bar-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; text-align: center; }
+  .stat-num { font-family: 'Space Grotesk', sans-serif; font-size: 2.2rem; font-weight: 700; color: var(--cyan); margin-bottom: 6px; }
+  .stat-lbl { font-size: 0.85rem; color: var(--text-muted); }
+
+  /* HOW IT WORKS */
+  .how-section { padding: 80px 40px; max-width: 1200px; margin: 0 auto; }
+  .how-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 48px; }
+  .how-step { border-left: 2px solid var(--navy-border); padding-left: 24px; position: relative; }
+  .how-step::before { content: attr(data-n); position: absolute; left: -1px; top: 0; transform: translateX(-50%); background: var(--cyan); color: var(--navy); width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'Space Mono', monospace; font-size: 0.65rem; font-weight: 700; }
+  .how-step-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.05rem; margin-bottom: 10px; margin-top: 4px; }
   .how-step-desc { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; }
 
-  /* ── PRICING ── */
-  .pricing-section {
-    padding: 80px 40px;
-    max-width: 1200px; margin: 0 auto;
-  }
-  .pricing-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
-    margin-top: 48px;
-  }
-  .pricing-card {
-    background: var(--navy-card);
-    border: 1px solid var(--navy-border);
-    border-radius: 16px; padding: 32px;
-    position: relative; transition: all 0.25s;
-  }
-  .pricing-card.featured {
-    border-color: var(--cyan);
-    box-shadow: 0 0 40px rgba(0,212,255,0.08);
-  }
-  .pricing-card.elite {
-    border-color: var(--gold);
-    box-shadow: 0 0 40px rgba(244,185,66,0.06);
-  }
-  .featured-badge {
-    position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
-    background: var(--cyan); color: var(--navy);
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em;
-    text-transform: uppercase; padding: 4px 16px; border-radius: 100px;
-  }
-  .elite-badge {
-    position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
-    background: var(--gold); color: var(--navy);
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em;
-    text-transform: uppercase; padding: 4px 16px; border-radius: 100px;
-  }
-  .plan-name {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px;
-  }
-  .plan-price {
-    display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px;
-  }
+  /* PRICING */
+  .pricing-section { padding: 80px 40px; max-width: 1200px; margin: 0 auto; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
+  .pricing-card { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 16px; padding: 32px; position: relative; transition: all 0.25s; }
+  .pricing-card.featured { border-color: var(--cyan); box-shadow: 0 0 40px rgba(0,212,255,0.08); }
+  .pricing-card.elite { border-color: var(--gold); box-shadow: 0 0 40px rgba(244,185,66,0.06); }
+  .featured-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--cyan); color: var(--navy); font-family: 'Space Grotesk', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 16px; border-radius: 100px; }
+  .elite-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--gold); color: var(--navy); font-family: 'Space Grotesk', sans-serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 16px; border-radius: 100px; }
+  .plan-name { font-family: 'Space Grotesk', sans-serif; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 16px; }
+  .plan-price { display: flex; align-items: baseline; gap: 6px; margin-bottom: 6px; }
   .plan-price .dollar { font-size: 1.1rem; color: var(--text-muted); }
-  .plan-price .amount {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 3rem; font-weight: 700; letter-spacing: -0.03em;
-    line-height: 1;
-  }
+  .plan-price .amount { font-family: 'Space Grotesk', sans-serif; font-size: 3rem; font-weight: 700; letter-spacing: -0.03em; line-height: 1; }
   .plan-price .period { font-size: 0.85rem; color: var(--text-muted); }
   .plan-tagline { font-size: 0.82rem; color: var(--text-muted); margin-bottom: 28px; }
-  .plan-btn {
-    display: block; width: 100%; padding: 12px;
-    border-radius: 8px; font-size: 0.9rem; font-weight: 600;
-    font-family: 'Inter', sans-serif; cursor: pointer;
-    text-align: center; transition: all 0.2s; margin-bottom: 28px;
-    border: none; text-decoration: none;
-  }
-  .plan-btn-free {
-    background: var(--navy-border); color: var(--text);
-  }
+  .plan-btn { display: block; width: 100%; padding: 12px; border-radius: 8px; font-size: 0.9rem; font-weight: 700; font-family: 'Space Grotesk', sans-serif; cursor: pointer; text-align: center; transition: all 0.2s; margin-bottom: 28px; border: none; text-decoration: none; }
+  .plan-btn-free { background: var(--navy-border); color: var(--text); }
   .plan-btn-free:hover { background: #2A3A55; }
-  .plan-btn-cyan {
-    background: var(--cyan); color: var(--navy);
-  }
+  .plan-btn-cyan { background: var(--cyan); color: var(--navy); }
   .plan-btn-cyan:hover { background: #33DDFF; }
-  .plan-btn-gold {
-    background: var(--gold); color: var(--navy);
-  }
+  .plan-btn-gold { background: var(--gold); color: var(--navy); }
   .plan-btn-gold:hover { background: #F8C95A; }
-  .plan-divider {
-    border: none; border-top: 1px solid var(--navy-border);
-    margin-bottom: 24px;
-  }
+  .plan-divider { border: none; border-top: 1px solid var(--navy-border); margin-bottom: 24px; }
   .plan-features { list-style: none; display: flex; flex-direction: column; gap: 12px; }
-  .plan-features li {
-    display: flex; align-items: flex-start; gap: 10px;
-    font-size: 0.875rem; color: var(--text-muted);
-  }
+  .plan-features li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.875rem; color: var(--text-muted); }
   .plan-features li .chk { color: var(--green); font-size: 0.8rem; flex-shrink: 0; margin-top: 2px; }
   .plan-features li .x { color: var(--text-dim); font-size: 0.8rem; flex-shrink: 0; margin-top: 2px; }
   .plan-features li.active { color: var(--text); }
 
-  /* ── COMMUNITY ── */
-  .community-section {
-    padding: 80px 40px;
-    background: linear-gradient(180deg, transparent 0%, rgba(0,212,255,0.03) 100%);
-    border-top: 1px solid var(--navy-border);
-  }
+  /* COMMUNITY */
+  .community-section { padding: 80px 40px; background: linear-gradient(180deg, transparent 0%, rgba(0,212,255,0.03) 100%); border-top: 1px solid var(--navy-border); }
   .community-inner { max-width: 1200px; margin: 0 auto; }
-  .community-grid {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
-    align-items: center; margin-top: 48px;
-  }
+  .community-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; margin-top: 48px; }
   .testimonial-stack { display: flex; flex-direction: column; gap: 16px; }
-  .testimonial {
-    background: var(--navy-card);
-    border: 1px solid var(--navy-border);
-    border-radius: 12px; padding: 20px;
-  }
+  .testimonial { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 12px; padding: 20px; }
   .test-quote { font-size: 0.9rem; line-height: 1.6; margin-bottom: 14px; }
   .test-quote .highlight { color: var(--cyan); }
   .test-author { display: flex; align-items: center; gap: 10px; }
-  .test-avatar {
-    width: 36px; height: 36px; border-radius: 50%;
-    background: var(--cyan-dim); border: 1px solid rgba(0,212,255,0.3);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.8rem; font-weight: 700; color: var(--cyan);
-  }
+  .test-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--cyan-dim); border: 1px solid rgba(0,212,255,0.3); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; color: var(--cyan); }
   .test-name { font-size: 0.85rem; font-weight: 600; }
   .test-handle { font-size: 0.75rem; color: var(--text-muted); }
   .community-features { display: flex; flex-direction: column; gap: 24px; }
   .cf-item { display: flex; gap: 16px; }
-  .cf-icon {
-    width: 44px; height: 44px; border-radius: 10px;
-    background: var(--cyan-dim); border: 1px solid rgba(0,212,255,0.2);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.1rem; flex-shrink: 0;
-  }
+  .cf-icon { width: 44px; height: 44px; border-radius: 10px; background: var(--cyan-dim); border: 1px solid rgba(0,212,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
   .cf-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; margin-bottom: 4px; }
   .cf-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
 
-  /* ── DISCLAIMER ── */
-  .disclaimer {
-    padding: 32px 40px;
-    max-width: 1200px; margin: 0 auto;
-    border-top: 1px solid var(--navy-border);
-    font-size: 0.78rem; color: var(--text-dim); line-height: 1.6;
-  }
-  .disclaimer strong { color: var(--text-muted); }
-
-  /* ── FOOTER ── */
-  footer {
-    background: var(--navy-card);
-    border-top: 1px solid var(--navy-border);
-    padding: 48px 40px 32px;
-  }
-  .footer-inner {
-    max-width: 1200px; margin: 0 auto;
-    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
-  }
-  .footer-brand .logo {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700; font-size: 1.2rem; margin-bottom: 12px;
-  }
-  .footer-brand .logo span { color: var(--cyan); }
-  .footer-brand p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
-  .footer-col h4 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.8rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.06em;
-    color: var(--text-muted); margin-bottom: 16px;
-  }
-  .footer-col a {
-    display: block; color: var(--text-muted); text-decoration: none;
-    font-size: 0.875rem; margin-bottom: 10px; transition: color 0.2s;
-  }
-  .footer-col a:hover { color: var(--text); }
-  .footer-bottom {
-    max-width: 1200px; margin: 32px auto 0;
-    padding-top: 24px; border-top: 1px solid var(--navy-border);
-    display: flex; align-items: center; justify-content: space-between;
-    font-size: 0.8rem; color: var(--text-dim);
-  }
-
-  /* ── CTA BANNER ── */
-  .cta-banner {
-    padding: 80px 40px;
-    max-width: 800px; margin: 0 auto; text-align: center;
-  }
-  .cta-banner h2 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(1.8rem, 3vw, 2.5rem);
-    font-weight: 700; letter-spacing: -0.02em; margin-bottom: 16px;
-  }
+  /* CTA */
+  .cta-banner { padding: 80px 40px; max-width: 800px; margin: 0 auto; text-align: center; }
+  .cta-banner h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 16px; }
   .cta-banner p { color: var(--text-muted); margin-bottom: 32px; }
   .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
 
-  /* ── RESPONSIVE ── */
+  /* DISCLAIMER */
+  .disclaimer { padding: 32px 40px; max-width: 1200px; margin: 0 auto; border-top: 1px solid var(--navy-border); font-size: 0.78rem; color: var(--text-dim); line-height: 1.6; }
+  .disclaimer strong { color: var(--text-muted); }
+
+  /* FOOTER */
+  footer { background: var(--navy-card); border-top: 1px solid var(--navy-border); padding: 48px 40px 32px; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; }
+  .footer-brand .logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; margin-bottom: 12px; }
+  .footer-brand .logo span { color: var(--cyan); }
+  .footer-brand p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+  .footer-col h4 { font-family: 'Space Grotesk', sans-serif; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 16px; }
+  .footer-col a { display: block; color: var(--text-muted); text-decoration: none; font-size: 0.875rem; margin-bottom: 10px; transition: color 0.2s; }
+  .footer-col a:hover { color: var(--text); }
+  .footer-bottom { max-width: 1200px; margin: 32px auto 0; padding-top: 24px; border-top: 1px solid var(--navy-border); display: flex; align-items: center; justify-content: space-between; font-size: 0.8rem; color: var(--text-dim); }
+
+  /* RESPONSIVE */
   @media (max-width: 900px) {
     nav { padding: 0 20px; }
     .nav-links { display: none; }
     .hero { grid-template-columns: 1fr; padding: 140px 20px 60px; gap: 48px; }
-    .markets-grid { grid-template-columns: repeat(2, 1fr); padding: 0 20px; }
-    .markets-section, .how-section, .pricing-section { padding: 60px 20px; }
+    .markets-grid { grid-template-columns: repeat(2, 1fr); }
+    .markets-section, .how-section, .pricing-section, .terminal-feature { padding: 60px 20px; }
     .how-grid { grid-template-columns: 1fr; gap: 32px; }
     .pricing-grid { grid-template-columns: 1fr; }
     .community-grid { grid-template-columns: 1fr; gap: 32px; }
     .footer-inner { grid-template-columns: 1fr 1fr; }
     .cta-banner { padding: 60px 20px; }
+    .terminal-card { grid-template-columns: 1fr; }
+    .stats-bar-inner { grid-template-columns: repeat(2, 1fr); }
   }
-  .market-card { text-decoration: none; display: block; cursor: pointer; transition: border-color 0.2s, background 0.2s; position: relative; overflow: hidden; }
-.market-card:hover { border-color: rgba(0,212,255,0.35); background: var(--navy-hover); }
-.signal-feed { border-top: 1px solid var(--navy-border); padding-top: 10px; height: 72px; overflow: hidden; position: relative; margin-top: 12px; }
-.signal-item { font-size: 11px; padding: 3px 0; display: flex; justify-content: space-between; align-items: center; gap: 6px; }
-.signal-ticker { font-weight: 600; color: var(--text); min-width: 44px; }
-.signal-action { font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 700; }
-.signal-buy { background: rgba(0,230,118,0.15); color: var(--green); }
-.signal-sell { background: rgba(255,75,75,0.15); color: var(--red); }
-.signal-time { font-size: 10px; color: var(--text-muted); }
-.signal-fade { position: absolute; bottom: 0; left: 0; right: 0; height: 24px; background: linear-gradient(transparent, var(--navy-card)); pointer-events: none; }
-.live-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin-right: 5px; animation: pulse 1.5s infinite; }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-.card-arrow { position: absolute; top: 1.25rem; right: 1.25rem; font-size: 14px; color: var(--text-muted); opacity: 0; transition: opacity 0.2s; }
-.market-card:hover .card-arrow { opacity: 1; }
 </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav>
-  <a href="index.html" class="nav-logo" style="text-decoration:none;">Alpha<span>Edge</span></a>
+  <a href="index.html" class="nav-logo">Alpha<span>Edge</span></a>
   <div class="nav-links">
     <a href="#markets">Markets</a>
+    <a href="#terminal">Terminal</a>
     <a href="#how">How it works</a>
     <a href="#pricing">Pricing</a>
     <a href="#community">Community</a>
   </div>
   <div class="nav-cta">
-    <button onclick="openModal('login')" class="btn-ghost" id="nav-signin-btn">Sign in</button>
-    <a href="alphaedge-dashboard.html" class="btn-ghost" id="nav-dashboard-btn" style="display:none;">My dashboard</a>
+    <a href="alphaedge-login.html" class="btn-ghost" id="nav-signin-btn">Sign in</a>
+    <a href="alphaedge-dashboard.html" class="btn-ghost" id="nav-dashboard-btn" style="display:none;">Dashboard</a>
     <a href="alphaedge-checkout.html" class="btn-primary">Start free</a>
   </div>
 </nav>
@@ -542,15 +251,16 @@
   <div class="hero-content">
     <div class="hero-eyebrow">Live across all markets</div>
     <h1>Trade with <span class="accent">real signals</span>, not speculation.</h1>
-    <p class="hero-sub">AlphaEdge delivers institutional-grade trade alerts across stocks, forex, crypto, and options — with the analysis, community, and education to execute them confidently.</p>
+    <p class="hero-sub">AlphaEdge delivers institutional-grade trade alerts across stocks, forex, crypto, and options — with a full trading terminal, education vault, and Telegram alerts to execute them confidently.</p>
     <div class="hero-actions">
       <a href="alphaedge-checkout.html" class="btn-primary btn-large">Start free — no card needed</a>
-      <a href="#how" class="btn-ghost btn-large">See how it works</a>
+      <a href="alphaedge-trading-terminal.html" class="btn-ghost btn-large">💻 Try Terminal</a>
     </div>
     <p class="hero-note">✓ Cancel anytime &nbsp;·&nbsp; ✓ Real traders, not bots &nbsp;·&nbsp; ✓ All markets covered</p>
     <div class="hero-stats">
       <div class="hero-stat"><div class="num">14<span>k+</span></div><div class="lbl">Active subscribers</div></div>
-      <div class="hero-stat"><div class="num">87<span>%</span></div><div class="lbl">Signal win rate (90d)</div></div>
+      <div class="hero-stat"><div class="num">73<span>%</span></div><div class="lbl">Signal win rate (90d)</div></div>
+      <div class="hero-stat"><div class="num">4</div><div class="lbl">Markets covered</div></div>
       <div class="hero-stat"><div class="num">3<span>ms</span></div><div class="lbl">Avg. alert delivery</div></div>
     </div>
   </div>
@@ -559,66 +269,40 @@
   <div class="signal-panel">
     <div class="panel-header">
       <span class="panel-title">Today's signals</span>
-      <span class="live-dot">Live</span>
+      <span class="live-indicator">Live</span>
     </div>
-
     <div class="signal-card">
       <div class="signal-type buy">BUY</div>
-      <div class="signal-info">
-        <div class="signal-sym">NVDA</div>
-        <div class="signal-meta">US Equities · Momentum</div>
-        <div class="signal-time">2 min ago</div>
-      </div>
-      <div class="signal-price">
-        <div class="entry">$1,142.50</div>
-        <div class="tp">TP $1,190 ↑</div>
-        <div class="sl">SL $1,110 ↓</div>
-      </div>
+      <div class="signal-info"><div class="signal-sym">NVDA</div><div class="signal-meta">US Equities · Momentum</div><div class="signal-time">2 min ago</div></div>
+      <div class="signal-price"><div class="entry">$1,142.50</div><div class="tp">TP $1,190 ↑</div><div class="sl">SL $1,110 ↓</div></div>
     </div>
-
     <div class="signal-card">
       <div class="signal-type sell">SELL</div>
-      <div class="signal-info">
-        <div class="signal-sym">EUR/USD</div>
-        <div class="signal-meta">Forex · Reversal</div>
-        <div class="signal-time">11 min ago</div>
-      </div>
-      <div class="signal-price">
-        <div class="entry">1.08420</div>
-        <div class="tp">TP 1.07900 ↓</div>
-        <div class="sl">SL 1.08750 ↑</div>
-      </div>
+      <div class="signal-info"><div class="signal-sym">EUR/USD</div><div class="signal-meta">Forex · Reversal</div><div class="signal-time">11 min ago</div></div>
+      <div class="signal-price"><div class="entry">1.08420</div><div class="tp">TP 1.07900 ↓</div><div class="sl">SL 1.08750 ↑</div></div>
     </div>
-
     <div class="signal-card">
       <div class="signal-type buy">BUY</div>
-      <div class="signal-info">
-        <div class="signal-sym">BTC/USD</div>
-        <div class="signal-meta">Crypto · Breakout</div>
-        <div class="signal-time">34 min ago</div>
-      </div>
-      <div class="signal-price">
-        <div class="entry">$67,420</div>
-        <div class="tp">TP $71,000 ↑</div>
-        <div class="sl">SL $65,800 ↓</div>
-      </div>
+      <div class="signal-info"><div class="signal-sym">BTC/USD</div><div class="signal-meta">Crypto · Breakout</div><div class="signal-time">34 min ago</div></div>
+      <div class="signal-price"><div class="entry">$67,420</div><div class="tp">TP $71,000 ↑</div><div class="sl">SL $65,800 ↓</div></div>
     </div>
-
     <div class="signal-card">
       <div class="signal-type buy">BUY</div>
-      <div class="signal-info">
-        <div class="signal-sym">SPY 490C</div>
-        <div class="signal-meta">Options · Weekly</div>
-        <div class="signal-time">1 hr ago</div>
-      </div>
-      <div class="signal-price">
-        <div class="entry">$3.40</div>
-        <div class="tp">TP $6.20 ↑</div>
-        <div class="sl">SL $1.80 ↓</div>
-      </div>
+      <div class="signal-info"><div class="signal-sym">SPY 490C</div><div class="signal-meta">Options · Weekly</div><div class="signal-time">1 hr ago</div></div>
+      <div class="signal-price"><div class="entry">$3.40</div><div class="tp">TP $6.20 ↑</div><div class="sl">SL $1.80 ↓</div></div>
     </div>
   </div>
 </section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-bar-inner">
+    <div><div class="stat-num">12,400+</div><div class="stat-lbl">Active traders</div></div>
+    <div><div class="stat-num">73%</div><div class="stat-lbl">Average win rate</div></div>
+    <div><div class="stat-num">$2.4M+</div><div class="stat-lbl">Member profits tracked</div></div>
+    <div><div class="stat-num">847</div><div class="stat-lbl">Signals this month</div></div>
+  </div>
+</div>
 
 <!-- MARKETS -->
 <section class="markets-section" id="markets">
@@ -626,43 +310,85 @@
   <h2 class="section-title">Every market. One platform.</h2>
   <p class="section-sub">From pre-market equity movers to overnight crypto swings — AlphaEdge has analysts and algorithms working across every major asset class.</p>
   <div class="markets-grid">
-
     <a class="market-card" href="alphaedge-markets-stocks.html">
-      <i class="ti ti-trending-up market-icon" aria-hidden="true"></i>
-      <i class="ti ti-arrow-right card-arrow" aria-hidden="true"></i>
+      <span class="card-arrow">→</span>
+      <div class="market-icon">📈</div>
       <div class="market-name">Stocks & Equities</div>
       <div class="market-desc">NYSE, NASDAQ, and S&P 500 signals with earnings, momentum, and technical setups.</div>
       <div class="market-count"><span class="live-dot"></span>12–18 signals/day</div>
       <div class="signal-feed" id="feed-stocks"><div class="signal-fade"></div></div>
     </a>
-
     <a class="market-card" href="alphaedge-markets-forex.html">
-      <i class="ti ti-currency-dollar market-icon" aria-hidden="true"></i>
-      <i class="ti ti-arrow-right card-arrow" aria-hidden="true"></i>
+      <span class="card-arrow">→</span>
+      <div class="market-icon">💱</div>
       <div class="market-name">Forex</div>
       <div class="market-desc">Major and minor pairs with macro-driven context and institutional flow tracking.</div>
       <div class="market-count"><span class="live-dot"></span>8–14 signals/day</div>
       <div class="signal-feed" id="feed-forex"><div class="signal-fade"></div></div>
     </a>
-
     <a class="market-card" href="alphaedge-markets-crypto.html">
-      <i class="ti ti-currency-bitcoin market-icon" aria-hidden="true"></i>
-      <i class="ti ti-arrow-right card-arrow" aria-hidden="true"></i>
+      <span class="card-arrow">→</span>
+      <div class="market-icon">₿</div>
       <div class="market-name">Crypto</div>
       <div class="market-desc">BTC, ETH, altcoins — spot and futures signals with on-chain data analysis.</div>
       <div class="market-count"><span class="live-dot"></span>10–20 signals/day</div>
       <div class="signal-feed" id="feed-crypto"><div class="signal-fade"></div></div>
     </a>
-
     <a class="market-card" href="alphaedge-markets-options.html">
-      <i class="ti ti-chart-candle market-icon" aria-hidden="true"></i>
-      <i class="ti ti-arrow-right card-arrow" aria-hidden="true"></i>
+      <span class="card-arrow">→</span>
+      <div class="market-icon">⚙️</div>
       <div class="market-name">Options & Futures</div>
       <div class="market-desc">Weekly options plays, unusual activity alerts, and commodity futures setups.</div>
       <div class="market-count"><span class="live-dot"></span>5–10 signals/day</div>
       <div class="signal-feed" id="feed-options"><div class="signal-fade"></div></div>
     </a>
+  </div>
+</section>
 
+<!-- TRADING TERMINAL -->
+<section id="terminal" class="terminal-feature">
+  <div class="terminal-card">
+    <div>
+      <div class="section-label">New Feature</div>
+      <h2 class="section-title" style="margin-bottom:16px;">A full trading terminal. <span style="color:var(--cyan)">Built in.</span></h2>
+      <p style="color:var(--text-muted);font-size:0.95rem;line-height:1.7;margin-bottom:28px;">Practice with $100,000 in simulated paper trading funds. When you're ready, connect your real broker — Alpaca for stocks, Binance for crypto, OANDA for forex. AlphaEdge signals appear directly in the terminal so you can execute with one click.</p>
+      <div style="display:flex;flex-direction:column;gap:14px;margin-bottom:32px;">
+        <div style="display:flex;align-items:center;gap:12px;font-size:0.875rem;"><span style="color:var(--green);font-size:1rem;">✓</span> <span style="color:var(--text);">Paper trade with $100K simulated funds</span></div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:0.875rem;"><span style="color:var(--green);font-size:1rem;">✓</span> <span style="color:var(--text);">Stocks, crypto, forex & options in one place</span></div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:0.875rem;"><span style="color:var(--green);font-size:1rem;">✓</span> <span style="color:var(--text);">Live signals appear directly in the terminal</span></div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:0.875rem;"><span style="color:var(--green);font-size:1rem;">✓</span> <span style="color:var(--text);">Connect Alpaca, Binance or OANDA for live execution</span></div>
+        <div style="display:flex;align-items:center;gap:12px;font-size:0.875rem;"><span style="color:var(--gold);font-size:1rem;">★</span> <span style="color:var(--text-muted);">Available on all paid plans</span></div>
+      </div>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;">
+        <a href="alphaedge-trading-terminal.html" class="btn-primary btn-large">Open Terminal →</a>
+        <a href="alphaedge-checkout.html" class="btn-ghost btn-large">Get full access</a>
+      </div>
+    </div>
+    <div class="terminal-preview">
+      <div class="terminal-topbar">
+        <div class="terminal-dots">
+          <div class="terminal-dot" style="background:#FF5F57;"></div>
+          <div class="terminal-dot" style="background:#FFBD2E;"></div>
+          <div class="terminal-dot" style="background:#28C840;"></div>
+        </div>
+        <span style="font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--text-muted);margin-left:8px;">AlphaEdge Terminal — Paper Trading</span>
+        <span style="margin-left:auto;font-size:0.65rem;background:rgba(244,185,66,0.15);color:var(--gold);padding:2px 8px;border-radius:4px;font-family:'Space Mono',monospace;">PAPER</span>
+      </div>
+      <div class="terminal-body">
+        <div style="display:flex;justify-content:space-between;margin-bottom:12px;font-size:0.7rem;color:var(--text-dim);font-family:'Space Mono',monospace;padding:0 10px;">
+          <span>SYMBOL</span><span>PRICE</span><span>CHG%</span><span>SIGNAL</span>
+        </div>
+        <div class="terminal-row"><span class="t-sym">NVDA</span><span class="t-price">$1,142.50</span><span class="t-chg-up">+2.8%</span><span class="t-badge buy">BUY</span></div>
+        <div class="terminal-row"><span class="t-sym">BTC/USD</span><span class="t-price">$67,420</span><span class="t-chg-up">+3.6%</span><span class="t-badge buy">BUY</span></div>
+        <div class="terminal-row"><span class="t-sym">EUR/USD</span><span class="t-price">1.08210</span><span class="t-chg-dn">-0.19%</span><span class="t-badge sell">SELL</span></div>
+        <div class="terminal-row"><span class="t-sym">AAPL</span><span class="t-price">$198.30</span><span class="t-chg-up">+1.2%</span><span class="t-badge buy">BUY</span></div>
+        <div class="terminal-row"><span class="t-sym">SOL/USD</span><span class="t-price">$168.40</span><span class="t-chg-up">+4.2%</span><span class="t-badge buy">BUY</span></div>
+        <div class="terminal-row"><span class="t-sym">GBP/JPY</span><span class="t-price">191.24</span><span class="t-chg-dn">-0.3%</span><span class="t-badge sell">SELL</span></div>
+        <div style="margin-top:12px;padding:10px;background:rgba(0,230,118,0.05);border:1px solid rgba(0,230,118,0.15);border-radius:8px;font-size:0.7rem;font-family:'Space Mono',monospace;">
+          <span style="color:var(--green);">● Portfolio: $100,284.20</span> &nbsp;·&nbsp; <span style="color:var(--green);">+$284.20 today</span>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -682,7 +408,7 @@
     </div>
     <div class="how-step" data-n="3">
       <div class="how-step-title">You execute</div>
-      <div class="how-step-desc">Alerts arrive via app notification, email, and Telegram in milliseconds. Execute with your broker of choice. Pro members get real-time updates on open positions.</div>
+      <div class="how-step-desc">Alerts arrive via Telegram, email, and dashboard in milliseconds. Execute with your broker or use the built-in AlphaEdge terminal. Pro members get real-time updates on open positions.</div>
     </div>
   </div>
 </section>
@@ -693,23 +419,42 @@
   <h2 class="section-title">Start free. Scale when ready.</h2>
   <p class="section-sub">No hidden fees. No auto-upsells. Pick the plan that matches where you are as a trader.</p>
 
-  <div class="pricing-grid">
+  <!-- TERMINAL BANNER -->
+  <div style="background:linear-gradient(135deg,rgba(0,212,255,0.06),rgba(244,185,66,0.04));border:1px solid rgba(0,212,255,0.2);border-radius:16px;padding:20px 28px;margin-bottom:32px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div style="width:44px;height:44px;border-radius:10px;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.2);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;">💻</div>
+      <div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;margin-bottom:3px;">Trading Terminal included on all paid plans</div>
+        <div style="font-size:0.82rem;color:var(--text-muted);">Paper trade with $100K · Connect real brokers · Signals appear in terminal</div>
+      </div>
+    </div>
+    <a href="alphaedge-trading-terminal.html" style="padding:9px 20px;background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.3);border-radius:8px;color:var(--cyan);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.82rem;text-decoration:none;white-space:nowrap;">Try Terminal →</a>
+  </div>
 
+  <!-- BILLING TOGGLE -->
+  <div style="display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:32px;">
+    <span id="monthly-label" style="font-size:0.875rem;color:var(--text);font-weight:500;">Monthly</span>
+    <div onclick="toggleBilling()" style="width:48px;height:26px;border-radius:100px;background:rgba(0,212,255,0.15);border:1px solid rgba(0,212,255,0.3);cursor:pointer;position:relative;" id="billing-track">
+      <div id="billing-thumb" style="position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--cyan);transition:transform 0.2s;"></div>
+    </div>
+    <span id="annual-label" style="font-size:0.875rem;color:var(--text-muted);">Annual</span>
+    <span id="annual-save" style="display:none;font-size:0.75rem;color:var(--green);background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.2);padding:3px 10px;border-radius:100px;">Save 20%</span>
+  </div>
+
+  <div class="pricing-grid">
     <!-- FREE -->
     <div class="pricing-card">
       <div class="plan-name">Free</div>
-      <div class="plan-price">
-        <div class="amount">$0</div>
-        <div class="period">/ month</div>
-      </div>
+      <div class="plan-price"><div class="amount">$0</div><div class="period">/ month</div></div>
       <div class="plan-tagline">Get a feel for the signals before committing.</div>
-      <a href="alphaedge-checkout.html?plan=free" class="plan-btn plan-btn-free">Get started free</a>
+      <a href="alphaedge-signup.html" class="plan-btn plan-btn-free">Get started free</a>
       <hr class="plan-divider">
       <ul class="plan-features">
         <li class="active"><span class="chk">✓</span> 2 signals per day (delayed 4hr)</li>
         <li class="active"><span class="chk">✓</span> Stocks & Crypto only</li>
         <li class="active"><span class="chk">✓</span> Weekly market recap email</li>
         <li class="active"><span class="chk">✓</span> Community read access</li>
+        <li class="active"><span class="chk">✓</span> Paper trading terminal</li>
         <li><span class="x">✗</span> Real-time alerts</li>
         <li><span class="x">✗</span> Forex & Options signals</li>
         <li><span class="x">✗</span> Educational courses</li>
@@ -717,17 +462,13 @@
       </ul>
     </div>
 
-    <!-- BASIC / PRO -->
+    <!-- PRO -->
     <div class="pricing-card featured">
       <div class="featured-badge">Most popular</div>
       <div class="plan-name">Pro</div>
-      <div class="plan-price">
-        <div class="dollar">$</div>
-        <div class="amount" style="color:var(--cyan)">49</div>
-        <div class="period">/ month</div>
-      </div>
-      <div class="plan-tagline">Everything you need to trade all markets live.</div>
-      <a href="alphaedge-checkout.html?plan=pro" class="plan-btn plan-btn-cyan">Start 7-day free trial</a>
+      <div class="plan-price"><div class="dollar">$</div><div class="amount" id="pro-price" style="color:var(--cyan)">49</div><div class="period" id="pro-period">/ month</div></div>
+      <div class="plan-tagline" id="pro-tagline">Everything you need to trade all markets live.</div>
+      <a href="alphaedge-checkout.html?plan=pro" class="plan-btn plan-btn-cyan" id="pro-btn">Start 7-day free trial</a>
       <hr class="plan-divider">
       <ul class="plan-features">
         <li class="active"><span class="chk">✓</span> Unlimited real-time signals</li>
@@ -737,7 +478,9 @@
         <li class="active"><span class="chk">✓</span> Community + analyst discussion threads</li>
         <li class="active"><span class="chk">✓</span> Weekly live webinar with lead trader</li>
         <li class="active"><span class="chk">✓</span> Core education library (20+ courses)</li>
+        <li class="active"><span class="chk">✓</span> 💻 Full trading terminal + live broker connect</li>
         <li><span class="x">✗</span> 1-on-1 analyst sessions</li>
+        <li><span class="x">✗</span> Proprietary scanner</li>
       </ul>
     </div>
 
@@ -745,13 +488,9 @@
     <div class="pricing-card elite">
       <div class="elite-badge">Elite</div>
       <div class="plan-name">Elite</div>
-      <div class="plan-price">
-        <div class="dollar">$</div>
-        <div class="amount" style="color:var(--gold)">149</div>
-        <div class="period">/ month</div>
-      </div>
-      <div class="plan-tagline">For serious traders who want the full advantage.</div>
-      <a href="alphaedge-checkout.html?plan=elite" class="plan-btn plan-btn-gold">Join Elite</a>
+      <div class="plan-price"><div class="dollar">$</div><div class="amount" id="elite-price" style="color:var(--gold)">149</div><div class="period" id="elite-period">/ month</div></div>
+      <div class="plan-tagline" id="elite-tagline">For serious traders who want the full advantage.</div>
+      <a href="alphaedge-checkout.html?plan=elite" class="plan-btn plan-btn-gold" id="elite-btn">Join Elite</a>
       <hr class="plan-divider">
       <ul class="plan-features">
         <li class="active"><span class="chk" style="color:var(--gold)">✓</span> Everything in Pro</li>
@@ -761,10 +500,46 @@
         <li class="active"><span class="chk" style="color:var(--gold)">✓</span> Exclusive Elite-only Telegram channel</li>
         <li class="active"><span class="chk" style="color:var(--gold)">✓</span> Full education vault (60+ courses)</li>
         <li class="active"><span class="chk" style="color:var(--gold)">✓</span> Portfolio review & feedback</li>
+        <li class="active"><span class="chk" style="color:var(--gold)">✓</span> 💻 Terminal + advanced scanner integration</li>
         <li class="active"><span class="chk" style="color:var(--gold)">✓</span> Early access to new features</li>
       </ul>
     </div>
+  </div>
 
+  <!-- COMPARE TABLE -->
+  <div style="margin-top:48px;background:var(--navy-card);border:1px solid var(--navy-border);border-radius:16px;overflow:hidden;">
+    <div style="padding:20px 28px;border-bottom:1px solid var(--navy-border);font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1rem;">Full feature comparison</div>
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+        <thead>
+          <tr style="border-bottom:1px solid var(--navy-border);">
+            <th style="padding:14px 28px;text-align:left;color:var(--text-muted);font-weight:600;width:40%;">Feature</th>
+            <th style="padding:14px 20px;text-align:center;color:var(--text-muted);font-weight:600;">Free</th>
+            <th style="padding:14px 20px;text-align:center;color:var(--cyan);font-weight:600;">Pro</th>
+            <th style="padding:14px 20px;text-align:center;color:var(--gold);font-weight:600;">Elite</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="border-bottom:1px solid rgba(30,45,69,0.5);"><td style="padding:12px 28px;color:var(--text-muted);">Signals per day</td><td style="padding:12px 20px;text-align:center;color:var(--text-muted);">2 (delayed)</td><td style="padding:12px 20px;text-align:center;color:var(--text);">Unlimited</td><td style="padding:12px 20px;text-align:center;color:var(--text);">Unlimited (priority)</td></tr>
+          <tr style="border-bottom:1px solid rgba(30,45,69,0.5);"><td style="padding:12px 28px;color:var(--text-muted);">Markets covered</td><td style="padding:12px 20px;text-align:center;color:var(--text-muted);">2</td><td style="padding:12px 20px;text-align:center;color:var(--text);">4</td><td style="padding:12px 20px;text-align:center;color:var(--text);">4</td></tr>
+          <tr style="border-bottom:1px solid rgba(30,45,69,0.5);"><td style="padding:12px 28px;color:var(--text-muted);">Telegram alerts</td><td style="padding:12px 20px;text-align:center;color:var(--text-dim);">✗</td><td style="padding:12px 20px;text-align:center;color:var(--green);">✓</td><td style="padding:12px 20px;text-align:center;color:var(--green);">✓ Priority</td></tr>
+          <tr style="border-bottom:1px solid rgba(30,45,69,0.5);"><td style="padding:12px 28px;color:var(--text-muted);">Trading terminal</td><td style="padding:12px 20px;text-align:center;color:var(--text-muted);">Paper only</td><td style="padding:12px 20px;text-align:center;color:var(--green);">✓ Full access</td><td style="padding:12px 20px;text-align:center;color:var(--green);">✓ + Live brokers</td></tr>
+          <tr style="border-bottom:1px solid rgba(30,45,69,0.5);"><td style="padding:12px 28px;color:var(--text-muted);">Education courses</td><td style="padding:12px 20px;text-align:center;color:var(--text-dim);">✗</td><td style="padding:12px 20px;text-align:center;color:var(--green);">20+ courses</td><td style="padding:12px 20px;text-align:center;color:var(--green);">60+ courses</td></tr>
+          <tr style="border-bottom:1px solid rgba(30,45,69,0.5);"><td style="padding:12px 28px;color:var(--text-muted);">Proprietary scanner</td><td style="padding:12px 20px;text-align:center;color:var(--text-dim);">✗</td><td style="padding:12px 20px;text-align:center;color:var(--text-dim);">✗</td><td style="padding:12px 20px;text-align:center;color:var(--green);">✓</td></tr>
+          <tr style="border-bottom:1px solid rgba(30,45,69,0.5);"><td style="padding:12px 28px;color:var(--text-muted);">1-on-1 analyst sessions</td><td style="padding:12px 20px;text-align:center;color:var(--text-dim);">✗</td><td style="padding:12px 20px;text-align:center;color:var(--text-dim);">✗</td><td style="padding:12px 20px;text-align:center;color:var(--green);">Monthly (60 min)</td></tr>
+          <tr><td style="padding:12px 28px;color:var(--text-muted);">Crypto wallet</td><td style="padding:12px 20px;text-align:center;color:var(--green);">✓</td><td style="padding:12px 20px;text-align:center;color:var(--green);">✓</td><td style="padding:12px 20px;text-align:center;color:var(--green);">✓</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TRUST ROW -->
+  <div style="display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap;margin-top:36px;padding-top:32px;border-top:1px solid var(--navy-border);">
+    <div style="display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--text-muted);">🔒 SSL encrypted</div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--text-muted);">↩️ Cancel anytime</div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--text-muted);">✅ 7-day free trial on Pro</div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--text-muted);">💳 Powered by Stripe</div>
+    <div style="display:flex;align-items:center;gap:8px;font-size:0.82rem;color:var(--text-muted);">₿ Crypto payments accepted</div>
   </div>
 </section>
 
@@ -772,78 +547,28 @@
 <section class="community-section" id="community">
   <div class="community-inner">
     <div class="section-label">Community</div>
-    <h2 class="section-title">Trade alongside 14,000+ members.</h2>
+    <h2 class="section-title">Trade alongside 12,400+ members.</h2>
     <p class="section-sub">AlphaEdge is more than signals — it's a community of traders learning together, sharing setups, and holding each other accountable.</p>
-
     <div class="community-grid">
       <div class="testimonial-stack">
         <div class="testimonial">
-          <div class="test-quote">
-            "I've tried 6 signal services. AlphaEdge is the first one that actually explains <span class="highlight">why</span> each trade is taken. The education alongside the signals changed how I think about markets."
-          </div>
-          <div class="test-author">
-            <div class="test-avatar">MR</div>
-            <div>
-              <div class="test-name">Marcus R.</div>
-              <div class="test-handle">Elite member · Forex trader · 14 months</div>
-            </div>
-          </div>
+          <div class="test-quote">"I've tried 6 signal services. AlphaEdge is the first one that actually explains <span class="highlight">why</span> each trade is taken. The education alongside the signals changed how I think about markets."</div>
+          <div class="test-author"><div class="test-avatar">MR</div><div><div class="test-name">Marcus R.</div><div class="test-handle">Elite member · Forex trader · 14 months</div></div></div>
         </div>
         <div class="testimonial">
-          <div class="test-quote">
-            "The crypto signals are genuinely on another level. <span class="highlight">+340% on my BTC calls</span> over the last quarter. I've never had results like this with any other service."
-          </div>
-          <div class="test-author">
-            <div class="test-avatar">JL</div>
-            <div>
-              <div class="test-name">Jamie L.</div>
-              <div class="test-handle">Pro member · Crypto trader · 8 months</div>
-            </div>
-          </div>
+          <div class="test-quote">"The trading terminal is what sold me. I can paper trade the signals first to build confidence, then go live with my Binance account. <span class="highlight">No other service offers this.</span>"</div>
+          <div class="test-author"><div class="test-avatar">JL</div><div><div class="test-name">Jamie L.</div><div class="test-handle">Pro member · Crypto trader · 8 months</div></div></div>
         </div>
         <div class="testimonial">
-          <div class="test-quote">
-            "The Telegram community alone is worth the subscription. Fast, signal updates, live commentary from analysts during market hours — it feels like trading with a team."
-          </div>
-          <div class="test-author">
-            <div class="test-avatar">SK</div>
-            <div>
-              <div class="test-name">Sophie K.</div>
-              <div class="test-handle">Pro member · Equities trader · 5 months</div>
-            </div>
-          </div>
+          <div class="test-quote">"The Telegram community alone is worth the subscription. Fast signal updates, live commentary from analysts during market hours — <span class="highlight">it feels like trading with a team.</span>"</div>
+          <div class="test-author"><div class="test-avatar">SK</div><div><div class="test-name">Sophie K.</div><div class="test-handle">Pro member · Equities trader · 5 months</div></div></div>
         </div>
       </div>
-
       <div class="community-features">
-        <div class="cf-item">
-          <div class="cf-icon">💬</div>
-          <div>
-            <div class="cf-title">Live Telegram channels</div>
-            <div class="cf-desc">Real-time analyst commentary, signal updates, and open discussion during market hours across all zones.</div>
-          </div>
-        </div>
-        <div class="cf-item">
-          <div class="cf-icon">🎓</div>
-          <div>
-            <div class="cf-title">Education vault</div>
-            <div class="cf-desc">Courses on technical analysis, risk management, options mechanics, crypto on-chain analysis, and more — taught by working traders.</div>
-          </div>
-        </div>
-        <div class="cf-item">
-          <div class="cf-icon">📅</div>
-          <div>
-            <div class="cf-title">Weekly live webinars</div>
-            <div class="cf-desc">Join our lead traders every week for market outlook sessions, trade reviews, and live Q&A.</div>
-          </div>
-        </div>
-        <div class="cf-item">
-          <div class="cf-icon">📊</div>
-          <div>
-            <div class="cf-title">Transparent performance</div>
-            <div class="cf-desc">Full signal history with verified P&L. No cherry-picked results. Every call, every outcome — published and searchable.</div>
-          </div>
-        </div>
+        <div class="cf-item"><div class="cf-icon">💬</div><div><div class="cf-title">Live Telegram channels</div><div class="cf-desc">Real-time analyst commentary, signal updates, and open discussion during market hours across all zones.</div></div></div>
+        <div class="cf-item"><div class="cf-icon">💻</div><div><div class="cf-title">Built-in trading terminal</div><div class="cf-desc">Paper trade or go live with your broker. AlphaEdge signals appear directly in the terminal so you can execute in seconds.</div></div></div>
+        <div class="cf-item"><div class="cf-icon">🎓</div><div><div class="cf-title">Education vault</div><div class="cf-desc">Courses on technical analysis, risk management, options mechanics, and crypto on-chain analysis — taught by working traders.</div></div></div>
+        <div class="cf-item"><div class="cf-icon">📊</div><div><div class="cf-title">Transparent performance</div><div class="cf-desc">Full signal history with verified P&L. No cherry-picked results. Every call, every outcome — published and searchable.</div></div></div>
       </div>
     </div>
   </div>
@@ -855,7 +580,7 @@
   <p>Join free today — no credit card required. Upgrade when you're ready.</p>
   <div class="cta-actions">
     <a href="alphaedge-checkout.html" class="btn-primary btn-large">Start for free</a>
-    <a href="#pricing" class="btn-ghost btn-large">Compare plans</a>
+    <a href="alphaedge-trading-terminal.html" class="btn-ghost btn-large">💻 Try the terminal</a>
   </div>
 </section>
 
@@ -869,127 +594,81 @@
   <div class="footer-inner">
     <div class="footer-brand">
       <div class="logo">Alpha<span>Edge</span></div>
-      <p>Institutional-grade signals and education for independent traders across all markets.</p>
+      <p>Institutional-grade signals, a full trading terminal, and education for independent traders across all markets.</p>
     </div>
     <div class="footer-col">
       <h4>Product</h4>
       <a href="#markets">Signals</a>
-      <a href="#how">Education</a>
-      <a href="#community">Community</a>
-      <a href="#pricing">Performance</a>
+      <a href="#terminal">Trading Terminal</a>
+      <a href="alphaedge-wallet.html">Wallet</a>
+      <a href="alphaedge-community.html">Community</a>
     </div>
     <div class="footer-col">
       <h4>Markets</h4>
-      <a href="#markets">Stocks</a>
-      <a href="#markets">Forex</a>
-      <a href="#markets">Crypto</a>
-      <a href="#markets">Options</a>
+      <a href="alphaedge-markets-stocks.html">Stocks</a>
+      <a href="alphaedge-markets-forex.html">Forex</a>
+      <a href="alphaedge-markets-crypto.html">Crypto</a>
+      <a href="alphaedge-markets-options.html">Options</a>
     </div>
     <div class="footer-col">
       <h4>Company</h4>
       <a href="alphaedge-about.html">About</a>
       <a href="alphaedge-blog.html">Blog</a>
+      <a href="alphaedge-support.html">Support</a>
       <a href="alphaedge-terms.html">Terms</a>
       <a href="alphaedge-privacy.html">Privacy</a>
-      <a href="alphaedge-copyright.html">Copyright & DMCA</a>
-      <a href="alphaedge-careers.html">Careers</a>
-      <a href="alphaedge-wallet.html">Wallet</a>
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2026 AlphaEdge LLC. All rights reserved. AlphaEdge™, Fortunex™, and Cloutium™ are trademarks of AlphaEdge LLC.</span>
-    <span>Not financial advice. Trade responsibly.</span>
+    <span>© 2026 AlphaEdge. All rights reserved. Not financial advice. Trade responsibly.</span>
+    <span style="display:flex;gap:16px;"><a href="https://t.me/AlphaEdgeProBot" style="color:var(--text-dim);text-decoration:none;">Telegram</a></span>
   </div>
 </footer>
 
 <script>
-  // Build live ticker
-  const items = [
-    { sym: 'NVDA', price: '$1,142.50', chg: '+2.8%', up: true, signal: 'BUY' },
-    { sym: 'EUR/USD', price: '1.08420', chg: '-0.3%', up: false, signal: 'SELL' },
-    { sym: 'BTC/USD', price: '$67,420', chg: '+4.1%', up: true, signal: 'BUY' },
-    { sym: 'AAPL', price: '$198.30', chg: '+1.2%', up: true, signal: 'BUY' },
-    { sym: 'GBP/JPY', price: '191.24', chg: '+0.5%', up: true, signal: 'BUY' },
-    { sym: 'ETH/USD', price: '$3,812', chg: '+3.3%', up: true, signal: 'BUY' },
-    { sym: 'SPY 490C', price: '$3.40', chg: '+18%', up: true, signal: 'BUY' },
-    { sym: 'GOLD', price: '$2,318', chg: '-0.4%', up: false, signal: 'SELL' },
-    { sym: 'TSLA', price: '$185.60', chg: '-1.7%', up: false, signal: 'SELL' },
-    { sym: 'XRP/USD', price: '$0.5820', chg: '+6.2%', up: true, signal: 'BUY' },
-  ];
-
-  function buildTicker(container) {
-    // duplicate for seamless loop
-    const all = [...items, ...items];
-    all.forEach(item => {
-      const el = document.createElement('div');
-      el.className = 'ticker-item';
-      el.innerHTML = `
-        <span class="sym">${item.sym}</span>
-        <span class="${item.up ? 'up' : 'dn'}">${item.price}</span>
-        <span class="${item.up ? 'up' : 'dn'}">${item.chg}</span>
-        <span class="signal-badge">${item.signal}</span>
-      `;
-      container.appendChild(el);
-    });
-  }
-
-  buildTicker(document.getElementById('ticker'));
-
-  // Animate signal cards on scroll
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.style.opacity = '1';
-        e.target.style.transform = 'translateY(0)';
-      }
-    });
-  }, { threshold: 0.1 });
-
-  document.querySelectorAll('.market-card, .pricing-card, .testimonial, .how-step').forEach(el => {
-    el.style.opacity = '0';
-    el.style.transform = 'translateY(20px)';
-    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-    observer.observe(el);
+// TICKER
+const tickerItems = [
+  { sym:'NVDA', price:'$1,142.50', chg:'+2.8%', up:true, signal:'BUY' },
+  { sym:'EUR/USD', price:'1.08420', chg:'-0.3%', up:false, signal:'SELL' },
+  { sym:'BTC/USD', price:'$67,420', chg:'+4.1%', up:true, signal:'BUY' },
+  { sym:'AAPL', price:'$198.30', chg:'+1.2%', up:true, signal:'BUY' },
+  { sym:'GBP/JPY', price:'191.24', chg:'+0.5%', up:true, signal:'BUY' },
+  { sym:'ETH/USD', price:'$3,812', chg:'+3.3%', up:true, signal:'BUY' },
+  { sym:'SPY 490C', price:'$3.40', chg:'+18%', up:true, signal:'BUY' },
+  { sym:'GOLD', price:'$2,318', chg:'-0.4%', up:false, signal:'SELL' },
+  { sym:'TSLA', price:'$185.60', chg:'-1.7%', up:false, signal:'SELL' },
+  { sym:'XRP/USD', price:'$0.5820', chg:'+6.2%', up:true, signal:'BUY' },
+];
+function buildTicker(container) {
+  [...tickerItems, ...tickerItems].forEach(item => {
+    const el = document.createElement('div');
+    el.className = 'ticker-item';
+    el.innerHTML = `<span class="sym">${item.sym}</span><span class="${item.up?'up':'dn'}">${item.price}</span><span class="${item.up?'up':'dn'}">${item.chg}</span><span class="signal-badge">${item.signal}</span>`;
+    container.appendChild(el);
   });
-</script>
+}
+buildTicker(document.getElementById('ticker'));
 
-<!-- AUTH MODAL (shared component) -->
-<script src="alphaedge-auth-modal.js"></script>
-<script>
-  // Session awareness — swap Sign In for Dashboard link if user is logged in
-  // TODO: replace token check with your real session/cookie validation
-  (function() {
-    const token = localStorage.getItem('ae_token');
-    if (token) {
-      document.getElementById('nav-signin-btn').style.display = 'none';
-      document.getElementById('nav-dashboard-btn').style.display = 'inline-block';
-    }
-  })();
-</script>
-<script>
+// SCROLL ANIMATIONS
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.style.opacity='1'; e.target.style.transform='translateY(0)'; }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.market-card, .pricing-card, .testimonial, .how-step, .terminal-card').forEach(el => {
+  el.style.opacity='0'; el.style.transform='translateY(20px)';
+  el.style.transition='opacity 0.5s ease, transform 0.5s ease';
+  observer.observe(el);
+});
+
+// MARKET SIGNAL FEEDS
 const signals = {
-  stocks: [
-    {ticker:'AAPL',action:'BUY',time:'2m ago'},{ticker:'NVDA',action:'BUY',time:'5m ago'},
-    {ticker:'TSLA',action:'SELL',time:'8m ago'},{ticker:'SPY',action:'BUY',time:'11m ago'},
-    {ticker:'MSFT',action:'BUY',time:'14m ago'},{ticker:'AMZN',action:'SELL',time:'18m ago'}
-  ],
-  forex: [
-    {ticker:'EUR/USD',action:'BUY',time:'3m ago'},{ticker:'GBP/JPY',action:'SELL',time:'7m ago'},
-    {ticker:'USD/CHF',action:'SELL',time:'10m ago'},{ticker:'AUD/USD',action:'BUY',time:'15m ago'}
-  ],
-  crypto: [
-    {ticker:'BTC',action:'BUY',time:'1m ago'},{ticker:'ETH',action:'BUY',time:'4m ago'},
-    {ticker:'SOL',action:'SELL',time:'9m ago'},{ticker:'XRP',action:'BUY',time:'13m ago'},
-    {ticker:'DOGE',action:'SELL',time:'17m ago'}
-  ],
-  options: [
-    {ticker:'SPX 0DTE',action:'BUY',time:'6m ago'},{ticker:'QQQ PUT',action:'BUY',time:'12m ago'},
-    {ticker:'TSLA CALL',action:'SELL',time:'16m ago'},{ticker:'GLD',action:'BUY',time:'24m ago'}
-  ]
+  stocks: [{ticker:'AAPL',action:'BUY',time:'2m ago'},{ticker:'NVDA',action:'BUY',time:'5m ago'},{ticker:'TSLA',action:'SELL',time:'8m ago'},{ticker:'SPY',action:'BUY',time:'11m ago'},{ticker:'MSFT',action:'BUY',time:'14m ago'},{ticker:'AMZN',action:'SELL',time:'18m ago'}],
+  forex: [{ticker:'EUR/USD',action:'BUY',time:'3m ago'},{ticker:'GBP/JPY',action:'SELL',time:'7m ago'},{ticker:'USD/CHF',action:'SELL',time:'10m ago'},{ticker:'AUD/USD',action:'BUY',time:'15m ago'}],
+  crypto: [{ticker:'BTC',action:'BUY',time:'1m ago'},{ticker:'ETH',action:'BUY',time:'4m ago'},{ticker:'SOL',action:'SELL',time:'9m ago'},{ticker:'XRP',action:'BUY',time:'13m ago'},{ticker:'DOGE',action:'SELL',time:'17m ago'}],
+  options: [{ticker:'SPX 0DTE',action:'BUY',time:'6m ago'},{ticker:'QQQ PUT',action:'BUY',time:'12m ago'},{ticker:'TSLA CALL',action:'SELL',time:'16m ago'},{ticker:'GLD',action:'BUY',time:'24m ago'}]
 };
-
 let offsets = {stocks:0,forex:0,crypto:0,options:0};
-
 function renderFeed(feedId, data, offset) {
   const el = document.getElementById(feedId);
   if (!el) return;
@@ -999,19 +678,45 @@ function renderFeed(feedId, data, offset) {
     const idx = (i + offset) % data.length;
     const item = document.createElement('div');
     item.className = 'signal-item';
-    item.innerHTML = `<span class="signal-ticker">${data[idx].ticker}</span><span class="signal-action ${data[idx].action==='BUY'?'signal-buy':'signal-sell'}">${data[idx].action}</span><span class="signal-time">${data[idx].time}</span>`;
+    item.innerHTML = `<span class="signal-ticker">${data[idx].ticker}</span><span class="signal-action ${data[idx].action==='BUY'?'signal-buy':'signal-sell'}">${data[idx].action}</span><span style="font-size:10px;color:var(--text-muted)">${data[idx].time}</span>`;
     el.insertBefore(item, fade);
   });
 }
-
 ['stocks','forex','crypto','options'].forEach(m => renderFeed('feed-'+m, signals[m], 0));
-
 setInterval(() => {
   ['stocks','forex','crypto','options'].forEach(m => {
     offsets[m] = (offsets[m] + 1) % signals[m].length;
     renderFeed('feed-'+m, signals[m], offsets[m]);
   });
 }, 3000);
+
+// BILLING TOGGLE
+let isAnnual = false;
+function toggleBilling() {
+  isAnnual = !isAnnual;
+  document.getElementById('billing-thumb').style.transform = isAnnual ? 'translateX(22px)' : 'translateX(0)';
+  document.getElementById('annual-save').style.display = isAnnual ? 'inline' : 'none';
+  document.getElementById('monthly-label').style.color = isAnnual ? 'var(--text-muted)' : 'var(--text)';
+  document.getElementById('annual-label').style.color = isAnnual ? 'var(--text)' : 'var(--text-muted)';
+  document.getElementById('pro-price').textContent = isAnnual ? '470' : '49';
+  document.getElementById('pro-period').textContent = isAnnual ? '/ year' : '/ month';
+  document.getElementById('pro-tagline').textContent = isAnnual ? 'Save $118 vs monthly billing.' : 'Everything you need to trade all markets live.';
+  document.getElementById('pro-btn').textContent = isAnnual ? 'Get Pro Annual' : 'Start 7-day free trial';
+  document.getElementById('elite-price').textContent = isAnnual ? '1430' : '149';
+  document.getElementById('elite-period').textContent = isAnnual ? '/ year' : '/ month';
+  document.getElementById('elite-tagline').textContent = isAnnual ? 'Save $358 vs monthly billing.' : 'For serious traders who want the full advantage.';
+  document.getElementById('elite-btn').textContent = isAnnual ? 'Get Elite Annual' : 'Join Elite';
+}
+
+// SESSION CHECK
+(function() {
+  const token = localStorage.getItem('ae_token');
+  if (token) {
+    document.getElementById('nav-signin-btn').style.display = 'none';
+    document.getElementById('nav-dashboard-btn').style.display = 'inline-block';
+  }
+})();
 </script>
+<script src="alphaedge-auth-modal.js"></script>
 </body>
 </html>
