@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlphaEdge Coin (AEC) — The Official AlphaEdge Token</title>
+<meta name="description" content="AlphaEdge Coin (AEC) — AI-powered trading meets blockchain. Buy on PumpFun, track live on DexScreener.">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #050816; --navy-card: #0b1630; --navy-border: #24335f;
+    --navy-hover: #0f1f40; --cyan: #00e5ff; --gold: #f7c948;
+    --green: #00E676; --red: #FF4B4B; --text: #fdfdff;
+    --text-muted: #b7c0e8; --text-dim: #3A4A6B;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: radial-gradient(circle at top, #1b2b5a 0%, #050816 55%, #000000 100%); color: var(--text); font-family: 'Inter', sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; min-height: 100vh; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 64px; background: linear-gradient(90deg, rgba(10,20,60,0.95), rgba(10,40,90,0.95)); border-bottom: 1px solid var(--navy-border); backdrop-filter: blur(12px); }
+  .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .nav-logo span { color: var(--cyan); }
+  .nav-logo-coin { width: 32px; height: 32px; border-radius: 50%; box-shadow: 0 0 12px rgba(247,201,72,0.8); animation: glow 2.5s ease-in-out infinite; }
+  @keyframes glow { 0%,100%{box-shadow:0 0 12px rgba(247,201,72,0.6)} 50%{box-shadow:0 0 28px rgba(247,201,72,1)} }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--cyan); }
+  .nav-cta { display: flex; gap: 10px; align-items: center; }
+  .btn-ghost { background: none; border: 1px solid var(--navy-border); color: var(--text-muted); padding: 7px 18px; border-radius: 6px; font-size: 0.875rem; font-weight: 500; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.2s; text-decoration: none; }
+  .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
+  .btn-buy { background: linear-gradient(90deg, #f7c948, #ff9f1c); color: #02040a; border: none; padding: 8px 20px; border-radius: 6px; font-size: 0.875rem; font-weight: 700; cursor: pointer; font-family: 'Space Grotesk', sans-serif; transition: all 0.2s; text-decoration: none; box-shadow: 0 0 14px rgba(247,201,72,0.5); }
+  .btn-buy:hover { transform: translateY(-1px); box-shadow: 0 0 20px rgba(247,201,72,0.8); }
+
+  /* TICKER */
+  .ticker-wrap { position: fixed; top: 64px; left: 0; right: 0; z-index: 99; overflow: hidden; height: 34px; display: flex; align-items: center; background: linear-gradient(90deg, #f7c948, #00e5ff); }
+  .ticker-label { background: rgba(0,0,0,0.3); color: #02040a; font-family: 'Space Mono', monospace; font-size: 0.65rem; font-weight: 700; padding: 0 12px; height: 100%; display: flex; align-items: center; white-space: nowrap; flex-shrink: 0; letter-spacing: 0.08em; }
+  .ticker-track { display: flex; gap: 0; animation: ticker 25s linear infinite; white-space: nowrap; flex: 1; overflow: hidden; }
+  .ticker-text { font-family: 'Space Mono', monospace; font-size: 0.72rem; color: #02040a; font-weight: 600; padding: 0 20px; }
+  @keyframes ticker { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  /* HERO */
+  .hero { padding: 140px 40px 80px; max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(247,201,72,0.12); border: 1px solid rgba(247,201,72,0.3); color: var(--gold); font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 14px; border-radius: 100px; margin-bottom: 20px; }
+  .hero-eyebrow::before { content:''; width:6px; height:6px; border-radius:50%; background:var(--gold); animation: pulse 1.5s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2rem, 4vw, 3.2rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 16px; }
+  h1 .gradient { background: linear-gradient(90deg, #f7c948, #00e5ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .hero-sub { color: var(--text-muted); font-size: 1rem; line-height: 1.7; margin-bottom: 28px; max-width: 480px; }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .btn-large { padding: 13px 28px; font-size: 0.95rem; border-radius: 8px; }
+  .btn-primary-large { background: linear-gradient(90deg, #f7c948, #ff9f1c); color: #02040a; font-weight: 700; font-family: 'Space Grotesk', sans-serif; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; border: none; cursor: pointer; box-shadow: 0 0 18px rgba(247,201,72,0.6); }
+  .btn-primary-large:hover { transform: translateY(-2px); box-shadow: 0 0 28px rgba(247,201,72,0.9); }
+  .btn-secondary-large { background: none; color: var(--cyan); border: 1px solid var(--cyan); font-family: 'Space Grotesk', sans-serif; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: all 0.2s; cursor: pointer; }
+  .btn-secondary-large:hover { background: rgba(0,229,255,0.08); transform: translateY(-2px); }
+
+  /* CONTRACT BOX */
+  .contract-box { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 12px; padding: 14px 18px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  .contract-label { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 4px; }
+  .contract-address { font-family: 'Space Mono', monospace; font-size: 0.78rem; color: var(--cyan); word-break: break-all; }
+  .copy-btn { padding: 7px 16px; background: var(--cyan); color: #02040a; border: none; border-radius: 6px; font-size: 0.78rem; font-weight: 700; cursor: pointer; font-family: 'Space Grotesk', sans-serif; white-space: nowrap; flex-shrink: 0; transition: all 0.2s; }
+  .copy-btn:hover { background: #33EEFF; }
+
+  /* COIN ANIMATION */
+  .hero-coin-wrap { position: relative; display: flex; align-items: center; justify-content: center; }
+  .coin-ring-outer { position: absolute; width: 320px; height: 320px; border-radius: 50%; border: 1px solid rgba(0,229,255,0.3); box-shadow: 0 0 40px rgba(0,229,255,0.6); animation: spin 10s linear infinite; }
+  .coin-ring-inner { position: absolute; width: 260px; height: 260px; border-radius: 50%; border: 1px dashed rgba(247,201,72,0.3); animation: spin 6s linear infinite reverse; }
+  @keyframes spin { 0%{transform:rotate(0deg)} 100%{transform:rotate(360deg)} }
+  .hero-coin-img { width: 200px; height: 200px; border-radius: 50%; box-shadow: 0 0 50px rgba(247,201,72,0.9); animation: coinPulse 4s ease-in-out infinite; position: relative; z-index: 2; object-fit: cover; }
+  @keyframes coinPulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.06)} }
+
+  /* STATS */
+  .stats-section { max-width: 1200px; margin: 0 auto; padding: 0 40px 60px; }
+  .stats-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; }
+  .stat-card { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 14px; padding: 18px 20px; transition: all 0.2s; position: relative; overflow: hidden; }
+  .stat-card::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background: linear-gradient(90deg, var(--gold), transparent); }
+  .stat-card:hover { transform: translateY(-3px); box-shadow: 0 0 20px rgba(0,229,255,0.3); border-color: var(--cyan); }
+  .stat-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .stat-value { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; color: var(--gold); }
+  .stat-change { font-size: 0.75rem; margin-top: 4px; }
+  .stat-change.up { color: var(--green); }
+  .stat-change.dn { color: var(--red); }
+
+  /* PROGRESS */
+  .progress-section { max-width: 1200px; margin: 0 auto; padding: 0 40px 60px; }
+  .section-eyebrow { font-family: 'Space Mono', monospace; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; }
+  .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 10px; }
+  .section-title .grad { background: linear-gradient(90deg, #f7c948, #00e5ff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .section-sub { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 24px; max-width: 560px; }
+  .progress-card { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 16px; padding: 24px; box-shadow: 0 0 24px rgba(0,229,255,0.1); }
+  .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+  .progress-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.95rem; }
+  .progress-pct { font-family: 'Space Mono', monospace; font-size: 1.1rem; font-weight: 700; color: var(--gold); }
+  .progress-bar { width: 100%; height: 20px; background: #11172c; border-radius: 100px; overflow: hidden; border: 1px solid var(--navy-border); margin-bottom: 10px; }
+  .progress-fill { height: 100%; width: 0%; background: linear-gradient(90deg, #f7c948, #00e5ff); transition: width 0.6s ease; border-radius: 100px; }
+  .progress-labels { display: flex; justify-content: space-between; font-size: 0.72rem; color: var(--text-muted); }
+
+  /* CHART SECTION */
+  .chart-section { max-width: 1200px; margin: 0 auto; padding: 0 40px 60px; }
+  .chart-card { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 16px; overflow: hidden; }
+  .chart-card iframe { width: 100%; height: 400px; border: none; display: block; }
+
+  /* AI SECTION */
+  .ai-section { max-width: 1200px; margin: 0 auto; padding: 0 40px 60px; }
+  .ai-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 20px; padding: 40px; }
+  .ai-features { display: flex; flex-direction: column; gap: 16px; margin-top: 20px; }
+  .ai-feature { display: flex; align-items: flex-start; gap: 14px; }
+  .ai-feature-icon { width: 40px; height: 40px; border-radius: 10px; background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+  .ai-feature-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.9rem; margin-bottom: 3px; }
+  .ai-feature-desc { font-size: 0.82rem; color: var(--text-muted); }
+  .ai-img { width: 100%; border-radius: 16px; border: 1px solid var(--navy-border); box-shadow: 0 0 30px rgba(0,229,255,0.4); object-fit: cover; max-height: 320px; }
+
+  /* HOW TO BUY */
+  .buy-section { max-width: 1200px; margin: 0 auto; padding: 0 40px 60px; }
+  .buy-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 24px; }
+  .buy-step { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 14px; padding: 22px; position: relative; }
+  .buy-step-num { font-family: 'Space Mono', monospace; font-size: 0.68rem; font-weight: 700; color: var(--cyan); background: rgba(0,229,255,0.1); border: 1px solid rgba(0,229,255,0.2); width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; }
+  .buy-step-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.9rem; margin-bottom: 6px; }
+  .buy-step-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+  .buy-step-link { display: inline-block; margin-top: 10px; font-size: 0.78rem; color: var(--cyan); text-decoration: none; font-weight: 600; }
+  .buy-step-link:hover { text-decoration: underline; }
+
+  /* CTA BANNER */
+  .cta-section { max-width: 1200px; margin: 0 auto; padding: 0 40px 60px; }
+  .cta-card { background: linear-gradient(135deg, rgba(247,201,72,0.1), rgba(0,229,255,0.06)); border: 1px solid rgba(247,201,72,0.25); border-radius: 20px; padding: 48px; text-align: center; }
+  .cta-card h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; margin-bottom: 12px; }
+  .cta-card p { color: var(--text-muted); margin-bottom: 28px; }
+  .cta-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+
+  /* FOOTER */
+  footer { background: rgba(5,8,22,0.9); border-top: 1px solid var(--navy-border); padding: 32px 40px; }
+  .footer-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+  .footer-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; }
+  .footer-logo span { color: var(--cyan); }
+  .footer-links { display: flex; gap: 20px; flex-wrap: wrap; }
+  .footer-links a { font-size: 0.82rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--cyan); }
+  .footer-disclaimer { max-width: 1200px; margin: 16px auto 0; font-size: 0.72rem; color: var(--text-dim); border-top: 1px solid var(--navy-border); padding-top: 16px; }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 20px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 120px 20px 40px; gap: 40px; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .buy-steps { grid-template-columns: repeat(2, 1fr); }
+    .ai-grid { grid-template-columns: 1fr; }
+    .stats-section, .progress-section, .chart-section, .ai-section, .buy-section, .cta-section { padding-left: 20px; padding-right: 20px; }
+    footer { padding: 24px 20px; }
+  }
+  @media (max-width: 600px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .buy-steps { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="alphaedge-coin.png" alt="AEC" class="nav-logo-coin">
+    Alpha<span>Edge</span>
+  </a>
+  <div class="nav-links">
+    <a href="#stats">Live Stats</a>
+    <a href="#progress">Progress</a>
+    <a href="#chart">Chart</a>
+    <a href="#how-to-buy">How to Buy</a>
+    <a href="index.html">Main Site</a>
+  </div>
+  <div class="nav-cta">
+    <a href="alphaedge-dashboard.html" class="btn-ghost">Dashboard</a>
+    <a href="https://join.pump.fun/HSag/kgc2fiaa" target="_blank" class="btn-buy">Buy AEC 🚀</a>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker-label">⚡ AEC LIVE</div>
+  <div style="overflow:hidden;flex:1;display:flex;">
+    <div class="ticker-track">
+      <div class="ticker-text" id="ticker-content">Loading AlphaEdge Coin live data...</div>
+      <div class="ticker-text" id="ticker-content-2">Loading AlphaEdge Coin live data...</div>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-eyebrow">Now live on Solana</div>
+    <h1>The Future of<br><span class="gradient">AlphaEdge Coin</span><br>is Here</h1>
+    <p class="hero-sub">AEC blends AI trading intelligence, blockchain transparency, and the AlphaEdge ecosystem into a bold new digital asset on Solana. Trade smarter. Earn together.</p>
+    <div class="hero-actions">
+      <a href="https://join.pump.fun/HSag/kgc2fiaa" target="_blank" class="btn-large btn-primary-large">🚀 Buy on PumpFun</a>
+      <a href="https://dexscreener.com/solana/H9cfWQqA7vGf8zkJHsL5WDWeNghBCm2AwY26jfUDQ5tk" target="_blank" class="btn-large btn-secondary-large">📊 View Chart</a>
+    </div>
+    <div class="contract-box">
+      <div>
+        <div class="contract-label">Contract Address (Solana)</div>
+        <div class="contract-address">3qak68LnM1KAo7pVhtLxzZzpLbp8tv5KtELt5azfpump</div>
+      </div>
+      <button class="copy-btn" onclick="copyContract()">📋 Copy</button>
+    </div>
+  </div>
+  <div class="hero-coin-wrap">
+    <div class="coin-ring-outer"></div>
+    <div class="coin-ring-inner"></div>
+    <img class="hero-coin-img" src="alphaedge-coin.png" alt="AlphaEdge Coin">
+  </div>
+</section>
+
+<!-- LIVE STATS -->
+<div class="stats-section" id="stats">
+  <div class="section-eyebrow">Live Market Data</div>
+  <div class="section-title">AEC <span class="grad">Real-Time Stats</span></div>
+  <p class="section-sub">Pulled live from DexScreener every 15 seconds.</p>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-label">Price (USD)</div>
+      <div class="stat-value" id="stat-price">—</div>
+      <div class="stat-change up" id="stat-price-chg"></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Market Cap</div>
+      <div class="stat-value" id="stat-mcap">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">24h Volume</div>
+      <div class="stat-value" id="stat-vol">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Liquidity</div>
+      <div class="stat-value" id="stat-liq">—</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">24h Trades</div>
+      <div class="stat-value" id="stat-trades">—</div>
+    </div>
+  </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-section" id="progress">
+  <div class="section-eyebrow">Bonding Curve</div>
+  <div class="section-title">PumpFun <span class="grad">Progress</span></div>
+  <p class="section-sub">Live bonding curve progress toward graduation to Raydium DEX.</p>
+  <div class="progress-card">
+    <div class="progress-header">
+      <div class="progress-title">🎯 Graduation Progress</div>
+      <div class="progress-pct" id="prog-pct">—%</div>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="prog-fill"></div></div>
+    <div class="progress-labels"><span>0%</span><span>Raydium at 100%</span></div>
+  </div>
+</div>
+
+<!-- LIVE CHART -->
+<div class="chart-section" id="chart">
+  <div class="section-eyebrow">Live Trading Chart</div>
+  <div class="section-title">DexScreener <span class="grad">Chart</span></div>
+  <p class="section-sub">Real-time AEC/SOL trading chart. Auto-refreshes every 30 seconds.</p>
+  <div class="chart-card">
+    <iframe id="dex-iframe" src="https://dexscreener.com/solana/H9cfWQqA7vGf8zkJHsL5WDWeNghBCm2AwY26jfUDQ5tk?embed=1&theme=dark" allowfullscreen></iframe>
+  </div>
+</div>
+
+<!-- AI SECTION -->
+<div class="ai-section">
+  <div class="ai-grid">
+    <div>
+      <div class="section-eyebrow">AI + Blockchain</div>
+      <div class="section-title" style="font-size:1.6rem;">Built on <span class="grad">AlphaEdge Intelligence</span></div>
+      <p style="color:var(--text-muted);font-size:0.9rem;margin-bottom:20px;">AEC is the native token of the AlphaEdge ecosystem — connecting AI trading signals, the terminal, and the community into one unified asset.</p>
+      <div class="ai-features">
+        <div class="ai-feature">
+          <div class="ai-feature-icon">🤖</div>
+          <div><div class="ai-feature-title">AI Trading Signals</div><div class="ai-feature-desc">AlphaEdge Pro & Elite members get real-time signals across stocks, forex, crypto and options.</div></div>
+        </div>
+        <div class="ai-feature">
+          <div class="ai-feature-icon">💻</div>
+          <div><div class="ai-feature-title">Trading Terminal</div><div class="ai-feature-desc">Paper trade or go live with Binance, Alpaca, or OANDA — all integrated into the AlphaEdge terminal.</div></div>
+        </div>
+        <div class="ai-feature">
+          <div class="ai-feature-icon">💬</div>
+          <div><div class="ai-feature-title">Community of 12,400+</div><div class="ai-feature-desc">Join the AlphaEdge Telegram and community — signals, wins, and live analyst commentary.</div></div>
+        </div>
+      </div>
+    </div>
+    <img src="alphaedge-ai-robot.png" alt="AlphaEdge AI Robot" class="ai-img">
+  </div>
+</div>
+
+<!-- HOW TO BUY -->
+<div class="buy-section" id="how-to-buy">
+  <div class="section-eyebrow">Get Started</div>
+  <div class="section-title">How to <span class="grad">Buy AEC</span></div>
+  <p class="section-sub">Get your AlphaEdge Coins in 4 simple steps.</p>
+  <div class="buy-steps">
+    <div class="buy-step">
+      <div class="buy-step-num">1</div>
+      <div class="buy-step-title">Get a Solana Wallet</div>
+      <div class="buy-step-desc">Download Phantom or Solflare wallet on your phone or browser.</div>
+      <a href="https://phantom.app" target="_blank" class="buy-step-link">Get Phantom →</a>
+    </div>
+    <div class="buy-step">
+      <div class="buy-step-num">2</div>
+      <div class="buy-step-title">Buy SOL</div>
+      <div class="buy-step-desc">Purchase Solana (SOL) on Coinbase, Binance, or Kraken and send to your wallet.</div>
+      <a href="https://coinbase.com" target="_blank" class="buy-step-link">Buy SOL →</a>
+    </div>
+    <div class="buy-step">
+      <div class="buy-step-num">3</div>
+      <div class="buy-step-title">Go to PumpFun</div>
+      <div class="buy-step-desc">Visit PumpFun and paste the AEC contract address to find the token.</div>
+      <a href="https://join.pump.fun/HSag/kgc2fiaa" target="_blank" class="buy-step-link">Open PumpFun →</a>
+    </div>
+    <div class="buy-step">
+      <div class="buy-step-num">4</div>
+      <div class="buy-step-title">Swap for AEC</div>
+      <div class="buy-step-desc">Connect your wallet, enter the amount of SOL to swap, and confirm. You now hold AEC!</div>
+      <a href="https://join.pump.fun/HSag/kgc2fiaa" target="_blank" class="buy-step-link">Buy AEC →</a>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-card">
+    <h2>Ready to join the <span class="gradient">AlphaEdge movement</span>?</h2>
+    <p>Buy AEC today and become part of the future of AI-powered trading on Solana.</p>
+    <div class="cta-actions">
+      <a href="https://join.pump.fun/HSag/kgc2fiaa" target="_blank" class="btn-large btn-primary-large">🚀 Buy AEC on PumpFun</a>
+      <a href="alphaedge-dashboard.html" class="btn-large btn-secondary-large">📡 View Signals</a>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo">Alpha<span>Edge</span> Coin</div>
+    <div class="footer-links">
+      <a href="index.html">Main Site</a>
+      <a href="alphaedge-dashboard.html">Dashboard</a>
+      <a href="alphaedge-community.html">Community</a>
+      <a href="https://dexscreener.com/solana/H9cfWQqA7vGf8zkJHsL5WDWeNghBCm2AwY26jfUDQ5tk" target="_blank">DexScreener</a>
+      <a href="https://join.pump.fun/HSag/kgc2fiaa" target="_blank">PumpFun</a>
+      <a href="alphaedge-terms.html">Terms</a>
+    </div>
+  </div>
+  <div class="footer-disclaimer">
+    ⚠️ AlphaEdge Coin (AEC) is a community token on the Solana blockchain. This is not financial advice. Cryptocurrency investments carry significant risk. Never invest more than you can afford to lose. AlphaEdge LLC is not responsible for token price performance.
+  </div>
+</footer>
+
+<script>
+const CONTRACT = '3qak68LnM1KAo7pVhtLxzZzpLbp8tv5KtELt5azfpump';
+const DEX_PAIR = 'H9cfWQqA7vGf8zkJHsL5WDWeNghBCm2AwY26jfUDQ5tk';
+
+function copyContract() {
+  navigator.clipboard.writeText(CONTRACT).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => btn.textContent = '📋 Copy', 2000);
+  });
+}
+
+async function fetchDexData() {
+  try {
+    const res = await fetch(`https://api.dexscreener.com/latest/dex/pairs/solana/${DEX_PAIR}`);
+    const data = await res.json();
+    const pair = data.pairs && data.pairs[0];
+    if (!pair) return;
+
+    const price = Number(pair.priceUsd).toFixed(8);
+    const mcap = pair.fdv ? '$' + Number(pair.fdv).toLocaleString() : '—';
+    const vol = pair.volume?.h24 ? '$' + Number(pair.volume.h24).toLocaleString() : '—';
+    const liq = pair.liquidity?.usd ? '$' + Number(pair.liquidity.usd).toLocaleString() : '—';
+    const trades = pair.txns?.h24 ? Number(pair.txns.h24).toLocaleString() : '—';
+    const chg24 = pair.priceChange?.h24;
+
+    document.getElementById('stat-price').textContent = '$' + price;
+    document.getElementById('stat-mcap').textContent = mcap;
+    document.getElementById('stat-vol').textContent = vol;
+    document.getElementById('stat-liq').textContent = liq;
+    document.getElementById('stat-trades').textContent = trades;
+
+    if (chg24 !== undefined) {
+      const chgEl = document.getElementById('stat-price-chg');
+      chgEl.textContent = (chg24 >= 0 ? '+' : '') + chg24.toFixed(2) + '% (24h)';
+      chgEl.className = 'stat-change ' + (chg24 >= 0 ? 'up' : 'dn');
+    }
+
+    const tickerText = `AEC • Price: $${price} • Market Cap: ${mcap} • 24h Volume: ${vol} • Liquidity: ${liq} • Trades: ${trades} • Contract: ${CONTRACT}`;
+    document.getElementById('ticker-content').textContent = tickerText;
+    document.getElementById('ticker-content-2').textContent = tickerText;
+
+    const progress = pair.progress || Math.min((Number(pair.fdv || 0) / 69000) * 100, 100);
+    document.getElementById('prog-fill').style.width = progress + '%';
+    document.getElementById('prog-pct').textContent = progress.toFixed(1) + '%';
+
+  } catch(e) {
+    console.log('DexScreener fetch error:', e.message);
+  }
+}
+
+// Auto-refresh chart
+setInterval(() => {
+  const iframe = document.getElementById('dex-iframe');
+  iframe.src = `https://dexscreener.com/solana/${DEX_PAIR}?embed=1&theme=dark&t=${Date.now()}`;
+}, 30000);
+
+fetchDexData();
+setInterval(fetchDexData, 15000);
+</script>
+</body>
+</html>
