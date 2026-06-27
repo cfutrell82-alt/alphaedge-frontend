@@ -7,152 +7,131 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root {
-    --navy: #0A0F1E; --navy-card: #111827; --navy-border: #1E2D45;
-    --navy-hover: #1A2640; --cyan: #00D4FF; --gold: #F4B942;
-    --green: #00E676; --red: #FF4B4B; --text: #E8EDF5;
-    --text-muted: #6B7FA3; --text-dim: #3A4A6B;
-  }
-  body { background: var(--navy); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
+  :root { --navy:#050816; --navy-card:#0b1630; --navy-border:#24335f; --navy-hover:#0f1f40; --cyan:#00e5ff; --gold:#f7c948; --green:#00E676; --red:#FF4B4B; --text:#fdfdff; --text-muted:#b7c0e8; --text-dim:#3A4A6B; }
+  body { background: radial-gradient(circle at top, #1b2b5a 0%, #050816 55%, #000000 100%); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
+  nav { display:flex; align-items:center; justify-content:space-between; padding:0 40px; height:64px; border-bottom:1px solid var(--navy-border); background:linear-gradient(90deg,rgba(10,20,60,0.95),rgba(10,40,90,0.95)); position:sticky; top:0; z-index:100; backdrop-filter:blur(12px); }
+  .nav-logo { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.2rem; color:var(--text); text-decoration:none; display:flex; align-items:center; gap:8px; }
+  .nav-logo span { color:var(--cyan); }
+  .nav-logo-coin { width:26px; height:26px; border-radius:50%; box-shadow:0 0 10px rgba(247,201,72,0.8); animation:coinGlow 2.5s ease-in-out infinite; }
+  @keyframes coinGlow { 0%,100%{box-shadow:0 0 8px rgba(247,201,72,0.6)} 50%{box-shadow:0 0 20px rgba(247,201,72,1)} }
+  .nav-links { display:flex; gap:28px; }
+  .nav-links a { color:var(--text-muted); text-decoration:none; font-size:0.875rem; transition:color 0.2s; }
+  .nav-links a:hover { color:var(--cyan); }
+  .nav-cta { display:flex; gap:10px; }
+  .btn-ghost { background:none; border:1px solid var(--navy-border); color:var(--text-muted); padding:8px 18px; border-radius:6px; font-size:0.875rem; font-weight:500; text-decoration:none; transition:all 0.2s; }
+  .btn-ghost:hover { border-color:var(--cyan); color:var(--cyan); }
+  .btn-primary { background:linear-gradient(90deg,#f7c948,#00e5ff); color:#02040a; border:none; padding:8px 18px; border-radius:6px; font-size:0.875rem; font-weight:700; text-decoration:none; font-family:'Space Grotesk',sans-serif; }
 
-  nav { display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 64px; border-bottom: 1px solid var(--navy-border); background: rgba(10,15,30,0.96); position: sticky; top: 0; z-index: 100; }
-  .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; color: var(--text); text-decoration: none; }
-  .nav-logo span { color: var(--cyan); }
-  .nav-links { display: flex; gap: 32px; }
-  .nav-links a { font-size: 0.9rem; color: var(--text-muted); text-decoration: none; transition: color 0.2s; }
-  .nav-links a:hover { color: var(--text); }
-  .nav-cta { display: flex; gap: 12px; align-items: center; }
-  .btn-ghost { padding: 8px 18px; border: 1px solid var(--navy-border); border-radius: 8px; color: var(--text-muted); font-size: 0.85rem; text-decoration: none; transition: all 0.2s; }
-  .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
-  .btn-primary { padding: 8px 18px; background: var(--cyan); color: var(--navy); border-radius: 8px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.85rem; text-decoration: none; }
-
-  /* HERO */
-  .hero { max-width: 900px; margin: 0 auto; padding: 72px 40px 48px; text-align: center; }
-  .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cyan); margin-bottom: 20px; padding: 6px 14px; border: 1px solid rgba(0,212,255,0.3); border-radius: 100px; background: rgba(0,212,255,0.08); }
-  .live-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); animation: pulse 1.5s infinite; display: inline-block; }
+  .hero { max-width:900px; margin:0 auto; padding:72px 40px 48px; text-align:center; }
+  .hero-eyebrow { display:inline-flex; align-items:center; gap:8px; font-size:0.75rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--cyan); margin-bottom:20px; padding:6px 14px; border:1px solid rgba(0,229,255,0.3); border-radius:100px; background:rgba(0,229,255,0.08); }
+  .live-dot { width:7px; height:7px; border-radius:50%; background:var(--green); animation:pulse 1.5s infinite; display:inline-block; }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
-  .hero h1 { font-family: 'Space Grotesk', sans-serif; font-size: 3rem; font-weight: 700; line-height: 1.1; margin-bottom: 16px; }
-  .hero h1 span { color: var(--cyan); }
-  .hero p { color: var(--text-muted); font-size: 1rem; line-height: 1.7; max-width: 560px; margin: 0 auto 32px; }
-  .hero-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
-  .btn-large { padding: 13px 28px; border-radius: 10px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.95rem; text-decoration: none; transition: all 0.2s; display: inline-block; }
-  .btn-large-primary { background: var(--cyan); color: var(--navy); }
-  .btn-large-primary:hover { background: #33DDFF; transform: translateY(-1px); }
-  .btn-large-tg { background: rgba(0,136,204,0.15); border: 1px solid rgba(0,136,204,0.3); color: #29B6F6; }
-  .btn-large-tg:hover { background: rgba(0,136,204,0.25); }
+  .hero h1 { font-family:'Space Grotesk',sans-serif; font-size:3rem; font-weight:700; line-height:1.1; margin-bottom:16px; }
+  .hero h1 .grad { background:linear-gradient(90deg,#f7c948,#00e5ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .hero p { color:var(--text-muted); font-size:1rem; line-height:1.7; max-width:560px; margin:0 auto 32px; }
+  .hero-actions { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+  .btn-large { padding:13px 28px; border-radius:10px; font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:0.95rem; text-decoration:none; transition:all 0.2s; display:inline-block; }
+  .btn-large-primary { background:linear-gradient(90deg,#f7c948,#00e5ff); color:#02040a; }
+  .btn-large-primary:hover { transform:translateY(-1px); box-shadow:0 0 20px rgba(0,229,255,0.4); }
+  .btn-large-tg { background:rgba(0,136,204,0.15); border:1px solid rgba(0,136,204,0.3); color:#29B6F6; }
+  .btn-large-tg:hover { background:rgba(0,136,204,0.25); }
 
-  /* STATS */
-  .stats-bar { background: var(--navy-card); border-top: 1px solid var(--navy-border); border-bottom: 1px solid var(--navy-border); padding: 28px 40px; }
-  .stats-inner { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
-  .stat-num { font-family: 'Space Grotesk', sans-serif; font-size: 1.8rem; font-weight: 700; color: var(--cyan); margin-bottom: 4px; }
-  .stat-label { font-size: 0.8rem; color: var(--text-muted); }
+  .stats-bar { background:rgba(11,22,48,0.6); border-top:1px solid var(--navy-border); border-bottom:1px solid var(--navy-border); padding:28px 40px; }
+  .stats-inner { max-width:900px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:20px; text-align:center; }
+  .stat-num { font-family:'Space Grotesk',sans-serif; font-size:1.8rem; font-weight:700; background:linear-gradient(90deg,#f7c948,#00e5ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:4px; }
+  .stat-label { font-size:0.8rem; color:var(--text-muted); }
 
-  /* CHANNELS */
-  .section { max-width: 1000px; margin: 0 auto; padding: 64px 40px; }
-  .section-eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cyan); margin-bottom: 12px; }
-  .section-title { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 12px; }
-  .section-title span { color: var(--cyan); }
-  .section-sub { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; max-width: 560px; margin-bottom: 36px; }
+  .section { max-width:1000px; margin:0 auto; padding:64px 40px; }
+  .section-eyebrow { font-size:0.72rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--cyan); margin-bottom:12px; }
+  .section-title { font-family:'Space Grotesk',sans-serif; font-size:2rem; font-weight:700; margin-bottom:12px; }
+  .section-title .grad { background:linear-gradient(90deg,#f7c948,#00e5ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .section-sub { color:var(--text-muted); font-size:0.95rem; line-height:1.7; max-width:560px; margin-bottom:36px; }
 
-  .channels-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .channel-card { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 16px; padding: 24px; transition: border-color 0.2s; cursor: pointer; text-decoration: none; display: block; }
-  .channel-card:hover { border-color: rgba(0,212,255,0.3); }
-  .channel-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; margin-bottom: 16px; }
-  .channel-icon-tg { background: rgba(0,136,204,0.15); border: 1px solid rgba(0,136,204,0.2); }
-  .channel-icon-pro { background: rgba(0,212,255,0.1); border: 1px solid rgba(0,212,255,0.2); }
-  .channel-icon-elite { background: rgba(244,185,66,0.1); border: 1px solid rgba(244,185,66,0.2); }
-  .channel-icon-edu { background: rgba(0,230,118,0.1); border: 1px solid rgba(0,230,118,0.2); }
-  .channel-icon-crypto { background: rgba(255,75,75,0.1); border: 1px solid rgba(255,75,75,0.2); }
-  .channel-icon-forex { background: rgba(244,185,66,0.1); border: 1px solid rgba(244,185,66,0.2); }
-  .channel-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 6px; color: var(--text); }
-  .channel-desc { font-size: 0.82rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px; }
-  .channel-meta { display: flex; align-items: center; justify-content: space-between; }
-  .channel-members { font-size: 0.75rem; color: var(--text-muted); }
-  .channel-badge { font-size: 0.68rem; font-weight: 700; padding: 3px 8px; border-radius: 100px; }
-  .badge-free { background: rgba(107,127,163,0.15); color: var(--text-muted); border: 1px solid var(--navy-border); }
-  .badge-pro { background: rgba(0,212,255,0.1); color: var(--cyan); border: 1px solid rgba(0,212,255,0.2); }
-  .badge-elite { background: rgba(244,185,66,0.1); color: var(--gold); border: 1px solid rgba(244,185,66,0.2); }
+  .channels-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+  .channel-card { background:var(--navy-card); border:1px solid var(--navy-border); border-radius:16px; padding:24px; transition:all 0.2s; cursor:pointer; text-decoration:none; display:block; }
+  .channel-card:hover { border-color:rgba(0,229,255,0.4); transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,229,255,0.1); }
+  .channel-icon { width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:1.4rem; margin-bottom:16px; }
+  .channel-name { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1rem; margin-bottom:6px; color:var(--text); }
+  .channel-desc { font-size:0.82rem; color:var(--text-muted); line-height:1.5; margin-bottom:14px; }
+  .channel-meta { display:flex; align-items:center; justify-content:space-between; }
+  .channel-members { font-size:0.75rem; color:var(--text-muted); }
+  .channel-badge { font-size:0.68rem; font-weight:700; padding:3px 8px; border-radius:100px; }
+  .badge-free { background:rgba(107,127,163,0.15); color:var(--text-muted); border:1px solid var(--navy-border); }
+  .badge-pro { background:rgba(0,229,255,0.1); color:var(--cyan); border:1px solid rgba(0,229,255,0.2); }
+  .badge-elite { background:rgba(247,201,72,0.1); color:var(--gold); border:1px solid rgba(247,201,72,0.2); }
 
-  /* LEADERBOARD */
-  .leaderboard-section { background: var(--navy-card); border-top: 1px solid var(--navy-border); border-bottom: 1px solid var(--navy-border); padding: 64px 40px; }
-  .leaderboard-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-  .leaderboard-table { background: var(--navy); border: 1px solid var(--navy-border); border-radius: 14px; overflow: hidden; }
-  .lb-header { display: grid; grid-template-columns: 40px 1fr 80px 80px; padding: 12px 16px; border-bottom: 1px solid var(--navy-border); font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; }
-  .lb-row { display: grid; grid-template-columns: 40px 1fr 80px 80px; padding: 12px 16px; border-bottom: 1px solid var(--navy-border); align-items: center; transition: background 0.15s; }
-  .lb-row:last-child { border-bottom: none; }
-  .lb-row:hover { background: var(--navy-hover); }
-  .lb-rank { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.9rem; color: var(--text-dim); }
-  .lb-rank.gold { color: #FFD700; }
-  .lb-rank.silver { color: #C0C0C0; }
-  .lb-rank.bronze { color: #CD7F32; }
-  .lb-user { display: flex; align-items: center; gap: 10px; }
-  .lb-avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.65rem; font-weight: 700; }
-  .lb-name { font-size: 0.85rem; font-weight: 500; }
-  .lb-trades { font-size: 0.82rem; color: var(--text-muted); text-align: right; }
-  .lb-pnl { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.85rem; text-align: right; }
+  .leaderboard-section { background:rgba(11,22,48,0.4); border-top:1px solid var(--navy-border); border-bottom:1px solid var(--navy-border); padding:64px 40px; }
+  .leaderboard-inner { max-width:1000px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:40px; }
+  .lb-table-wrap { background:var(--navy-card); border:1px solid var(--navy-border); border-radius:14px; overflow:hidden; }
+  .lb-header { display:grid; grid-template-columns:40px 1fr 80px 80px; padding:12px 16px; border-bottom:1px solid var(--navy-border); font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.06em; }
+  .lb-row { display:grid; grid-template-columns:40px 1fr 80px 80px; padding:12px 16px; border-bottom:1px solid var(--navy-border); align-items:center; transition:background 0.15s; }
+  .lb-row:last-child { border-bottom:none; }
+  .lb-row:hover { background:var(--navy-hover); }
+  .lb-rank { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:0.9rem; color:var(--text-dim); }
+  .lb-user { display:flex; align-items:center; gap:10px; }
+  .lb-avatar { width:28px; height:28px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.65rem; font-weight:700; }
+  .lb-name { font-size:0.85rem; font-weight:500; }
+  .lb-trades { font-size:0.82rem; color:var(--text-muted); text-align:right; }
+  .lb-pnl { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:0.85rem; text-align:right; color:var(--green); }
 
-  /* RECENT WINS */
-  .wins-feed { display: flex; flex-direction: column; gap: 12px; }
-  .win-card { background: var(--navy); border: 1px solid var(--navy-border); border-radius: 12px; padding: 14px 16px; display: flex; align-items: center; gap: 14px; transition: border-color 0.2s; }
-  .win-card:hover { border-color: rgba(0,230,118,0.3); }
-  .win-avatar { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 700; flex-shrink: 0; }
-  .win-info { flex: 1; }
-  .win-name { font-size: 0.85rem; font-weight: 600; margin-bottom: 2px; }
-  .win-trade { font-size: 0.78rem; color: var(--text-muted); }
-  .win-pnl { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--green); }
-  .win-time { font-size: 0.72rem; color: var(--text-dim); margin-top: 2px; text-align: right; }
+  .wins-feed { display:flex; flex-direction:column; gap:12px; }
+  .win-card { background:var(--navy-card); border:1px solid var(--navy-border); border-radius:12px; padding:14px 16px; display:flex; align-items:center; gap:14px; transition:border-color 0.2s; }
+  .win-card:hover { border-color:rgba(0,230,118,0.4); }
+  .win-avatar { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:700; flex-shrink:0; }
+  .win-info { flex:1; }
+  .win-name { font-size:0.85rem; font-weight:600; margin-bottom:2px; }
+  .win-trade { font-size:0.78rem; color:var(--text-muted); }
+  .win-pnl { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:0.95rem; color:var(--green); }
+  .win-time { font-size:0.72rem; color:var(--text-dim); margin-top:2px; text-align:right; }
 
-  /* TESTIMONIALS */
-  .testimonials-section { max-width: 1000px; margin: 0 auto; padding: 64px 40px; }
-  .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 36px; }
-  .testimonial-card { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 14px; padding: 22px; transition: border-color 0.2s; }
-  .testimonial-card:hover { border-color: rgba(0,212,255,0.2); }
-  .stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 12px; }
-  .testimonial-text { font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px; font-style: italic; }
-  .testimonial-author { display: flex; align-items: center; gap: 10px; }
-  .testimonial-avatar { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; font-weight: 700; }
-  .testimonial-name { font-size: 0.82rem; font-weight: 600; }
-  .testimonial-plan { font-size: 0.72rem; color: var(--cyan); }
+  .testimonials-section { max-width:1000px; margin:0 auto; padding:64px 40px; }
+  .testimonials-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:36px; }
+  .testimonial-card { background:var(--navy-card); border:1px solid var(--navy-border); border-radius:14px; padding:22px; transition:border-color 0.2s; }
+  .testimonial-card:hover { border-color:rgba(0,229,255,0.3); }
+  .stars { color:var(--gold); font-size:0.85rem; margin-bottom:12px; }
+  .testimonial-text { font-size:0.875rem; color:var(--text-muted); line-height:1.6; margin-bottom:16px; font-style:italic; }
+  .testimonial-author { display:flex; align-items:center; gap:10px; }
+  .testimonial-avatar { width:32px; height:32px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:0.7rem; font-weight:700; }
+  .testimonial-name { font-size:0.82rem; font-weight:600; }
+  .testimonial-plan { font-size:0.72rem; color:var(--cyan); }
 
-  /* CTA */
-  .cta-section { background: var(--navy-card); border-top: 1px solid var(--navy-border); padding: 72px 40px; text-align: center; }
-  .cta-section h2 { font-family: 'Space Grotesk', sans-serif; font-size: 2.2rem; font-weight: 700; margin-bottom: 14px; }
-  .cta-section h2 span { color: var(--cyan); }
-  .cta-section p { color: var(--text-muted); font-size: 1rem; margin-bottom: 32px; }
-  .cta-buttons { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+  .cta-section { background:rgba(11,22,48,0.4); border-top:1px solid var(--navy-border); padding:72px 40px; text-align:center; }
+  .cta-section h2 { font-family:'Space Grotesk',sans-serif; font-size:2.2rem; font-weight:700; margin-bottom:14px; }
+  .cta-section h2 .grad { background:linear-gradient(90deg,#f7c948,#00e5ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .cta-section p { color:var(--text-muted); font-size:1rem; margin-bottom:32px; }
+  .cta-buttons { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
 
-  footer { padding: 30px 40px; border-top: 1px solid var(--navy-border); display: flex; justify-content: space-between; align-items: center; }
-  .footer-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; color: var(--text); text-decoration: none; }
-  .footer-logo span { color: var(--cyan); }
-  .footer-links { display: flex; gap: 24px; }
-  .footer-links a { font-size: 0.82rem; color: var(--text-muted); text-decoration: none; }
-  .footer-links a:hover { color: var(--text); }
+  footer { padding:28px 40px; border-top:1px solid var(--navy-border); display:flex; justify-content:space-between; align-items:center; background:rgba(5,8,22,0.8); flex-wrap:wrap; gap:16px; }
+  .footer-logo { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1rem; color:var(--text); text-decoration:none; display:flex; align-items:center; gap:8px; }
+  .footer-logo span { color:var(--cyan); }
+  .footer-links { display:flex; gap:24px; flex-wrap:wrap; }
+  .footer-links a { font-size:0.82rem; color:var(--text-muted); text-decoration:none; transition:color 0.2s; }
+  .footer-links a:hover { color:var(--cyan); }
 
-  @media (max-width: 768px) {
-    nav { padding: 0 16px; }
-    .nav-links { display: none; }
-    .hero { padding: 40px 20px 32px; }
-    .hero h1 { font-size: 2rem; }
-    .stats-inner { grid-template-columns: 1fr 1fr; }
-    .channels-grid { grid-template-columns: 1fr; }
-    .leaderboard-inner { grid-template-columns: 1fr; }
-    .testimonials-grid { grid-template-columns: 1fr; }
-    .section, .testimonials-section { padding: 40px 20px; }
-    .leaderboard-section { padding: 40px 20px; }
-    footer { flex-direction: column; gap: 16px; padding: 24px 16px; }
-    .cta-buttons { flex-direction: column; align-items: center; }
+  @media (max-width:768px) {
+    nav { padding:0 16px; }
+    .nav-links { display:none; }
+    .hero { padding:40px 20px 32px; }
+    .hero h1 { font-size:2rem; }
+    .stats-inner { grid-template-columns:1fr 1fr; }
+    .channels-grid { grid-template-columns:1fr; }
+    .leaderboard-inner { grid-template-columns:1fr; }
+    .testimonials-grid { grid-template-columns:1fr; }
+    .section, .testimonials-section { padding:40px 20px; }
+    .leaderboard-section { padding:40px 20px; }
+    footer { flex-direction:column; gap:16px; padding:24px 16px; }
+    .cta-buttons { flex-direction:column; align-items:center; }
   }
 </style>
 </head>
 <body>
-
 <nav>
-  <a href="index.html" class="nav-logo">Alpha<span>Edge</span></a>
+  <a href="index.html" class="nav-logo"><img src="alphaedge-coin.png" alt="AEC" class="nav-logo-coin">Alpha<span>Edge</span></a>
   <div class="nav-links">
     <a href="index.html#markets">Markets</a>
-    <a href="alphaedge-blog.html">Blog</a>
+    <a href="alphaedge-trading-terminal.html">Terminal</a>
     <a href="index.html#pricing">Pricing</a>
-    <a href="alphaedge-about.html">About</a>
+    <a href="alphaedge-coin.html">AEC Coin 🪙</a>
   </div>
   <div class="nav-cta">
     <a href="alphaedge-login.html" class="btn-ghost">Sign in</a>
@@ -160,18 +139,16 @@
   </div>
 </nav>
 
-<!-- HERO -->
 <div class="hero">
   <div class="hero-eyebrow"><span class="live-dot"></span> 12,400+ traders active</div>
-  <h1>Trade better,<br><span>together</span></h1>
+  <h1>Trade better,<br><span class="grad">together</span></h1>
   <p>Join the AlphaEdge community — a global network of traders sharing signals, strategies, and wins in real time via Telegram and our members-only channels.</p>
   <div class="hero-actions">
     <a href="alphaedge-checkout.html" class="btn-large btn-large-primary">Join the community</a>
-    <a href="https://t.me/AlphaEdgeProBot" target="_blank" class="btn-large btn-large-tg">✈️ Open in Telegram</a>
+    <a href="https://t.me/AlphaEdgeProBot" target="_blank" class="btn-large btn-large-tg">✈️ Open Telegram</a>
   </div>
 </div>
 
-<!-- STATS -->
 <div class="stats-bar">
   <div class="stats-inner">
     <div><div class="stat-num">12,400+</div><div class="stat-label">Active members</div></div>
@@ -181,217 +158,76 @@
   </div>
 </div>
 
-<!-- CHANNELS -->
 <div class="section">
   <div class="section-eyebrow">Community Channels</div>
-  <div class="section-title">Every market. <span>Every plan.</span></div>
-  <p class="section-sub">Access channels tailored to your plan and trading style. All channels are delivered via Telegram for instant alerts on any device.</p>
-
+  <div class="section-title">Every market. <span class="grad">Every plan.</span></div>
+  <p class="section-sub">All channels delivered via Telegram for instant alerts on any device.</p>
   <div class="channels-grid">
-    <a href="https://t.me/AlphaEdgeProBot" target="_blank" class="channel-card">
-      <div class="channel-icon channel-icon-tg">✈️</div>
-      <div class="channel-name">AlphaEdge Announcements</div>
-      <div class="channel-desc">Platform updates, new features, and important announcements for all members.</div>
-      <div class="channel-meta">
-        <span class="channel-members">12,400 members</span>
-        <span class="channel-badge badge-free">FREE</span>
-      </div>
-    </a>
-    <a href="https://t.me/AlphaEdgeProBot" target="_blank" class="channel-card">
-      <div class="channel-icon channel-icon-pro">📡</div>
-      <div class="channel-name">Pro Signals</div>
-      <div class="channel-desc">Real-time trade signals across stocks, forex, crypto and options. Entry, target, and stop on every alert.</div>
-      <div class="channel-meta">
-        <span class="channel-members">8,240 members</span>
-        <span class="channel-badge badge-pro">PRO</span>
-      </div>
-    </a>
-    <a href="https://t.me/AlphaEdgeProBot" target="_blank" class="channel-card">
-      <div class="channel-icon channel-icon-elite">👑</div>
-      <div class="channel-name">Elite Signals</div>
-      <div class="channel-desc">Priority signals delivered before Pro channel. Includes scanner alerts and analyst commentary on each trade.</div>
-      <div class="channel-meta">
-        <span class="channel-members">1,840 members</span>
-        <span class="channel-badge badge-elite">ELITE</span>
-      </div>
-    </a>
-    <a href="https://t.me/AlphaEdgeProBot" target="_blank" class="channel-card">
-      <div class="channel-icon channel-icon-edu">🎓</div>
-      <div class="channel-name">Education & Tips</div>
-      <div class="channel-desc">Daily trading tips, educational content, and market breakdowns from our analyst team.</div>
-      <div class="channel-meta">
-        <span class="channel-members">9,100 members</span>
-        <span class="channel-badge badge-free">FREE</span>
-      </div>
-    </a>
-    <a href="https://t.me/AlphaEdgeProBot" target="_blank" class="channel-card">
-      <div class="channel-icon channel-icon-crypto">₿</div>
-      <div class="channel-name">Crypto Community Chat</div>
-      <div class="channel-desc">Live discussion channel for crypto traders. Share setups, discuss on-chain data, and learn from other members.</div>
-      <div class="channel-meta">
-        <span class="channel-members">5,620 members</span>
-        <span class="channel-badge badge-pro">PRO</span>
-      </div>
-    </a>
-    <a href="https://t.me/AlphaEdgeProBot" target="_blank" class="channel-card">
-      <div class="channel-icon channel-icon-forex">💱</div>
-      <div class="channel-name">Forex & Macro Chat</div>
-      <div class="channel-desc">Currency traders and macro analysts discussing setups, news events, and institutional flow in real time.</div>
-      <div class="channel-meta">
-        <span class="channel-members">3,280 members</span>
-        <span class="channel-badge badge-pro">PRO</span>
-      </div>
-    </a>
+    <a href="https://t.me/AlphaEdgeProBot" target="_blank" class="channel-card"><div class="channel-icon" style="background:rgba(0,136,204,0.15);border:1px solid rgba(0,136,204,0.2);">✈️</div><div class="channel-name">Announcements</div><div class="channel-desc">Platform updates and important news for all members.</div><div class="channel-meta"><span class="channel-members">12,400 members</span><span class="channel-badge badge-free">FREE</span></div></a>
+    <a href="https://t.me/AlphaEdgeProBot" target="_blank" class="channel-card"><div class="channel-icon" style="background:rgba(0,229,255,0.1);border:1px solid rgba(0,229,255,0.2);">📡</div><div class="channel-name">Pro Signals</div><div class="channel-desc">Real-time trade signals across stocks, forex, crypto and options.</div><div class="channel-meta"><span class="channel-members">8,240 members</span><span class="channel-badge badge-pro">PRO</span></div></a>
+    <a href="https://t.me/AlphaEdgeProBot" target="_blank" class="channel-card"><div class="channel-icon" style="background:rgba(247,201,72,0.1);border:1px solid rgba(247,201,72,0.2);">👑</div><div class="channel-name">Elite Signals</div><div class="channel-desc">Priority signals with analyst commentary on each trade.</div><div class="channel-meta"><span class="channel-members">1,840 members</span><span class="channel-badge badge-elite">ELITE</span></div></a>
+    <a href="https://t.me/AlphaEdgeProBot" target="_blank" class="channel-card"><div class="channel-icon" style="background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.2);">📊</div><div class="channel-name">Market Updates</div><div class="channel-desc">Daily market breakdowns from our analyst team.</div><div class="channel-meta"><span class="channel-members">9,100 members</span><span class="channel-badge badge-free">FREE</span></div></a>
+    <a href="https://t.me/AlphaEdgeProBot" target="_blank" class="channel-card"><div class="channel-icon" style="background:rgba(255,75,75,0.1);border:1px solid rgba(255,75,75,0.2);">₿</div><div class="channel-name">Crypto Community</div><div class="channel-desc">Live crypto discussion, setups, and on-chain analysis.</div><div class="channel-meta"><span class="channel-members">5,620 members</span><span class="channel-badge badge-pro">PRO</span></div></a>
+    <a href="https://t.me/AlphaEdgeProBot" target="_blank" class="channel-card"><div class="channel-icon" style="background:rgba(247,201,72,0.1);border:1px solid rgba(247,201,72,0.2);">🪙</div><div class="channel-name">AEC Coin Chat</div><div class="channel-desc">AlphaEdge Coin community — price, news, and updates on Solana.</div><div class="channel-meta"><span class="channel-members">2,400 members</span><span class="channel-badge badge-free">FREE</span></div></a>
   </div>
 </div>
 
-<!-- LEADERBOARD & WINS -->
 <div class="leaderboard-section">
   <div class="leaderboard-inner">
     <div>
       <div class="section-eyebrow">Leaderboard</div>
-      <div class="section-title" style="font-size:1.5rem;margin-bottom:20px;">Top traders <span>this month</span></div>
-      <div class="leaderboard-table">
+      <div class="section-title" style="font-size:1.5rem;margin-bottom:20px;">Top traders <span class="grad">this month</span></div>
+      <div class="lb-table-wrap">
         <div class="lb-header"><div>#</div><div>Trader</div><div style="text-align:right">Trades</div><div style="text-align:right">P&L</div></div>
-        <div class="lb-row">
-          <div class="lb-rank gold">🥇</div>
-          <div class="lb-user"><div class="lb-avatar" style="background:rgba(255,215,0,0.15);color:#FFD700;">MK</div><div class="lb-name">Marcus K.</div></div>
-          <div class="lb-trades">47</div>
-          <div class="lb-pnl pos">+$8,420</div>
-        </div>
-        <div class="lb-row">
-          <div class="lb-rank silver">🥈</div>
-          <div class="lb-user"><div class="lb-avatar" style="background:rgba(192,192,192,0.15);color:#C0C0C0;">SR</div><div class="lb-name">Sofia R.</div></div>
-          <div class="lb-trades">38</div>
-          <div class="lb-pnl pos">+$6,180</div>
-        </div>
-        <div class="lb-row">
-          <div class="lb-rank bronze">🥉</div>
-          <div class="lb-user"><div class="lb-avatar" style="background:rgba(205,127,50,0.15);color:#CD7F32;">JT</div><div class="lb-name">James T.</div></div>
-          <div class="lb-trades">52</div>
-          <div class="lb-pnl pos">+$5,740</div>
-        </div>
-        <div class="lb-row">
-          <div class="lb-rank">4</div>
-          <div class="lb-user"><div class="lb-avatar" style="background:rgba(0,212,255,0.1);color:var(--cyan);">AL</div><div class="lb-name">Aisha L.</div></div>
-          <div class="lb-trades">29</div>
-          <div class="lb-pnl pos">+$4,920</div>
-        </div>
-        <div class="lb-row">
-          <div class="lb-rank">5</div>
-          <div class="lb-user"><div class="lb-avatar" style="background:rgba(0,230,118,0.1);color:var(--green);">DM</div><div class="lb-name">David M.</div></div>
-          <div class="lb-trades">41</div>
-          <div class="lb-pnl pos">+$4,110</div>
-        </div>
-        <div class="lb-row">
-          <div class="lb-rank">6</div>
-          <div class="lb-user"><div class="lb-avatar" style="background:rgba(244,185,66,0.1);color:var(--gold);">RK</div><div class="lb-name">Rachel K.</div></div>
-          <div class="lb-trades">33</div>
-          <div class="lb-pnl pos">+$3,870</div>
-        </div>
+        <div class="lb-row"><div class="lb-rank">🥇</div><div class="lb-user"><div class="lb-avatar" style="background:rgba(255,215,0,0.15);color:#FFD700;">MK</div><div class="lb-name">Marcus K.</div></div><div class="lb-trades">47</div><div class="lb-pnl">+$8,420</div></div>
+        <div class="lb-row"><div class="lb-rank">🥈</div><div class="lb-user"><div class="lb-avatar" style="background:rgba(192,192,192,0.15);color:#C0C0C0;">SR</div><div class="lb-name">Sofia R.</div></div><div class="lb-trades">38</div><div class="lb-pnl">+$6,180</div></div>
+        <div class="lb-row"><div class="lb-rank">🥉</div><div class="lb-user"><div class="lb-avatar" style="background:rgba(205,127,50,0.15);color:#CD7F32;">JT</div><div class="lb-name">James T.</div></div><div class="lb-trades">52</div><div class="lb-pnl">+$5,740</div></div>
+        <div class="lb-row"><div class="lb-rank" style="color:var(--text-dim)">4</div><div class="lb-user"><div class="lb-avatar" style="background:rgba(0,229,255,0.1);color:var(--cyan);">AL</div><div class="lb-name">Aisha L.</div></div><div class="lb-trades">29</div><div class="lb-pnl">+$4,920</div></div>
+        <div class="lb-row"><div class="lb-rank" style="color:var(--text-dim)">5</div><div class="lb-user"><div class="lb-avatar" style="background:rgba(0,230,118,0.1);color:var(--green);">DM</div><div class="lb-name">David M.</div></div><div class="lb-trades">41</div><div class="lb-pnl">+$4,110</div></div>
       </div>
     </div>
-
     <div>
       <div class="section-eyebrow">Recent Wins</div>
-      <div class="section-title" style="font-size:1.5rem;margin-bottom:20px;">Community <span>highlights</span></div>
+      <div class="section-title" style="font-size:1.5rem;margin-bottom:20px;">Community <span class="grad">highlights</span></div>
       <div class="wins-feed">
-        <div class="win-card">
-          <div class="win-avatar" style="background:rgba(255,215,0,0.15);color:#FFD700;">MK</div>
-          <div class="win-info">
-            <div class="win-name">Marcus K.</div>
-            <div class="win-trade">NVDA BUY → TP hit in 2 days</div>
-          </div>
-          <div style="text-align:right"><div class="win-pnl">+$1,840</div><div class="win-time">2h ago</div></div>
-        </div>
-        <div class="win-card">
-          <div class="win-avatar" style="background:rgba(0,212,255,0.1);color:var(--cyan);">JT</div>
-          <div class="win-info">
-            <div class="win-name">James T.</div>
-            <div class="win-trade">BTC BUY → +5.4% in 3 days</div>
-          </div>
-          <div style="text-align:right"><div class="win-pnl">+$2,160</div><div class="win-time">5h ago</div></div>
-        </div>
-        <div class="win-card">
-          <div class="win-avatar" style="background:rgba(0,230,118,0.1);color:var(--green);">AL</div>
-          <div class="win-info">
-            <div class="win-name">Aisha L.</div>
-            <div class="win-trade">EUR/USD SELL → 68 pips</div>
-          </div>
-          <div style="text-align:right"><div class="win-pnl">+$680</div><div class="win-time">8h ago</div></div>
-        </div>
-        <div class="win-card">
-          <div class="win-avatar" style="background:rgba(244,185,66,0.1);color:var(--gold);">SR</div>
-          <div class="win-info">
-            <div class="win-name">Sofia R.</div>
-            <div class="win-trade">SPX 0DTE CALL → 180% gain</div>
-          </div>
-          <div style="text-align:right"><div class="win-pnl">+$900</div><div class="win-time">1d ago</div></div>
-        </div>
-        <div class="win-card">
-          <div class="win-avatar" style="background:rgba(255,75,75,0.1);color:var(--red);">DM</div>
-          <div class="win-info">
-            <div class="win-name">David M.</div>
-            <div class="win-trade">ETH BUY → TP1 hit +7.2%</div>
-          </div>
-          <div style="text-align:right"><div class="win-pnl">+$1,440</div><div class="win-time">1d ago</div></div>
-        </div>
+        <div class="win-card"><div class="win-avatar" style="background:rgba(255,215,0,0.15);color:#FFD700;">MK</div><div class="win-info"><div class="win-name">Marcus K.</div><div class="win-trade">NVDA BUY → TP hit in 2 days</div></div><div style="text-align:right"><div class="win-pnl">+$1,840</div><div class="win-time">2h ago</div></div></div>
+        <div class="win-card"><div class="win-avatar" style="background:rgba(0,229,255,0.1);color:var(--cyan);">JT</div><div class="win-info"><div class="win-name">James T.</div><div class="win-trade">BTC BUY → +5.4% in 3 days</div></div><div style="text-align:right"><div class="win-pnl">+$2,160</div><div class="win-time">5h ago</div></div></div>
+        <div class="win-card"><div class="win-avatar" style="background:rgba(0,230,118,0.1);color:var(--green);">AL</div><div class="win-info"><div class="win-name">Aisha L.</div><div class="win-trade">EUR/USD SELL → 68 pips</div></div><div style="text-align:right"><div class="win-pnl">+$680</div><div class="win-time">8h ago</div></div></div>
+        <div class="win-card"><div class="win-avatar" style="background:rgba(247,201,72,0.1);color:var(--gold);">SR</div><div class="win-info"><div class="win-name">Sofia R.</div><div class="win-trade">AEC/SOL → +42% swing</div></div><div style="text-align:right"><div class="win-pnl">+$920</div><div class="win-time">1d ago</div></div></div>
+        <div class="win-card"><div class="win-avatar" style="background:rgba(255,75,75,0.1);color:var(--red);">DM</div><div class="win-info"><div class="win-name">David M.</div><div class="win-trade">ETH BUY → TP1 hit +7.2%</div></div><div style="text-align:right"><div class="win-pnl">+$1,440</div><div class="win-time">1d ago</div></div></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- TESTIMONIALS -->
 <div class="testimonials-section">
   <div class="section-eyebrow">What members say</div>
-  <div class="section-title">Real traders. <span>Real results.</span></div>
+  <div class="section-title">Real traders. <span class="grad">Real results.</span></div>
   <div class="testimonials-grid">
-    <div class="testimonial-card">
-      <div class="stars">★★★★★</div>
-      <div class="testimonial-text">"I've tried 4 signal services before AlphaEdge. This is the first one that actually publishes its win rate and doesn't hide losses. The community alone is worth the price."</div>
-      <div class="testimonial-author">
-        <div class="testimonial-avatar" style="background:rgba(0,212,255,0.1);color:var(--cyan);">MK</div>
-        <div><div class="testimonial-name">Marcus K.</div><div class="testimonial-plan">Elite member · 8 months</div></div>
-      </div>
-    </div>
-    <div class="testimonial-card">
-      <div class="stars">★★★★★</div>
-      <div class="testimonial-text">"The Telegram alerts are fast and the entry/target/stop format makes it so easy to act on. I've hit my target on 14 of my last 18 trades following AlphaEdge signals."</div>
-      <div class="testimonial-author">
-        <div class="testimonial-avatar" style="background:rgba(0,230,118,0.1);color:var(--green);">JL</div>
-        <div><div class="testimonial-name">Jessica L.</div><div class="testimonial-plan">Pro member · 5 months</div></div>
-      </div>
-    </div>
-    <div class="testimonial-card">
-      <div class="stars">★★★★★</div>
-      <div class="testimonial-text">"The education content changed how I trade. I used to just follow signals blindly — now I understand WHY each trade is taken and I've started finding my own setups too."</div>
-      <div class="testimonial-author">
-        <div class="testimonial-avatar" style="background:rgba(244,185,66,0.1);color:var(--gold);">RT</div>
-        <div><div class="testimonial-name">Ryan T.</div><div class="testimonial-plan">Pro member · 3 months</div></div>
-      </div>
-    </div>
+    <div class="testimonial-card"><div class="stars">★★★★★</div><div class="testimonial-text">"I've tried 4 signal services before AlphaEdge. This is the first one that actually publishes its win rate and doesn't hide losses. The community alone is worth the price."</div><div class="testimonial-author"><div class="testimonial-avatar" style="background:rgba(0,229,255,0.1);color:var(--cyan);">MK</div><div><div class="testimonial-name">Marcus K.</div><div class="testimonial-plan">Elite member · 8 months</div></div></div></div>
+    <div class="testimonial-card"><div class="stars">★★★★★</div><div class="testimonial-text">"The Telegram alerts are fast and the entry/target/stop format makes it easy to act on. I've hit my target on 14 of my last 18 trades following AlphaEdge signals."</div><div class="testimonial-author"><div class="testimonial-avatar" style="background:rgba(0,230,118,0.1);color:var(--green);">JL</div><div><div class="testimonial-name">Jessica L.</div><div class="testimonial-plan">Pro member · 5 months</div></div></div></div>
+    <div class="testimonial-card"><div class="stars">★★★★★</div><div class="testimonial-text">"The AEC Coin community is incredible too. Between signals, the terminal, and AEC — AlphaEdge feels like a full trading ecosystem, not just a signal service."</div><div class="testimonial-author"><div class="testimonial-avatar" style="background:rgba(247,201,72,0.1);color:var(--gold);">RT</div><div><div class="testimonial-name">Ryan T.</div><div class="testimonial-plan">Pro member · 3 months</div></div></div></div>
   </div>
 </div>
 
-<!-- CTA -->
 <div class="cta-section">
-  <h2>Ready to join <span>12,400+ traders</span>?</h2>
-  <p>Start your 7-day free trial and get instant access to the community, signals, and education vault.</p>
+  <h2>Ready to join <span class="grad">12,400+ traders</span>?</h2>
+  <p>Start your 7-day free trial and get instant access to the community, signals, and terminal.</p>
   <div class="cta-buttons">
     <a href="alphaedge-checkout.html" class="btn-large btn-large-primary">Start free trial</a>
-    <a href="https://t.me/AlphaEdgeProBot" target="_blank" class="btn-large btn-large-tg">✈️ Join Telegram first</a>
+    <a href="https://t.me/AlphaEdgeProBot" target="_blank" class="btn-large btn-large-tg">✈️ Join Telegram</a>
   </div>
 </div>
 
 <footer>
-  <a href="index.html" class="footer-logo">Alpha<span>Edge</span></a>
+  <a href="index.html" class="footer-logo"><img src="alphaedge-coin.png" alt="AEC" style="width:22px;height:22px;border-radius:50%;">Alpha<span>Edge</span></a>
   <div class="footer-links">
-    <a href="alphaedge-about.html">About</a>
-    <a href="alphaedge-blog.html">Blog</a>
+    <a href="index.html">Home</a>
+    <a href="alphaedge-trading-terminal.html">Terminal</a>
+    <a href="alphaedge-coin.html">AEC Coin</a>
     <a href="alphaedge-terms.html">Terms</a>
     <a href="alphaedge-privacy.html">Privacy</a>
   </div>
 </footer>
-
 </body>
 </html>
