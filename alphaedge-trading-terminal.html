@@ -230,6 +230,8 @@ body { background: var(--navy); color: var(--text); font-family: 'Inter', sans-s
   <div class="chart-area">
     <div class="chart-header">
       <div>
+        <div id="chart" style="height: 500px;"></div>
+
         <div class="chart-sym" id="chart-sym">NVDA</div>
         <div style="font-size:0.62rem;color:var(--text-dim)" id="chart-fullname">NVIDIA Corporation</div>
       </div>
@@ -957,5 +959,65 @@ setTimeout(() => {
   showSignalAlert({ symbol:'NVDA', direction:'BUY', entry:1142.50, tp:1185, sl:1110 });
 }, 6000);
 </script>
+  <script>
+// Create Chart
+const chart = LightweightCharts.createChart(document.getElementById('chart'), {
+    width: document.getElementById('chart').clientWidth,
+    height: 500,
+    layout: {
+        background: { color: '#0d1117' },
+        textColor: '#c9d1d9',
+    },
+    grid: {
+        vertLines: { color: '#21262d' },
+        horzLines: { color: '#21262d' },
+    },
+});
+
+const candleSeries = chart.addCandlestickSeries({
+    upColor: '#26a69a',
+    downColor: '#ef5350',
+    borderUpColor: '#26a69a',
+    borderDownColor: '#ef5350',
+    wickUpColor: '#26a69a',
+    wickDownColor: '#ef5350',
+});
+
+// LIVE DATA (WebSocket)
+const socket = new WebSocket('wss://ws.finnhub.io?token=YOUR_API_KEY');
+
+socket.addEventListener('open', () => {
+    socket.send(JSON.stringify({ type: 'subscribe', symbol: 'BINANCE:BTCUSDT' }));
+});
+
+let lastCandle = null;
+
+socket.addEventListener('message', event => {
+    const data = JSON.parse(event.data);
+
+    if (data.data) {
+        data.data.forEach(point => {
+            const time = Math.floor(point.t / 1000);
+
+            if (lastCandle && lastCandle.time === time) {
+                lastCandle.close = point.p;
+                lastCandle.high = Math.max(lastCandle.high, point.p);
+                lastCandle.low = Math.min(lastCandle.low, point.p);
+                candleSeries.update(lastCandle);
+            } else {
+                lastCandle = {
+                    time,
+                    open: point.p,
+                    high: point.p,
+                    low: point.p,
+                    close: point.p
+                };
+                candleSeries.update(lastCandle);
+            }
+        });
+    }
+});
+</script>
+
 </body>
 </html>
