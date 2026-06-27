@@ -3,765 +3,217 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AlphaEdge — Checkout</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<!-- Stripe.js — load BEFORE your code, always from stripe.com -->
-<script src="https://js.stripe.com/v3/"></script>
+<title>AlphaEdge — Choose Your Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-  :root {
-    --navy:        #0A0F1E;
-    --navy-card:   #111827;
-    --navy-border: #1E2D45;
-    --navy-hover:  #1A2640;
-    --cyan:        #00D4FF;
-    --cyan-dim:    rgba(0,212,255,0.10);
-    --gold:        #F4B942;
-    --gold-dim:    rgba(244,185,66,0.10);
-    --green:       #00E676;
-    --red:         #FF4B4B;
-    --text:        #E8EDF5;
-    --text-muted:  #6B7FA3;
-    --text-dim:    #3A4A6B;
-  }
-
-  body {
-    background: var(--navy);
-    color: var(--text);
-    font-family: 'Inter', sans-serif;
-    min-height: 100vh;
-  }
-
-  /* ── NAV ── */
-  nav {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 40px; height: 64px;
-    border-bottom: 1px solid var(--navy-border);
-    background: rgba(10,15,30,0.96);
-  }
-  .nav-logo {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700; font-size: 1.2rem; color: var(--text);
-    text-decoration: none;
-  }
-  .nav-logo span { color: var(--cyan); }
-  .nav-secure {
-    display: flex; align-items: center; gap: 8px;
-    font-size: 0.8rem; color: var(--text-muted);
-  }
-  .nav-secure svg { color: var(--green); }
-  .nav-back {
-    font-size: 0.85rem; color: var(--text-muted);
-    text-decoration: none; transition: color 0.2s;
-  }
-  .nav-back:hover { color: var(--cyan); }
-
-  /* ── LAYOUT ── */
-  .checkout-wrap {
-    max-width: 1040px; margin: 0 auto;
-    padding: 48px 24px;
-    display: grid; grid-template-columns: 1fr 420px; gap: 40px;
-    align-items: start;
-  }
-
-  /* ── PLAN SELECTOR ── */
-  .section-heading {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.7rem; font-weight: 700;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--text-muted); margin-bottom: 16px;
-  }
-
-  .plan-cards { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
-
-  .plan-option {
-    background: var(--navy-card);
-    border: 1px solid var(--navy-border);
-    border-radius: 12px; padding: 20px 22px;
-    cursor: pointer; transition: all 0.2s;
-    display: flex; align-items: center; gap: 16px;
-    position: relative;
-  }
-  .plan-option:hover { border-color: rgba(0,212,255,0.35); background: var(--navy-hover); }
-  .plan-option.selected-pro  { border-color: var(--cyan);  box-shadow: 0 0 0 1px var(--cyan); }
-  .plan-option.selected-elite{ border-color: var(--gold);  box-shadow: 0 0 0 1px var(--gold); }
-
-  .plan-radio {
-    width: 20px; height: 20px; border-radius: 50%;
-    border: 2px solid var(--navy-border); flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    transition: all 0.2s;
-  }
-  .plan-option.selected-pro  .plan-radio { border-color: var(--cyan); }
-  .plan-option.selected-elite .plan-radio { border-color: var(--gold); }
-  .plan-radio-dot {
-    width: 10px; height: 10px; border-radius: 50%; opacity: 0;
-    transition: opacity 0.2s;
-  }
-  .plan-option.selected-pro  .plan-radio-dot { background: var(--cyan); opacity: 1; }
-  .plan-option.selected-elite .plan-radio-dot { background: var(--gold); opacity: 1; }
-
-  .plan-info { flex: 1; }
-  .plan-info-name {
-    font-family: 'Space Grotesk', sans-serif;
-    font-weight: 700; font-size: 1rem; margin-bottom: 4px;
-  }
-  .plan-info-desc { font-size: 0.8rem; color: var(--text-muted); }
-  .plan-info-features {
-    display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;
-  }
-  .feature-pill {
-    font-size: 0.7rem; padding: 3px 8px; border-radius: 4px;
-    background: rgba(255,255,255,0.04); border: 1px solid var(--navy-border);
-    color: var(--text-muted);
-  }
-
-  .plan-price-right { text-align: right; flex-shrink: 0; }
-  .plan-price-right .amt {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.5rem; font-weight: 700;
-  }
-  .plan-price-right .per { font-size: 0.75rem; color: var(--text-muted); }
-  .plan-price-right .save {
-    font-size: 0.7rem; margin-top: 4px;
-    padding: 2px 8px; border-radius: 100px;
-    background: rgba(0,230,118,0.12); color: var(--green);
-    border: 1px solid rgba(0,230,118,0.2);
-  }
-
-  .popular-badge {
-    position: absolute; top: -11px; right: 18px;
-    background: var(--cyan); color: var(--navy);
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.65rem; font-weight: 700;
-    letter-spacing: 0.06em; text-transform: uppercase;
-    padding: 3px 10px; border-radius: 100px;
-  }
-  .elite-badge-sm {
-    position: absolute; top: -11px; right: 18px;
-    background: var(--gold); color: var(--navy);
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.65rem; font-weight: 700;
-    letter-spacing: 0.06em; text-transform: uppercase;
-    padding: 3px 10px; border-radius: 100px;
-  }
-
-  /* billing toggle */
-  .billing-toggle {
-    display: flex; align-items: center; gap: 14px;
-    margin-bottom: 28px;
-  }
-  .toggle-label { font-size: 0.85rem; color: var(--text-muted); }
-  .toggle-label.active { color: var(--text); font-weight: 500; }
-  .toggle-track {
-    width: 44px; height: 24px; border-radius: 100px;
-    background: var(--cyan-dim); border: 1px solid rgba(0,212,255,0.3);
-    cursor: pointer; position: relative; transition: background 0.2s;
-  }
-  .toggle-track.annual { background: rgba(0,212,255,0.25); }
-  .toggle-thumb {
-    position: absolute; top: 3px; left: 3px;
-    width: 16px; height: 16px; border-radius: 50%;
-    background: var(--cyan); transition: transform 0.2s;
-  }
-  .toggle-track.annual .toggle-thumb { transform: translateX(20px); }
-  .annual-save {
-    font-size: 0.75rem; color: var(--green);
-    background: rgba(0,230,118,0.1); border: 1px solid rgba(0,230,118,0.2);
-    padding: 3px 10px; border-radius: 100px;
-  }
-
-  /* ── PAYMENT FORM ── */
-  .payment-panel {
-    background: var(--navy-card);
-    border: 1px solid var(--navy-border);
-    border-radius: 16px; padding: 28px;
-    position: sticky; top: 24px;
-  }
-  .payment-panel::before {
-    content: '';
-    display: block; height: 2px; margin: -28px -28px 24px;
-    border-radius: 16px 16px 0 0;
-    background: linear-gradient(90deg, var(--cyan), transparent 60%);
-  }
-
-  .order-summary { margin-bottom: 24px; }
-  .order-row {
-    display: flex; justify-content: space-between; align-items: center;
-    font-size: 0.875rem; padding: 6px 0;
-  }
-  .order-row .lbl { color: var(--text-muted); }
-  .order-row .val { font-weight: 500; }
-  .order-row.total {
-    border-top: 1px solid var(--navy-border);
-    margin-top: 8px; padding-top: 14px;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1rem; font-weight: 700;
-  }
-  .order-row.total .val { color: var(--cyan); font-size: 1.15rem; }
-  .trial-note {
-    background: rgba(0,230,118,0.08);
-    border: 1px solid rgba(0,230,118,0.2);
-    border-radius: 8px; padding: 10px 14px;
-    font-size: 0.8rem; color: var(--green);
-    margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
-  }
-
-  .form-group { margin-bottom: 16px; }
-  .form-label {
-    display: block; font-size: 0.78rem; font-weight: 500;
-    color: var(--text-muted); margin-bottom: 6px; letter-spacing: 0.02em;
-  }
-  .form-input {
-    width: 100%; background: rgba(255,255,255,0.04);
-    border: 1px solid var(--navy-border);
-    border-radius: 8px; padding: 11px 14px;
-    color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.9rem;
-    outline: none; transition: border-color 0.2s;
-  }
-  .form-input::placeholder { color: var(--text-dim); }
-  .form-input:focus { border-color: var(--cyan); }
-
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-
-  /* Stripe element container */
-  .stripe-element {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--navy-border);
-    border-radius: 8px; padding: 12px 14px;
-    transition: border-color 0.2s;
-  }
-  .stripe-element.StripeElement--focus { border-color: var(--cyan); }
-  .stripe-element.StripeElement--invalid { border-color: var(--red); }
-
-  .card-icons {
-    display: flex; gap: 6px; margin-bottom: 8px; align-items: center;
-  }
-  .card-icon {
-    height: 22px; border-radius: 3px; background: rgba(255,255,255,0.08);
-    border: 1px solid var(--navy-border); padding: 3px 6px;
-    font-family: 'Space Mono', monospace; font-size: 0.55rem;
-    color: var(--text-muted); display: flex; align-items: center;
-  }
-
-  .submit-btn {
-    width: 100%; padding: 14px;
-    background: var(--cyan); color: var(--navy);
-    border: none; border-radius: 10px;
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1rem; font-weight: 700;
-    cursor: pointer; transition: all 0.2s;
-    margin-top: 20px; display: flex; align-items: center; justify-content: center; gap: 8px;
-  }
-  .submit-btn:hover { background: #33DDFF; transform: translateY(-1px); }
-  .submit-btn:disabled { background: var(--text-dim); cursor: not-allowed; transform: none; }
-  .submit-btn.elite-btn { background: var(--gold); }
-  .submit-btn.elite-btn:hover { background: #F8C95A; }
-
-  .submit-btn .spinner {
-    width: 18px; height: 18px; border: 2px solid rgba(10,15,30,0.3);
-    border-top-color: var(--navy); border-radius: 50%;
-    animation: spin 0.7s linear infinite; display: none;
-  }
-  .submit-btn.loading .spinner { display: block; }
-  .submit-btn.loading .btn-text { opacity: 0.6; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-
-  .form-error {
-    color: var(--red); font-size: 0.8rem; margin-top: 6px;
-    min-height: 18px;
-  }
-
-  .security-row {
-    display: flex; align-items: center; justify-content: center;
-    gap: 6px; margin-top: 14px;
-    font-size: 0.75rem; color: var(--text-dim);
-  }
-  .security-row svg { flex-shrink: 0; }
-
-  /* ── SUCCESS STATE ── */
-  .success-screen {
-    display: none; text-align: center; padding: 40px 20px;
-  }
-  .success-icon {
-    width: 72px; height: 72px; border-radius: 50%;
-    background: rgba(0,230,118,0.12); border: 2px solid var(--green);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 2rem; margin: 0 auto 24px;
-    animation: pop 0.5s cubic-bezier(0.34,1.56,0.64,1);
-  }
-  @keyframes pop {
-    from { transform: scale(0.5); opacity: 0; }
-    to   { transform: scale(1);   opacity: 1; }
-  }
-  .success-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.5rem; font-weight: 700; margin-bottom: 10px;
-  }
-  .success-sub { color: var(--text-muted); font-size: 0.9rem; line-height: 1.6; }
-  .success-next {
-    margin-top: 28px; display: flex; flex-direction: column; gap: 10px;
-  }
-  .success-btn {
-    display: block; padding: 12px 24px; border-radius: 8px;
-    font-family: 'Space Grotesk', sans-serif; font-weight: 600;
-    font-size: 0.9rem; text-decoration: none; transition: all 0.2s;
-  }
-  .success-btn-primary {
-    background: var(--cyan); color: var(--navy);
-  }
-  .success-btn-ghost {
-    background: none; border: 1px solid var(--navy-border); color: var(--text-muted);
-  }
-  .success-btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
-
-  /* ── TRUST BADGES ── */
-  .trust-row {
-    display: flex; gap: 20px; flex-wrap: wrap;
-    margin-top: 32px; padding-top: 24px;
-    border-top: 1px solid var(--navy-border);
-  }
-  .trust-item {
-    display: flex; align-items: center; gap: 8px;
-    font-size: 0.78rem; color: var(--text-muted);
-  }
-  .trust-item .icon { font-size: 1rem; }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 800px) {
-    .checkout-wrap {
-      grid-template-columns: 1fr;
-      padding: 24px 16px;
-    }
-    .payment-panel { position: static; }
-    nav { padding: 0 16px; }
-  }
+  :root { --navy:#050816; --navy-card:#0b1630; --navy-border:#24335f; --navy-hover:#0f1f40; --cyan:#00e5ff; --gold:#f7c948; --green:#00E676; --red:#FF4B4B; --text:#fdfdff; --text-muted:#b7c0e8; --text-dim:#3A4A6B; }
+  body { background: radial-gradient(circle at top, #1b2b5a 0%, #050816 55%, #000000 100%); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
+  nav { display:flex; align-items:center; justify-content:space-between; padding:0 40px; height:64px; border-bottom:1px solid var(--navy-border); background:linear-gradient(90deg,rgba(10,20,60,0.95),rgba(10,40,90,0.95)); position:sticky; top:0; z-index:100; backdrop-filter:blur(12px); }
+  .nav-logo { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.2rem; color:var(--text); text-decoration:none; display:flex; align-items:center; gap:8px; }
+  .nav-logo span { color:var(--cyan); }
+  .nav-logo-coin { width:26px; height:26px; border-radius:50%; box-shadow:0 0 10px rgba(247,201,72,0.8); }
+  .hero { max-width:700px; margin:0 auto; padding:64px 40px 40px; text-align:center; }
+  .hero h1 { font-family:'Space Grotesk',sans-serif; font-size:2.4rem; font-weight:700; margin-bottom:12px; }
+  .hero h1 .grad { background:linear-gradient(90deg,#f7c948,#00e5ff); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+  .hero p { color:var(--text-muted); font-size:1rem; margin-bottom:32px; }
+  .billing-toggle { display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:40px; }
+  .pricing-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:20px; max-width:1100px; margin:0 auto; padding:0 40px 80px; }
+  .pricing-card { background:var(--navy-card); border:1px solid var(--navy-border); border-radius:18px; padding:32px; position:relative; transition:all 0.25s; }
+  .pricing-card.featured { border-color:var(--cyan); box-shadow:0 0 40px rgba(0,229,255,0.1); }
+  .pricing-card.elite { border-color:var(--gold); box-shadow:0 0 40px rgba(247,201,72,0.08); }
+  .pricing-card:hover { transform:translateY(-4px); }
+  .featured-badge { position:absolute; top:-13px; left:50%; transform:translateX(-50%); background:linear-gradient(90deg,#00e5ff,#0099bb); color:#02040a; font-family:'Space Grotesk',sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; padding:4px 16px; border-radius:100px; }
+  .elite-badge { position:absolute; top:-13px; left:50%; transform:translateX(-50%); background:linear-gradient(90deg,#f7c948,#ff9f1c); color:#02040a; font-family:'Space Grotesk',sans-serif; font-size:0.7rem; font-weight:700; letter-spacing:0.06em; text-transform:uppercase; padding:4px 16px; border-radius:100px; }
+  .plan-name { font-family:'Space Grotesk',sans-serif; font-size:0.75rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; color:var(--text-muted); margin-bottom:14px; }
+  .plan-price { display:flex; align-items:baseline; gap:6px; margin-bottom:6px; }
+  .plan-price .dollar { font-size:1.1rem; color:var(--text-muted); }
+  .plan-price .amount { font-family:'Space Grotesk',sans-serif; font-size:3rem; font-weight:700; letter-spacing:-0.03em; line-height:1; }
+  .plan-price .period { font-size:0.85rem; color:var(--text-muted); }
+  .plan-tagline { font-size:0.82rem; color:var(--text-muted); margin-bottom:24px; }
+  .plan-btn { display:block; width:100%; padding:13px; border-radius:10px; font-size:0.95rem; font-weight:700; font-family:'Space Grotesk',sans-serif; cursor:pointer; text-align:center; transition:all 0.2s; margin-bottom:24px; border:none; text-decoration:none; }
+  .plan-btn-free { background:rgba(36,51,95,0.6); color:var(--text); border:1px solid var(--navy-border); }
+  .plan-btn-free:hover { background:var(--navy-hover); }
+  .plan-btn-cyan { background:linear-gradient(90deg,#00e5ff,#0099bb); color:#02040a; }
+  .plan-btn-cyan:hover { transform:translateY(-1px); box-shadow:0 0 16px rgba(0,229,255,0.4); }
+  .plan-btn-gold { background:linear-gradient(90deg,#f7c948,#ff9f1c); color:#02040a; }
+  .plan-btn-gold:hover { transform:translateY(-1px); box-shadow:0 0 16px rgba(247,201,72,0.5); }
+  .plan-divider { border:none; border-top:1px solid var(--navy-border); margin-bottom:22px; }
+  .plan-features { list-style:none; display:flex; flex-direction:column; gap:11px; }
+  .plan-features li { display:flex; align-items:flex-start; gap:10px; font-size:0.875rem; color:var(--text-muted); }
+  .plan-features li .chk { color:var(--green); font-size:0.8rem; flex-shrink:0; margin-top:2px; }
+  .plan-features li .x { color:var(--text-dim); font-size:0.8rem; flex-shrink:0; margin-top:2px; }
+  .plan-features li.active { color:var(--text); }
+  .trust-row { display:flex; align-items:center; justify-content:center; gap:24px; flex-wrap:wrap; padding:0 40px 60px; }
+  .trust-item { display:flex; align-items:center; gap:7px; font-size:0.82rem; color:var(--text-muted); }
+  @media (max-width:900px) { nav{padding:0 20px;} .pricing-grid{grid-template-columns:1fr;padding:0 20px 60px;} .hero{padding:48px 20px 32px;} }
 </style>
 </head>
 <body>
-
 <nav>
-  <a href="index.html" class="nav-logo" style="text-decoration:none;">Alpha<span>Edge</span></a>
-  <div class="nav-secure">
-    <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-    Secure checkout · 256-bit SSL
-  </div>
-  <a href="index.html" class="nav-back">← Back to plans</a>
+  <a href="index.html" class="nav-logo"><img src="alphaedge-coin.png" alt="AEC" class="nav-logo-coin">Alpha<span>Edge</span></a>
+  <a href="index.html" style="font-size:0.85rem;color:var(--text-muted);text-decoration:none;">← Back to site</a>
 </nav>
 
-<div class="checkout-wrap">
-
-  <!-- LEFT: PLAN SELECTION -->
-  <div class="checkout-left">
-    <p class="section-heading">Choose your plan</p>
-
-    <!-- Billing toggle -->
-    <div class="billing-toggle">
-      <span class="toggle-label active" id="monthly-lbl">Monthly</span>
-      <div class="toggle-track" id="billing-toggle" onclick="toggleBilling()">
-        <div class="toggle-thumb"></div>
-      </div>
-      <span class="toggle-label" id="annual-lbl">Annual</span>
-      <span class="annual-save" id="annual-save-badge" style="display:none">Save 20%</span>
+<div class="hero">
+  <h1>Start free. <span class="grad">Scale when ready.</span></h1>
+  <p>No hidden fees. Cancel anytime. 7-day free trial on Pro and Elite.</p>
+  <div class="billing-toggle">
+    <span id="monthly-label" style="font-size:0.875rem;color:var(--text);font-weight:500;">Monthly</span>
+    <div onclick="toggleBilling()" style="width:48px;height:26px;border-radius:100px;background:rgba(0,229,255,0.15);border:1px solid rgba(0,229,255,0.3);cursor:pointer;position:relative;" id="billing-track">
+      <div id="billing-thumb" style="position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:var(--cyan);transition:transform 0.2s;"></div>
     </div>
-
-    <div class="plan-cards">
-      <!-- PRO -->
-      <div class="plan-option selected-pro" id="card-pro" onclick="selectPlan('pro')">
-        <div class="popular-badge">Most popular</div>
-        <div class="plan-radio"><div class="plan-radio-dot"></div></div>
-        <div class="plan-info">
-          <div class="plan-info-name">Pro</div>
-          <div class="plan-info-desc">Unlimited real-time signals across all 4 markets</div>
-          <div class="plan-info-features">
-            <span class="feature-pill">All markets</span>
-            <span class="feature-pill">Real-time alerts</span>
-            <span class="feature-pill">Telegram access</span>
-            <span class="feature-pill">20+ courses</span>
-            <span class="feature-pill">Weekly webinar</span>
-          </div>
-        </div>
-        <div class="plan-price-right">
-          <div class="amt" id="pro-price" style="color:var(--cyan)">$49</div>
-          <div class="per">/ month</div>
-          <div class="save" id="pro-save" style="display:none">Save $118/yr</div>
-        </div>
-      </div>
-
-      <!-- ELITE -->
-      <div class="plan-option" id="card-elite" onclick="selectPlan('elite')">
-        <div class="elite-badge-sm">Elite</div>
-        <div class="plan-radio"><div class="plan-radio-dot"></div></div>
-        <div class="plan-info">
-          <div class="plan-info-name">Elite</div>
-          <div class="plan-info-desc">Everything in Pro plus 1-on-1 analyst sessions & scanner access</div>
-          <div class="plan-info-features">
-            <span class="feature-pill">Everything in Pro</span>
-            <span class="feature-pill">1-on-1 sessions</span>
-            <span class="feature-pill">Proprietary scanner</span>
-            <span class="feature-pill">60+ courses</span>
-            <span class="feature-pill">Portfolio review</span>
-          </div>
-        </div>
-        <div class="plan-price-right">
-          <div class="amt" id="elite-price" style="color:var(--gold)">$149</div>
-          <div class="per">/ month</div>
-          <div class="save" id="elite-save" style="display:none">Save $358/yr</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Trust -->
-    <div class="trust-row">
-      <div class="trust-item"><span class="icon">🔒</span> SSL encrypted payment</div>
-      <div class="trust-item"><span class="icon">↩️</span> Cancel anytime, no lock-in</div>
-      <div class="trust-item"><span class="icon">✅</span> 7-day free trial on Pro</div>
-      <div class="trust-item"><span class="icon">💳</span> Powered by Stripe</div>
-    </div>
-  </div>
-
-  <!-- RIGHT: PAYMENT PANEL -->
-  <div class="payment-panel" id="payment-panel">
-
-    <!-- Order summary -->
-    <div class="order-summary">
-      <p class="section-heading">Order summary</p>
-      <div class="order-row">
-        <span class="lbl" id="summary-plan-name">AlphaEdge Pro</span>
-        <span class="val" id="summary-plan-billing">Monthly</span>
-      </div>
-      <div class="order-row">
-        <span class="lbl">Billing</span>
-        <span class="val" id="summary-billing-cycle">$49 / month</span>
-      </div>
-      <div class="order-row total">
-        <span class="lbl">Due today</span>
-        <span class="val" id="summary-due">$0.00</span>
-      </div>
-    </div>
-
-    <div class="trial-note" id="trial-note">
-      🎉 <span id="trial-text">7-day free trial — your card won't be charged until <strong id="trial-end-date"></strong></span>
-    </div>
-
-    <!-- Payment form -->
-    <div id="payment-form">
-      <div class="form-group">
-        <label class="form-label">Email address</label>
-        <input type="email" class="form-input" id="email" placeholder="you@example.com" autocomplete="email">
-      </div>
-
-      <div class="form-row">
-        <div class="form-group">
-          <label class="form-label">First name</label>
-          <input type="text" class="form-input" id="fname" placeholder="Jane" autocomplete="given-name">
-        </div>
-        <div class="form-group">
-          <label class="form-label">Last name</label>
-          <input type="text" class="form-input" id="lname" placeholder="Smith" autocomplete="family-name">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">Card details</label>
-        <div class="card-icons">
-          <span class="card-icon">VISA</span>
-          <span class="card-icon">MC</span>
-          <span class="card-icon">AMEX</span>
-          <span class="card-icon">DISC</span>
-        </div>
-        <!-- Stripe mounts here -->
-        <div id="card-element" class="stripe-element"></div>
-        <div class="form-error" id="card-error"></div>
-      </div>
-
-      <button class="submit-btn" id="submit-btn" onclick="handleSubmit()">
-        <div class="spinner"></div>
-        <span class="btn-text" id="btn-text">Start 7-day free trial</span>
-      </button>
-
-      <div class="security-row">
-        <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        Payments processed securely by Stripe. AlphaEdge never stores your card data.
-      </div>
-    </div>
-
-    <!-- Success screen -->
-    <div class="success-screen" id="success-screen">
-      <div class="success-icon">✓</div>
-      <div class="success-title">You're in!</div>
-      <p class="success-sub">Welcome to AlphaEdge <strong id="success-plan"></strong>. Check your email for access instructions and Telegram invite.</p>
-      <div class="success-next">
-        <a href="alphaedge-login.html" class="success-btn success-btn-primary">Go to dashboard →</a>
-        <a href="https://t.me/alphaedge" target="_blank" class="success-btn success-btn-ghost">Join Telegram channel</a>
-      </div>
-    </div>
-
+    <span id="annual-label" style="font-size:0.875rem;color:var(--text-muted);">Annual</span>
+    <span id="annual-save" style="display:none;font-size:0.75rem;color:var(--green);background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.2);padding:3px 10px;border-radius:100px;">Save 20%</span>
   </div>
 </div>
 
+<div class="pricing-grid">
+  <div class="pricing-card">
+    <div class="plan-name">Free</div>
+    <div class="plan-price"><div class="amount">$0</div><div class="period">/ month</div></div>
+    <div class="plan-tagline">Get a feel for the signals before committing.</div>
+    <a href="alphaedge-signup.html" class="plan-btn plan-btn-free">Get started free</a>
+    <hr class="plan-divider">
+    <ul class="plan-features">
+      <li class="active"><span class="chk">✓</span> 2 signals per day (delayed)</li>
+      <li class="active"><span class="chk">✓</span> Stocks & Crypto only</li>
+      <li class="active"><span class="chk">✓</span> Community read access</li>
+      <li class="active"><span class="chk">✓</span> Paper trading terminal</li>
+      <li class="active"><span class="chk">✓</span> Crypto wallet</li>
+      <li><span class="x">✗</span> Real-time alerts</li>
+      <li><span class="x">✗</span> Forex & Options signals</li>
+      <li><span class="x">✗</span> Telegram group access</li>
+    </ul>
+  </div>
+
+  <div class="pricing-card featured">
+    <div class="featured-badge">Most popular</div>
+    <div class="plan-name">Pro</div>
+    <div class="plan-price"><div class="dollar">$</div><div class="amount" id="pro-price" style="background:linear-gradient(90deg,#00e5ff,#0099bb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">49</div><div class="period" id="pro-period">/ month</div></div>
+    <div class="plan-tagline" id="pro-tagline">Everything you need to trade all markets live.</div>
+    <a href="#" class="plan-btn plan-btn-cyan" id="pro-btn" onclick="startCheckout('pro')">Start 7-day free trial</a>
+    <hr class="plan-divider">
+    <ul class="plan-features">
+      <li class="active"><span class="chk">✓</span> Unlimited real-time signals</li>
+      <li class="active"><span class="chk">✓</span> All 4 markets</li>
+      <li class="active"><span class="chk">✓</span> Telegram + email alerts</li>
+      <li class="active"><span class="chk">✓</span> Full signal history & stats</li>
+      <li class="active"><span class="chk">✓</span> Community access</li>
+      <li class="active"><span class="chk">✓</span> 💻 Full trading terminal</li>
+      <li class="active"><span class="chk">✓</span> Crypto wallet</li>
+      <li><span class="x">✗</span> Proprietary scanner</li>
+    </ul>
+  </div>
+
+  <div class="pricing-card elite">
+    <div class="elite-badge">Elite</div>
+    <div class="plan-name">Elite</div>
+    <div class="plan-price"><div class="dollar">$</div><div class="amount" id="elite-price" style="background:linear-gradient(90deg,#f7c948,#ff9f1c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">149</div><div class="period" id="elite-period">/ month</div></div>
+    <div class="plan-tagline" id="elite-tagline">For serious traders who want the full advantage.</div>
+    <a href="#" class="plan-btn plan-btn-gold" id="elite-btn" onclick="startCheckout('elite')">Join Elite</a>
+    <hr class="plan-divider">
+    <ul class="plan-features">
+      <li class="active"><span class="chk" style="color:var(--gold)">✓</span> Everything in Pro</li>
+      <li class="active"><span class="chk" style="color:var(--gold)">✓</span> Priority signal delivery</li>
+      <li class="active"><span class="chk" style="color:var(--gold)">✓</span> Proprietary scanner access</li>
+      <li class="active"><span class="chk" style="color:var(--gold)">✓</span> Elite-only Telegram channel</li>
+      <li class="active"><span class="chk" style="color:var(--gold)">✓</span> Portfolio review & feedback</li>
+      <li class="active"><span class="chk" style="color:var(--gold)">✓</span> 💻 Terminal + live brokers</li>
+      <li class="active"><span class="chk" style="color:var(--gold)">✓</span> Early access to features</li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- TELEGRAM BOT CTA BANNER -->
+<section style="padding:60px 40px;background:rgba(11,22,48,0.6);border-top:1px solid #24335f;border-bottom:1px solid #24335f;">
+  <div style="max-width:1100px;margin:0 auto;background:linear-gradient(135deg,rgba(0,136,204,0.1),rgba(0,229,255,0.05));border:1px solid rgba(0,136,204,0.25);border-radius:20px;padding:40px 48px;display:flex;align-items:center;gap:40px;flex-wrap:wrap;position:relative;overflow:hidden;">
+    <div style="position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#f7c948,#00e5ff);"></div>
+    <img src="alphaedge-ai-robot.png" alt="AlphaEdge Pro Bot" style="width:120px;height:120px;border-radius:20px;box-shadow:0 0 32px rgba(0,229,255,0.4);flex-shrink:0;object-fit:cover;">
+    <div style="flex:1;min-width:200px;">
+      <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:#00e5ff;margin-bottom:8px;">Now Live on Telegram</div>
+      <h3 style="font-family:'Space Grotesk',sans-serif;font-size:1.6rem;font-weight:700;margin-bottom:8px;">@AlphaEdgeProBot</h3>
+      <p style="color:#b7c0e8;font-size:0.9rem;line-height:1.6;max-width:480px;">Get real-time trade signals, market updates, and account alerts delivered directly to your Telegram. Connect your AlphaEdge account and never miss a signal again.</p>
+      <div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;">
+        <div style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:#b7c0e8;"><span style="color:#00E676;">&#10003;</span> Instant signal alerts</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:#b7c0e8;"><span style="color:#00E676;">&#10003;</span> Market updates</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:#b7c0e8;"><span style="color:#00E676;">&#10003;</span> Account notifications</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:0.8rem;color:#b7c0e8;"><span style="color:#00E676;">&#10003;</span> 12,400+ members</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:10px;flex-shrink:0;">
+      <a href="https://t.me/AlphaEdgeProBot" target="_blank" style="display:flex;align-items:center;gap:10px;padding:14px 24px;background:rgba(0,136,204,0.2);border:1px solid rgba(0,136,204,0.4);border-radius:10px;color:#29B6F6;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.95rem;text-decoration:none;white-space:nowrap;">
+        &#9992;&#65039; Open @AlphaEdgeProBot
+      </a>
+      <a href="alphaedge-community.html" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:12px 24px;background:none;border:1px solid #24335f;border-radius:10px;color:#b7c0e8;font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.85rem;text-decoration:none;">
+        View Community &rarr;
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="trust-row">
+  <div class="trust-item">🔒 SSL encrypted</div>
+  <div class="trust-item">↩️ Cancel anytime</div>
+  <div class="trust-item">✅ 7-day free trial</div>
+  <div class="trust-item">💳 Powered by Stripe</div>
+  <div class="trust-item">₿ Crypto payments accepted</div>
+</div>
+
 <script>
-// ─────────────────────────────────────────────
-// CONFIGURATION — replace with your real keys
-// ─────────────────────────────────────────────
-const STRIPE_CONFIG = {
-  publishableKey: 'pk_test_51TjQXq0hJWqgPs37Dsv7NF68Ow0bPUdbrrmSZGJrh53bXjvyBTPE7kHsMAFeWiq6f1GDe9jqrn11DSxJoZt3jxga00Dqy22SZr',
-
-  // Your backend endpoint that creates a Stripe PaymentIntent or SetupIntent
-  // See server-side guide in alphaedge-stripe-server.js
-   backendUrl: 'https://alphaedge-backend-uu13.onrender.com/api/create-subscription',
-
-  // Stripe Price IDs from your Stripe Dashboard
-  prices: {
-    pro_monthly:    'prod_UlcAwWYavaWodR',
-    pro_annual:     'prod_UlcFoxXNwPuVuv',
-    elite_monthly:  'prod_UlcKDxNSXWNGSB',
-    elite_annual:   'prod_UlcOgMVJxU59PJ',
-  }
+const STRIPE_PK = 'pk_test_51RUTKkP8BtTobkOIX0dAUY3cFRSW7sDgYKUKE8kvtHsqxkKSJ8Cg45NN4a6b98yGvomH7bZIbZgLfChRvFxzfhCa00gvh8OKNJ';
+const PRICE_IDS = {
+  pro_monthly: 'price_1RUTl3P8BtTobkOIVhFsIWxz',
+  pro_annual: 'price_1RUTlrP8BtTobkOI7fmhzGiC',
+  elite_monthly: 'price_1RUTmLP8BtTobkOI5zR6xLNy',
+  elite_annual: 'price_1RUTmqP8BtTobkOI5MEsKB4j',
 };
-
-// ─────────────────────────────────────────────
-// STATE
-// ─────────────────────────────────────────────
-let selectedPlan = 'pro';
 let isAnnual = false;
-let stripe, cardElement;
 
-const pricing = {
-  pro:   { monthly: 49,  annual: Math.round(49  * 12 * 0.8) },
-  elite: { monthly: 149, annual: Math.round(149 * 12 * 0.8) },
-};
-
-// ─────────────────────────────────────────────
-// INIT STRIPE
-// ─────────────────────────────────────────────
-function initStripe() {
-  // In production: replace with your real publishable key
-  // For demo/testing we gracefully skip if key isn't set
-  if (STRIPE_CONFIG.publishableKey.includes('YOUR_')) {
-    showDemoMode();
-    return;
-  }
-
-  stripe = Stripe(STRIPE_CONFIG.publishableKey);
-  const elements = stripe.elements({
-    appearance: {
-      theme: 'night',
-      variables: {
-        colorPrimary: '#00D4FF',
-        colorBackground: 'rgba(255,255,255,0.04)',
-        colorText: '#E8EDF5',
-        colorDanger: '#FF4B4B',
-        fontFamily: 'Inter, sans-serif',
-        borderRadius: '8px',
-      }
-    }
-  });
-
-  cardElement = elements.create('card', {
-    style: {
-      base: {
-        color: '#E8EDF5',
-        fontFamily: 'Inter, sans-serif',
-        fontSize: '15px',
-        '::placeholder': { color: '#3A4A6B' },
-      },
-      invalid: { color: '#FF4B4B' },
-    }
-  });
-
-  cardElement.mount('#card-element');
-  cardElement.on('change', e => {
-    document.getElementById('card-error').textContent = e.error ? e.error.message : '';
-  });
-}
-
-// Demo mode when Stripe key not configured
-function showDemoMode() {
-  document.getElementById('card-element').innerHTML = `
-    <div style="font-size:0.8rem;color:var(--text-muted);padding:8px 0;">
-      <span style="color:var(--cyan)">ℹ Demo mode</span> — Add your Stripe publishable key in STRIPE_CONFIG to enable real payments.<br>
-      <span style="opacity:0.6;font-size:0.75rem;">Card field will appear here once Stripe is configured.</span>
-    </div>`;
-}
-
-// ─────────────────────────────────────────────
-// PLAN SELECTION
-// ─────────────────────────────────────────────
-function selectPlan(plan) {
-  selectedPlan = plan;
-  document.getElementById('card-pro').className   = 'plan-option' + (plan === 'pro'   ? ' selected-pro'   : '');
-  document.getElementById('card-elite').className = 'plan-option' + (plan === 'elite' ? ' selected-elite' : '');
-
-  const btn = document.getElementById('submit-btn');
-  btn.className = 'submit-btn' + (plan === 'elite' ? ' elite-btn' : '');
-
-  updateSummary();
-}
-
-// ─────────────────────────────────────────────
-// BILLING TOGGLE
-// ─────────────────────────────────────────────
 function toggleBilling() {
   isAnnual = !isAnnual;
-  const track = document.getElementById('billing-toggle');
-  track.className = 'toggle-track' + (isAnnual ? ' annual' : '');
-  document.getElementById('monthly-lbl').className = 'toggle-label' + (!isAnnual ? ' active' : '');
-  document.getElementById('annual-lbl').className  = 'toggle-label' + (isAnnual  ? ' active' : '');
-  document.getElementById('annual-save-badge').style.display = isAnnual ? 'inline' : 'none';
-
-  // Update displayed prices
-  document.getElementById('pro-price').textContent   = isAnnual ? `$${Math.round(pricing.pro.annual / 12)}` : '$49';
-  document.getElementById('elite-price').textContent = isAnnual ? `$${Math.round(pricing.elite.annual / 12)}` : '$149';
-  document.getElementById('pro-save').style.display   = isAnnual ? 'block' : 'none';
-  document.getElementById('elite-save').style.display = isAnnual ? 'block' : 'none';
-
-  updateSummary();
+  document.getElementById('billing-thumb').style.transform = isAnnual ? 'translateX(22px)' : 'translateX(0)';
+  document.getElementById('annual-save').style.display = isAnnual ? 'inline' : 'none';
+  document.getElementById('monthly-label').style.color = isAnnual ? 'var(--text-muted)' : 'var(--text)';
+  document.getElementById('annual-label').style.color = isAnnual ? 'var(--text)' : 'var(--text-muted)';
+  document.getElementById('pro-price').textContent = isAnnual ? '470' : '49';
+  document.getElementById('pro-period').textContent = isAnnual ? '/ year' : '/ month';
+  document.getElementById('pro-tagline').textContent = isAnnual ? 'Save $118 vs monthly.' : 'Everything you need to trade all markets live.';
+  document.getElementById('pro-btn').textContent = isAnnual ? 'Get Pro Annual' : 'Start 7-day free trial';
+  document.getElementById('elite-price').textContent = isAnnual ? '1430' : '149';
+  document.getElementById('elite-period').textContent = isAnnual ? '/ year' : '/ month';
+  document.getElementById('elite-tagline').textContent = isAnnual ? 'Save $358 vs monthly.' : 'For serious traders who want the full advantage.';
+  document.getElementById('elite-btn').textContent = isAnnual ? 'Get Elite Annual' : 'Join Elite';
 }
 
-// ─────────────────────────────────────────────
-// ORDER SUMMARY
-// ─────────────────────────────────────────────
-function updateSummary() {
-  const plan = selectedPlan;
-  const planLabel = plan === 'pro' ? 'AlphaEdge Pro' : 'AlphaEdge Elite';
-  const monthlyAmt = pricing[plan].monthly;
-  const annualAmt  = pricing[plan].annual;
-
-  document.getElementById('summary-plan-name').textContent    = planLabel;
-  document.getElementById('summary-plan-billing').textContent = isAnnual ? 'Annual (billed yearly)' : 'Monthly';
-
-  if (isAnnual) {
-    document.getElementById('summary-billing-cycle').textContent = `$${annualAmt} / year`;
-    document.getElementById('summary-due').textContent = `$${annualAmt}.00`;
-  } else {
-    document.getElementById('summary-billing-cycle').textContent = `$${monthlyAmt} / month`;
-    document.getElementById('summary-due').textContent = plan === 'pro' ? '$0.00' : `$${monthlyAmt}.00`;
-  }
-
-  // Trial only for Pro monthly
-  const hasTrial = plan === 'pro' && !isAnnual;
-  document.getElementById('trial-note').style.display = hasTrial ? 'flex' : 'none';
-
-  // Update CTA
-  const btnText = document.getElementById('btn-text');
-  if (hasTrial) {
-    btnText.textContent = 'Start 7-day free trial';
-  } else if (isAnnual) {
-    btnText.textContent = `Pay $${isAnnual ? pricing[plan].annual : pricing[plan].monthly} annually`;
-  } else {
-    btnText.textContent = `Subscribe · $${pricing[plan].monthly}/mo`;
-  }
-
-  // Trial end date
-  const trialEnd = new Date();
-  trialEnd.setDate(trialEnd.getDate() + 7);
-  document.getElementById('trial-end-date').textContent = trialEnd.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+function startCheckout(plan) {
+  const priceId = plan === 'pro'
+    ? (isAnnual ? PRICE_IDS.pro_annual : PRICE_IDS.pro_monthly)
+    : (isAnnual ? PRICE_IDS.elite_annual : PRICE_IDS.elite_monthly);
+  const token = localStorage.getItem('ae_token');
+  if (!token) { window.location.href = 'alphaedge-signup.html'; return; }
+  const script = document.createElement('script');
+  script.src = 'https://js.stripe.com/v3/';
+  script.onload = async () => {
+    const stripe = Stripe(STRIPE_PK);
+    try {
+      const res = await fetch('https://alphaedge-backend-uu13.onrender.com/api/create-subscription', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify({ priceId })
+      });
+      const data = await res.json();
+      if (data.url) window.location.href = data.url;
+      else if (data.sessionId) stripe.redirectToCheckout({ sessionId: data.sessionId });
+      else alert('Checkout error. Please try again.');
+    } catch(e) { alert('Network error. Please try again.'); }
+  };
+  document.head.appendChild(script);
 }
 
-// ─────────────────────────────────────────────
-// FORM SUBMISSION
-// ─────────────────────────────────────────────
-async function handleSubmit() {
-  const btn = document.getElementById('submit-btn');
-  const email = document.getElementById('email').value.trim();
-  const fname = document.getElementById('fname').value.trim();
-  const lname = document.getElementById('lname').value.trim();
-
-  // Basic validation
-  if (!email || !email.includes('@')) {
-    document.getElementById('card-error').textContent = 'Please enter a valid email address.';
-    return;
-  }
-  if (!fname) {
-    document.getElementById('card-error').textContent = 'Please enter your first name.';
-    return;
-  }
-
-  // Demo mode (no Stripe key)
-  if (!stripe) {
-    simulateSuccess();
-    return;
-  }
-
-  btn.classList.add('loading');
-  btn.disabled = true;
-  document.getElementById('card-error').textContent = '';
-
-  try {
-    // 1. Call your backend to create a Stripe Customer + Subscription
-    //    Your backend returns a client_secret for the SetupIntent or PaymentIntent
-    const res = await fetch(STRIPE_CONFIG.backendUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        email,
-        name: `${fname} ${lname}`,
-        priceId: STRIPE_CONFIG.prices[`${selectedPlan}_${isAnnual ? 'annual' : 'monthly'}`],
-        trial: selectedPlan === 'pro' && !isAnnual,
-      })
-    });
-
-    const { clientSecret, error: backendError } = await res.json();
-    if (backendError) throw new Error(backendError);
-
-    // 2. Confirm the payment / setup with Stripe.js
-    const { error: stripeError } = await stripe.confirmCardSetup(clientSecret, {
-      payment_method: {
-        card: cardElement,
-        billing_details: { name: `${fname} ${lname}`, email },
-      }
-    });
-
-    if (stripeError) {
-      document.getElementById('card-error').textContent = stripeError.message;
-      btn.classList.remove('loading');
-      btn.disabled = false;
-    } else {
-      showSuccess();
-    }
-
-  } catch (err) {
-    document.getElementById('card-error').textContent = err.message || 'Something went wrong. Please try again.';
-    btn.classList.remove('loading');
-    btn.disabled = false;
-  }
-}
-
-// ─────────────────────────────────────────────
-// SUCCESS
-// ─────────────────────────────────────────────
-function showSuccess() {
-  document.getElementById('payment-form').style.display = 'none';
-  document.getElementById('success-screen').style.display = 'block';
-  document.getElementById('success-plan').textContent =
-    selectedPlan === 'pro' ? 'Pro' : 'Elite';
-}
-
-// Demo simulation
-function simulateSuccess() {
-  const btn = document.getElementById('submit-btn');
-  btn.classList.add('loading');
-  btn.disabled = true;
-  setTimeout(() => {
-    btn.classList.remove('loading');
-    showSuccess();
-  }, 1800);
-}
-
-// ─────────────────────────────────────────────
-// BOOT
-// ─────────────────────────────────────────────
-
-// Auto-select plan from URL param e.g. ?plan=elite or ?plan=pro
-const urlPlan = new URLSearchParams(window.location.search).get('plan');
-if (urlPlan === 'elite') selectPlan('elite');
-else selectPlan('pro'); // default to pro (free goes straight through)
-
-updateSummary();
-initStripe();
+const params = new URLSearchParams(window.location.search);
+if (params.get('plan') === 'elite') document.querySelector('.pricing-card.elite').scrollIntoView({behavior:'smooth'});
 </script>
-<script src="alphaedge-auth-modal.js"></script>
 </body>
 </html>
