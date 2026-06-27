@@ -14,7 +14,6 @@
     --text-muted: #6B7FA3; --text-dim: #3A4A6B;
   }
   body { background: var(--navy); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
-
   nav { display: flex; align-items: center; justify-content: space-between; padding: 0 32px; height: 64px; border-bottom: 1px solid var(--navy-border); background: rgba(10,15,30,0.98); position: sticky; top: 0; z-index: 100; }
   .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; color: var(--text); text-decoration: none; }
   .nav-logo span { color: var(--cyan); }
@@ -25,18 +24,13 @@
   .nav-right { display: flex; align-items: center; gap: 16px; }
   .plan-badge { font-size: 0.72rem; font-weight: 700; padding: 3px 10px; border-radius: 100px; background: rgba(0,212,255,0.12); color: var(--cyan); border: 1px solid rgba(0,212,255,0.3); }
   .user-avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--navy-hover); border: 1px solid var(--navy-border); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 600; color: var(--cyan); }
-
   .dash-wrap { display: flex; flex: 1; }
   .sidebar { width: 220px; border-right: 1px solid var(--navy-border); padding: 24px 16px; display: flex; flex-direction: column; gap: 4px; flex-shrink: 0; }
   .sidebar-label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); padding: 0 10px; margin: 16px 0 6px; }
-  .sidebar-label:first-child { margin-top: 0; }
   .sidebar-item { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 8px; font-size: 0.875rem; color: var(--text-muted); text-decoration: none; transition: all 0.2s; }
   .sidebar-item:hover { color: var(--text); background: var(--navy-hover); }
   .sidebar-item.active { color: var(--cyan); background: rgba(0,212,255,0.08); }
-
   .main { flex: 1; padding: 28px 32px; overflow-y: auto; }
-
-  /* BALANCE CARDS */
   .balance-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
   .balance-card { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 16px; padding: 22px 24px; position: relative; overflow: hidden; }
   .balance-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
@@ -46,11 +40,8 @@
   .balance-label { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 10px; }
   .balance-amount { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; margin-bottom: 6px; }
   .balance-sub { font-size: 0.78rem; color: var(--text-muted); }
-  .balance-change { font-size: 0.8rem; font-weight: 600; }
   .pos { color: var(--green); }
   .neg { color: var(--red); }
-
-  /* ACTION BUTTONS */
   .action-row { display: flex; gap: 12px; margin-bottom: 24px; }
   .action-btn { display: flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 10px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.9rem; cursor: pointer; border: none; transition: all 0.2s; }
   .btn-deposit { background: var(--cyan); color: var(--navy); }
@@ -59,11 +50,7 @@
   .btn-withdraw:hover { border-color: var(--cyan); color: var(--cyan); }
   .btn-swap { background: none; border: 1px solid var(--navy-border); color: var(--text-muted); }
   .btn-swap:hover { border-color: var(--gold); color: var(--gold); }
-
-  /* MAIN GRID */
   .wallet-grid { display: grid; grid-template-columns: 1fr 340px; gap: 20px; }
-
-  /* ASSETS */
   .card { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 14px; overflow: hidden; }
   .card-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--navy-border); }
   .card-title { font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; font-weight: 700; }
@@ -76,17 +63,6 @@
   .asset-amount { font-family: 'Space Mono', monospace; font-size: 0.85rem; text-align: right; }
   .asset-value { font-family: 'Space Grotesk', sans-serif; font-weight: 600; text-align: right; }
   .asset-change { text-align: right; font-size: 0.82rem; font-weight: 600; }
-
-  /* P&L CHART */
-  .pnl-section { margin-bottom: 20px; }
-  .chart-wrap { padding: 16px 20px; }
-  .chart-tabs { display: flex; gap: 4px; margin-bottom: 16px; }
-  .chart-tab { padding: 4px 12px; border-radius: 6px; font-size: 0.78rem; color: var(--text-muted); cursor: pointer; border: none; background: none; transition: all 0.2s; }
-  .chart-tab.active { background: rgba(0,212,255,0.1); color: var(--cyan); }
-  .chart-tab:hover { color: var(--text); }
-  canvas { width: 100%; height: 120px; }
-
-  /* TRANSACTIONS */
   .tx-row { display: flex; align-items: center; gap: 14px; padding: 14px 20px; border-bottom: 1px solid var(--navy-border); transition: background 0.15s; }
   .tx-row:last-child { border-bottom: none; }
   .tx-row:hover { background: var(--navy-hover); }
@@ -101,40 +77,48 @@
   .tx-status { font-size: 0.7rem; padding: 2px 8px; border-radius: 4px; margin-top: 3px; display: inline-block; }
   .tx-complete { background: rgba(0,230,118,0.1); color: var(--green); }
   .tx-pending { background: rgba(244,185,66,0.1); color: var(--gold); }
-
-  /* DEPOSIT MODAL */
   .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 1000; display: none; align-items: center; justify-content: center; }
   .modal-overlay.open { display: flex; }
-  .modal { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 20px; padding: 32px; width: 100%; max-width: 440px; position: relative; }
+  .modal { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 20px; padding: 32px; width: 100%; max-width: 460px; position: relative; }
   .modal::before { content: ''; display: block; height: 2px; margin: -32px -32px 28px; border-radius: 20px 20px 0 0; background: linear-gradient(90deg, var(--cyan), transparent 60%); }
   .modal-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; margin-bottom: 6px; }
   .modal-sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 24px; }
   .modal-close { position: absolute; top: 16px; right: 16px; background: none; border: none; color: var(--text-muted); font-size: 1.2rem; cursor: pointer; }
   .modal-close:hover { color: var(--text); }
-  .crypto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-  .crypto-option { background: rgba(255,255,255,0.03); border: 1px solid var(--navy-border); border-radius: 10px; padding: 14px; cursor: pointer; transition: all 0.2s; text-align: center; }
+  .crypto-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+  .crypto-option { background: rgba(255,255,255,0.03); border: 1px solid var(--navy-border); border-radius: 10px; padding: 12px; cursor: pointer; transition: all 0.2s; text-align: center; }
   .crypto-option:hover { border-color: var(--cyan); background: rgba(0,212,255,0.05); }
   .crypto-option.selected { border-color: var(--cyan); background: rgba(0,212,255,0.08); }
-  .crypto-option .emoji { font-size: 1.5rem; margin-bottom: 6px; }
-  .crypto-option .name { font-size: 0.8rem; font-weight: 600; }
-  .crypto-option .ticker { font-size: 0.72rem; color: var(--text-muted); }
+  .crypto-option .emoji { font-size: 1.4rem; margin-bottom: 4px; }
+  .crypto-option .name { font-size: 0.78rem; font-weight: 600; }
+  .crypto-option .ticker { font-size: 0.68rem; color: var(--text-muted); }
   .form-group { margin-bottom: 16px; }
   .form-label { display: block; font-size: 0.78rem; font-weight: 500; color: var(--text-muted); margin-bottom: 6px; }
   .form-input { width: 100%; background: rgba(255,255,255,0.04); border: 1px solid var(--navy-border); border-radius: 8px; padding: 11px 14px; color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.9rem; outline: none; transition: border-color 0.2s; }
   .form-input:focus { border-color: var(--cyan); }
   .wallet-address-box { background: rgba(0,212,255,0.05); border: 1px solid rgba(0,212,255,0.2); border-radius: 10px; padding: 14px 16px; margin-bottom: 16px; }
   .wallet-address-label { font-size: 0.72rem; color: var(--text-muted); margin-bottom: 6px; }
-  .wallet-address { font-family: 'Space Mono', monospace; font-size: 0.78rem; color: var(--cyan); word-break: break-all; }
+  .wallet-address { font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--cyan); word-break: break-all; }
   .copy-btn { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 0.75rem; color: var(--text-muted); cursor: pointer; background: none; border: none; padding: 0; }
   .copy-btn:hover { color: var(--cyan); }
-  .qr-placeholder { width: 120px; height: 120px; background: white; border-radius: 8px; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; color: #333; }
   .submit-btn { width: 100%; padding: 13px; background: var(--cyan); color: var(--navy); border: none; border-radius: 10px; font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
   .submit-btn:hover { background: #33DDFF; }
+  .submit-btn:disabled { background: var(--text-dim); cursor: not-allowed; }
   .notice { background: rgba(244,185,66,0.08); border: 1px solid rgba(244,185,66,0.2); border-radius: 8px; padding: 10px 14px; font-size: 0.78rem; color: var(--gold); margin-bottom: 16px; }
-
+  .amount-row { display: flex; gap: 8px; align-items: flex-end; margin-bottom: 16px; }
+  .amount-row .form-group { flex: 1; margin-bottom: 0; }
+  .amount-shortcuts { display: flex; gap: 6px; margin-top: 6px; }
+  .amt-btn { padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; border: 1px solid var(--navy-border); background: none; color: var(--text-muted); cursor: pointer; transition: all 0.2s; }
+  .amt-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+  .loading-spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(10,15,30,0.3); border-top-color: var(--navy); border-radius: 50%; animation: spin 0.7s linear infinite; margin-right: 8px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  canvas { width: 100%; height: 120px; }
+  .chart-tabs { display: flex; gap: 4px; }
+  .chart-tab { padding: 4px 12px; border-radius: 6px; font-size: 0.78rem; color: var(--text-muted); cursor: pointer; border: none; background: none; transition: all 0.2s; }
+  .chart-tab.active { background: rgba(0,212,255,0.1); color: var(--cyan); }
   @media (max-width: 900px) {
     .sidebar { display: none; }
-    .balance-grid { grid-template-columns: 1fr; }
+    .balance-grid { grid-template-columns: 1fr 1fr; }
     .wallet-grid { grid-template-columns: 1fr; }
     .asset-row { grid-template-columns: 40px 1fr 100px; }
     .asset-change, .asset-amount { display: none; }
@@ -151,8 +135,8 @@
     <a href="alphaedge-wallet.html" class="nav-tab active">Wallet</a>
   </div>
   <div class="nav-right">
-    <span class="plan-badge">PRO</span>
-    <div class="user-avatar">CF</div>
+    <span class="plan-badge" id="nav-plan">PRO</span>
+    <div class="user-avatar" id="nav-avatar">CF</div>
   </div>
 </nav>
 
@@ -171,32 +155,29 @@
   </div>
 
   <div class="main">
-
-    <!-- BALANCE CARDS -->
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;">
       <h1 style="font-family:'Space Grotesk',sans-serif;font-size:1.4rem;font-weight:700;">My <span style="color:var(--cyan)">Wallet</span></h1>
-      <div style="font-size:0.78rem;color:var(--text-muted);">Last updated: just now</div>
+      <div style="font-size:0.78rem;color:var(--text-muted);" id="last-updated">Loading...</div>
     </div>
 
     <div class="balance-grid">
       <div class="balance-card total">
         <div class="balance-label">Total Portfolio Value</div>
-        <div class="balance-amount" style="color:var(--cyan)">$12,847.32</div>
-        <div class="balance-sub"><span class="balance-change pos">↑ $284.50 (2.3%) today</span></div>
+        <div class="balance-amount" style="color:var(--cyan)" id="total-balance">$0.00</div>
+        <div class="balance-sub"><span class="pos" id="balance-change">Loading...</span></div>
       </div>
       <div class="balance-card available">
-        <div class="balance-label">Available Balance</div>
-        <div class="balance-amount" style="color:var(--green)">$3,214.80</div>
+        <div class="balance-label">Available (USDC)</div>
+        <div class="balance-amount" style="color:var(--green)" id="usdc-balance">$0.00</div>
         <div class="balance-sub">Ready to deploy</div>
       </div>
       <div class="balance-card pnl">
-        <div class="balance-label">Total P&L (All Time)</div>
-        <div class="balance-amount" style="color:var(--gold)">+$2,147.32</div>
-        <div class="balance-sub"><span class="pos">↑ 20.1% return</span></div>
+        <div class="balance-label">BTC Balance</div>
+        <div class="balance-amount" style="color:var(--gold)" id="btc-balance">0.0000</div>
+        <div class="balance-sub" id="btc-usd">$0.00</div>
       </div>
     </div>
 
-    <!-- ACTION BUTTONS -->
     <div class="action-row">
       <button class="action-btn btn-deposit" onclick="openModal('deposit')">⬇ Deposit</button>
       <button class="action-btn btn-withdraw" onclick="openModal('withdraw')">⬆ Withdraw</button>
@@ -205,8 +186,7 @@
 
     <div class="wallet-grid">
       <div>
-        <!-- P&L CHART -->
-        <div class="card pnl-section" style="margin-bottom:20px;">
+        <div class="card" style="margin-bottom:20px;">
           <div class="card-header">
             <div class="card-title">Portfolio Performance</div>
             <div class="chart-tabs">
@@ -216,110 +196,33 @@
               <button class="chart-tab" onclick="setChartPeriod('1Y',this)">1Y</button>
             </div>
           </div>
-          <div class="chart-wrap">
-            <canvas id="pnl-chart"></canvas>
-          </div>
+          <div style="padding:16px 20px;"><canvas id="pnl-chart"></canvas></div>
         </div>
 
-        <!-- ASSETS -->
         <div class="card">
           <div class="card-header">
             <div class="card-title">Assets</div>
-            <div style="font-size:0.78rem;color:var(--text-muted);">4 assets</div>
+            <div style="font-size:0.78rem;color:var(--text-muted);" id="asset-count">Loading...</div>
           </div>
           <div style="display:grid;grid-template-columns:40px 1fr 100px 100px 100px;padding:10px 20px;font-size:0.7rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;border-bottom:1px solid var(--navy-border);">
             <div></div><div>Asset</div><div style="text-align:right">Holdings</div><div style="text-align:right">Value</div><div style="text-align:right">24h</div>
           </div>
-          <div class="asset-row">
-            <div class="asset-icon" style="background:rgba(247,147,26,0.15);">₿</div>
-            <div><div class="asset-name">Bitcoin</div><div class="asset-ticker">BTC</div></div>
-            <div class="asset-amount">0.1284 BTC</div>
-            <div class="asset-value">$8,636.12</div>
-            <div class="asset-change pos">+2.3%</div>
-          </div>
-          <div class="asset-row">
-            <div class="asset-icon" style="background:rgba(98,126,234,0.15);">Ξ</div>
-            <div><div class="asset-name">Ethereum</div><div class="asset-ticker">ETH</div></div>
-            <div class="asset-amount">0.2841 ETH</div>
-            <div class="asset-value">$996.40</div>
-            <div class="asset-change pos">+1.8%</div>
-          </div>
-          <div class="asset-row">
-            <div class="asset-icon" style="background:rgba(0,212,255,0.15);">◎</div>
-            <div><div class="asset-name">USD Coin</div><div class="asset-ticker">USDC</div></div>
-            <div class="asset-amount">3,214.80 USDC</div>
-            <div class="asset-value">$3,214.80</div>
-            <div class="asset-change" style="color:var(--text-muted)">0.0%</div>
-          </div>
-          <div class="asset-row">
-            <div class="asset-icon" style="background:rgba(0,230,118,0.15);">◈</div>
-            <div><div class="asset-name">Solana</div><div class="asset-ticker">SOL</div></div>
-            <div class="asset-amount">0 SOL</div>
-            <div class="asset-value">$0.00</div>
-            <div class="asset-change neg">-0.4%</div>
+          <div id="assets-list">
+            <div class="asset-row"><div class="asset-icon" style="background:rgba(247,147,26,0.15);">₿</div><div><div class="asset-name">Bitcoin</div><div class="asset-ticker">BTC</div></div><div class="asset-amount" id="btc-holdings">0 BTC</div><div class="asset-value" id="btc-val">$0.00</div><div class="asset-change pos">+2.3%</div></div>
+            <div class="asset-row"><div class="asset-icon" style="background:rgba(98,126,234,0.15);">Ξ</div><div><div class="asset-name">Ethereum</div><div class="asset-ticker">ETH</div></div><div class="asset-amount" id="eth-holdings">0 ETH</div><div class="asset-value" id="eth-val">$0.00</div><div class="asset-change pos">+1.8%</div></div>
+            <div class="asset-row"><div class="asset-icon" style="background:rgba(0,212,255,0.15);">◎</div><div><div class="asset-name">USD Coin</div><div class="asset-ticker">USDC</div></div><div class="asset-amount" id="usdc-holdings">0 USDC</div><div class="asset-value" id="usdc-val">$0.00</div><div class="asset-change" style="color:var(--text-muted)">0.0%</div></div>
+            <div class="asset-row"><div class="asset-icon" style="background:rgba(0,230,118,0.15);">◈</div><div><div class="asset-name">Solana</div><div class="asset-ticker">SOL</div></div><div class="asset-amount" id="sol-holdings">0 SOL</div><div class="asset-value" id="sol-val">$0.00</div><div class="asset-change neg">-0.4%</div></div>
           </div>
         </div>
       </div>
 
-      <!-- RIGHT: TRANSACTIONS -->
       <div class="card" style="height:fit-content;">
         <div class="card-header">
           <div class="card-title">Recent Transactions</div>
           <div style="font-size:0.78rem;color:var(--cyan);cursor:pointer;">View all</div>
         </div>
-        <div class="tx-row">
-          <div class="tx-icon tx-deposit-icon">⬇</div>
-          <div class="tx-info">
-            <div class="tx-title">BTC Deposit</div>
-            <div class="tx-date">Jun 25, 2026 · 9:14 AM</div>
-            <span class="tx-status tx-complete">Confirmed</span>
-          </div>
-          <div><div class="tx-amount pos">+$5,000.00</div><div style="font-size:0.72rem;color:var(--text-muted);text-align:right;">0.0742 BTC</div></div>
-        </div>
-        <div class="tx-row">
-          <div class="tx-icon tx-trade-icon">⇄</div>
-          <div class="tx-info">
-            <div class="tx-title">BTC → USDC Swap</div>
-            <div class="tx-date">Jun 24, 2026 · 3:22 PM</div>
-            <span class="tx-status tx-complete">Confirmed</span>
-          </div>
-          <div><div class="tx-amount" style="color:var(--text-muted)">$1,200.00</div><div style="font-size:0.72rem;color:var(--text-muted);text-align:right;">0.0178 BTC</div></div>
-        </div>
-        <div class="tx-row">
-          <div class="tx-icon tx-deposit-icon">⬇</div>
-          <div class="tx-info">
-            <div class="tx-title">ETH Deposit</div>
-            <div class="tx-date">Jun 22, 2026 · 11:05 AM</div>
-            <span class="tx-status tx-complete">Confirmed</span>
-          </div>
-          <div><div class="tx-amount pos">+$1,000.00</div><div style="font-size:0.72rem;color:var(--text-muted);text-align:right;">0.2841 ETH</div></div>
-        </div>
-        <div class="tx-row">
-          <div class="tx-icon tx-withdraw-icon">⬆</div>
-          <div class="tx-info">
-            <div class="tx-title">USDC Withdrawal</div>
-            <div class="tx-date">Jun 20, 2026 · 2:47 PM</div>
-            <span class="tx-status tx-pending">Pending</span>
-          </div>
-          <div><div class="tx-amount neg">-$500.00</div><div style="font-size:0.72rem;color:var(--text-muted);text-align:right;">500 USDC</div></div>
-        </div>
-        <div class="tx-row">
-          <div class="tx-icon tx-deposit-icon">⬇</div>
-          <div class="tx-info">
-            <div class="tx-title">BTC Deposit</div>
-            <div class="tx-date">Jun 18, 2026 · 8:30 AM</div>
-            <span class="tx-status tx-complete">Confirmed</span>
-          </div>
-          <div><div class="tx-amount pos">+$5,000.00</div><div style="font-size:0.72rem;color:var(--text-muted);text-align:right;">0.0742 BTC</div></div>
-        </div>
-        <div class="tx-row">
-          <div class="tx-icon tx-trade-icon">⇄</div>
-          <div class="tx-info">
-            <div class="tx-title">ETH → BTC Swap</div>
-            <div class="tx-date">Jun 15, 2026 · 5:11 PM</div>
-            <span class="tx-status tx-complete">Confirmed</span>
-          </div>
-          <div><div class="tx-amount" style="color:var(--text-muted)">$800.00</div></div>
+        <div id="tx-list">
+          <div style="padding:24px;text-align:center;color:var(--text-muted);font-size:0.85rem;">No transactions yet.<br>Make your first deposit to get started!</div>
         </div>
       </div>
     </div>
@@ -331,37 +234,48 @@
   <div class="modal">
     <button class="modal-close" onclick="closeModal('deposit')">✕</button>
     <div class="modal-title">Deposit Crypto</div>
-    <p class="modal-sub">Choose a currency and send to your wallet address</p>
-    <div class="notice">⚠️ Only send the selected cryptocurrency to this address. Sending the wrong asset may result in permanent loss.</div>
-    <div class="crypto-grid">
-      <div class="crypto-option selected" onclick="selectCrypto(this,'BTC','bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh')">
-        <div class="emoji">₿</div>
-        <div class="name">Bitcoin</div>
-        <div class="ticker">BTC</div>
+    <p class="modal-sub">Choose a currency and amount to generate your deposit address</p>
+    <div class="notice">⚠️ Only send the selected cryptocurrency. Sending the wrong asset may result in permanent loss.</div>
+
+    <div id="deposit-step-1">
+      <p style="font-size:0.8rem;color:var(--text-muted);margin-bottom:12px;">Select currency:</p>
+      <div class="crypto-grid">
+        <div class="crypto-option selected" onclick="selectDepositCrypto(this,'BTC')"><div class="emoji">₿</div><div class="name">Bitcoin</div><div class="ticker">BTC</div></div>
+        <div class="crypto-option" onclick="selectDepositCrypto(this,'ETH')"><div class="emoji">Ξ</div><div class="name">Ethereum</div><div class="ticker">ETH</div></div>
+        <div class="crypto-option" onclick="selectDepositCrypto(this,'USDC')"><div class="emoji">◎</div><div class="name">USD Coin</div><div class="ticker">USDC</div></div>
+        <div class="crypto-option" onclick="selectDepositCrypto(this,'USDT')"><div class="emoji">₮</div><div class="name">Tether</div><div class="ticker">USDT</div></div>
+        <div class="crypto-option" onclick="selectDepositCrypto(this,'SOL')"><div class="emoji">◈</div><div class="name">Solana</div><div class="ticker">SOL</div></div>
+        <div class="crypto-option" onclick="selectDepositCrypto(this,'BNB')"><div class="emoji">⬡</div><div class="name">BNB</div><div class="ticker">BNB</div></div>
       </div>
-      <div class="crypto-option" onclick="selectCrypto(this,'ETH','0x71C7656EC7ab88b098defB751B7401B5f6d8976F')">
-        <div class="emoji">Ξ</div>
-        <div class="name">Ethereum</div>
-        <div class="ticker">ETH</div>
+
+      <div class="form-group">
+        <label class="form-label">Amount (USD)</label>
+        <input type="number" class="form-input" id="deposit-amount" placeholder="100" min="10">
+        <div class="amount-shortcuts">
+          <button class="amt-btn" onclick="setAmount(50)">$50</button>
+          <button class="amt-btn" onclick="setAmount(100)">$100</button>
+          <button class="amt-btn" onclick="setAmount(500)">$500</button>
+          <button class="amt-btn" onclick="setAmount(1000)">$1,000</button>
+        </div>
       </div>
-      <div class="crypto-option" onclick="selectCrypto(this,'USDC','0x71C7656EC7ab88b098defB751B7401B5f6d8976F')">
-        <div class="emoji">◎</div>
-        <div class="name">USD Coin</div>
-        <div class="ticker">USDC</div>
-      </div>
-      <div class="crypto-option" onclick="selectCrypto(this,'SOL','7EcDhSYGxXyscszYEp35KHN8vvw3svAuLKTzXwCFLtV')">
-        <div class="emoji">◈</div>
-        <div class="name">Solana</div>
-        <div class="ticker">SOL</div>
-      </div>
+
+      <button class="submit-btn" id="generate-btn" onclick="generateDepositAddress()">Generate Deposit Address</button>
     </div>
-    <div class="wallet-address-box">
-      <div class="wallet-address-label" id="deposit-currency-label">Your BTC Deposit Address</div>
-      <div class="wallet-address" id="deposit-address">bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh</div>
-      <button class="copy-btn" onclick="copyAddress()">📋 Copy address</button>
+
+    <div id="deposit-step-2" style="display:none;">
+      <div class="wallet-address-box">
+        <div class="wallet-address-label" id="deposit-currency-label">Send BTC to this address:</div>
+        <div class="wallet-address" id="deposit-address">Generating...</div>
+        <button class="copy-btn" onclick="copyAddress()">📋 Copy address</button>
+      </div>
+      <div style="background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.15);border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:0.82rem;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="color:var(--text-muted)">Amount to send:</span><span id="crypto-amount" style="font-weight:600;color:var(--cyan)">—</span></div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="color:var(--text-muted)">Network:</span><span id="crypto-network" style="font-weight:600;">—</span></div>
+        <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-muted)">Expires in:</span><span id="expires-in" style="font-weight:600;color:var(--gold);">30 min</span></div>
+      </div>
+      <p style="font-size:0.78rem;color:var(--text-muted);text-align:center;margin-bottom:16px;">Send exactly the amount shown above. Deposits confirmed after 2 network confirmations.</p>
+      <button class="submit-btn" onclick="closeModal('deposit');showStep(1)" style="background:var(--navy-hover);color:var(--text);border:1px solid var(--navy-border);">← Generate new address</button>
     </div>
-    <p style="font-size:0.78rem;color:var(--text-muted);text-align:center;margin-bottom:16px;">Deposits are credited after 2 network confirmations · Usually 10–30 minutes</p>
-    <button class="submit-btn" onclick="closeModal('deposit')">Done</button>
   </div>
 </div>
 
@@ -371,13 +285,14 @@
     <button class="modal-close" onclick="closeModal('withdraw')">✕</button>
     <div class="modal-title">Withdraw Crypto</div>
     <p class="modal-sub">Send crypto to an external wallet address</p>
-    <div class="notice">⚠️ Withdrawals are processed within 24 hours. Double-check your wallet address before submitting.</div>
+    <div class="notice">⚠️ Withdrawals are processed within 24 hours. Double-check your address before submitting.</div>
     <div class="form-group">
       <label class="form-label">Currency</label>
       <select class="form-input" id="withdraw-currency">
-        <option>BTC — 0.1284 available</option>
-        <option>ETH — 0.2841 available</option>
-        <option>USDC — 3,214.80 available</option>
+        <option value="BTC">BTC — Bitcoin</option>
+        <option value="ETH">ETH — Ethereum</option>
+        <option value="USDC">USDC — USD Coin</option>
+        <option value="SOL">SOL — Solana</option>
       </select>
     </div>
     <div class="form-group">
@@ -397,13 +312,14 @@
   <div class="modal">
     <button class="modal-close" onclick="closeModal('swap')">✕</button>
     <div class="modal-title">Swap Assets</div>
-    <p class="modal-sub">Exchange one cryptocurrency for another instantly</p>
+    <p class="modal-sub">Exchange one cryptocurrency for another</p>
     <div class="form-group">
       <label class="form-label">From</label>
       <select class="form-input">
-        <option>BTC — 0.1284 available</option>
-        <option>ETH — 0.2841 available</option>
-        <option>USDC — 3,214.80 available</option>
+        <option>BTC — Bitcoin</option>
+        <option>ETH — Ethereum</option>
+        <option>USDC — USD Coin</option>
+        <option>SOL — Solana</option>
       </select>
     </div>
     <div class="form-group">
@@ -414,10 +330,10 @@
     <div class="form-group">
       <label class="form-label">To</label>
       <select class="form-input">
-        <option>USDC</option>
-        <option>BTC</option>
-        <option>ETH</option>
-        <option>SOL</option>
+        <option>USDC — USD Coin</option>
+        <option>BTC — Bitcoin</option>
+        <option>ETH — Ethereum</option>
+        <option>SOL — Solana</option>
       </select>
     </div>
     <div style="background:rgba(0,212,255,0.05);border:1px solid rgba(0,212,255,0.15);border-radius:8px;padding:12px 14px;margin-bottom:16px;font-size:0.82rem;color:var(--text-muted);">
@@ -428,18 +344,161 @@
 </div>
 
 <script>
-function openModal(type) {
-  document.getElementById(type+'-modal').classList.add('open');
-}
-function closeModal(type) {
-  document.getElementById(type+'-modal').classList.remove('open');
+const BACKEND = 'https://alphaedge-backend-uu13.onrender.com';
+let selectedCrypto = 'BTC';
+let currentUser = null;
+let wallet = null;
+
+// Load user from localStorage
+async function loadWallet() {
+  try {
+    const token = localStorage.getItem('ae_token');
+    const userStr = localStorage.getItem('ae_user');
+    if (!token || !userStr) { window.location.href = 'alphaedge-login.html'; return; }
+
+    currentUser = JSON.parse(userStr);
+    document.getElementById('nav-avatar').textContent = (currentUser.firstName?.[0] || 'U') + (currentUser.lastName?.[0] || '');
+    document.getElementById('nav-plan').textContent = currentUser.plan?.toUpperCase() || 'FREE';
+
+    const res = await fetch(`${BACKEND}/api/wallet`, {
+      headers: { 'Authorization': `Bearer ${token}` }
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      wallet = data.wallet;
+      updateWalletUI(wallet);
+      updateTransactions(data.transactions);
+    }
+  } catch (err) {
+    console.error('Wallet load error:', err);
+  }
+  document.getElementById('last-updated').textContent = 'Last updated: just now';
 }
 
-function selectCrypto(el, ticker, address) {
+function updateWalletUI(w) {
+  if (!w) return;
+  const btcPrice = 67420, ethPrice = 3512, solPrice = 38.20;
+  const btcVal = w.btcBalance * btcPrice;
+  const ethVal = w.ethBalance * ethPrice;
+  const usdcVal = w.usdcBalance;
+  const solVal = w.solBalance * solPrice;
+  const total = btcVal + ethVal + usdcVal + solVal;
+
+  document.getElementById('total-balance').textContent = `$${total.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})}`;
+  document.getElementById('usdc-balance').textContent = `$${usdcVal.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})}`;
+  document.getElementById('btc-balance').textContent = w.btcBalance.toFixed(4);
+  document.getElementById('btc-usd').textContent = `$${btcVal.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2})}`;
+  document.getElementById('balance-change').textContent = total > 0 ? `Portfolio value updated` : `Make your first deposit to get started`;
+  document.getElementById('btc-holdings').textContent = `${w.btcBalance.toFixed(4)} BTC`;
+  document.getElementById('eth-holdings').textContent = `${w.ethBalance.toFixed(4)} ETH`;
+  document.getElementById('usdc-holdings').textContent = `${w.usdcBalance.toFixed(2)} USDC`;
+  document.getElementById('sol-holdings').textContent = `${w.solBalance.toFixed(2)} SOL`;
+  document.getElementById('btc-val').textContent = `$${btcVal.toLocaleString('en-US', {minimumFractionDigits:2})}`;
+  document.getElementById('eth-val').textContent = `$${ethVal.toLocaleString('en-US', {minimumFractionDigits:2})}`;
+  document.getElementById('usdc-val').textContent = `$${usdcVal.toLocaleString('en-US', {minimumFractionDigits:2})}`;
+  document.getElementById('sol-val').textContent = `$${solVal.toLocaleString('en-US', {minimumFractionDigits:2})}`;
+  document.getElementById('asset-count').textContent = '4 assets';
+}
+
+function updateTransactions(txs) {
+  const list = document.getElementById('tx-list');
+  if (!txs || txs.length === 0) {
+    list.innerHTML = '<div style="padding:24px;text-align:center;color:var(--text-muted);font-size:0.85rem;">No transactions yet.<br>Make your first deposit to get started!</div>';
+    return;
+  }
+  list.innerHTML = txs.slice(0,8).map(tx => {
+    const icon = tx.type === 'deposit' ? '⬇' : tx.type === 'withdrawal' ? '⬆' : '⇄';
+    const iconClass = tx.type === 'deposit' ? 'tx-deposit-icon' : tx.type === 'withdrawal' ? 'tx-withdraw-icon' : 'tx-trade-icon';
+    const amtColor = tx.type === 'deposit' ? 'var(--green)' : tx.type === 'withdrawal' ? 'var(--red)' : 'var(--text-muted)';
+    const prefix = tx.type === 'deposit' ? '+' : tx.type === 'withdrawal' ? '-' : '';
+    const statusClass = tx.status === 'completed' ? 'tx-complete' : 'tx-pending';
+    return `<div class="tx-row">
+      <div class="tx-icon ${iconClass}">${icon}</div>
+      <div class="tx-info">
+        <div class="tx-title">${tx.currency} ${tx.type.charAt(0).toUpperCase() + tx.type.slice(1)}</div>
+        <div class="tx-date">${new Date(tx.createdAt).toLocaleDateString('en-US', {month:'short',day:'numeric',year:'numeric'})}</div>
+        <span class="tx-status ${statusClass}">${tx.status.charAt(0).toUpperCase() + tx.status.slice(1)}</span>
+      </div>
+      <div><div class="tx-amount" style="color:${amtColor}">${prefix}$${tx.usdValue.toLocaleString('en-US', {minimumFractionDigits:2})}</div></div>
+    </div>`;
+  }).join('');
+}
+
+// DEPOSIT
+function selectDepositCrypto(el, ticker) {
   document.querySelectorAll('.crypto-option').forEach(o => o.classList.remove('selected'));
   el.classList.add('selected');
-  document.getElementById('deposit-address').textContent = address;
-  document.getElementById('deposit-currency-label').textContent = `Your ${ticker} Deposit Address`;
+  selectedCrypto = ticker;
+}
+
+function setAmount(amt) {
+  document.getElementById('deposit-amount').value = amt;
+}
+
+async function generateDepositAddress() {
+  const amount = document.getElementById('deposit-amount').value;
+  if (!amount || amount < 10) {
+    alert('Minimum deposit is $10.');
+    return;
+  }
+
+  const btn = document.getElementById('generate-btn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="loading-spinner"></span> Generating...';
+
+  try {
+    const token = localStorage.getItem('ae_token');
+    const res = await fetch(`${BACKEND}/api/payments/create`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+      body: JSON.stringify({
+        userId: currentUser.id,
+        currency: selectedCrypto,
+        amount: parseFloat(amount),
+        description: `AlphaEdge deposit — ${currentUser.email}`
+      })
+    });
+
+    if (res.ok) {
+      const data = await res.json();
+      document.getElementById('deposit-address').textContent = data.payAddress;
+      document.getElementById('deposit-currency-label').textContent = `Send ${data.payCurrency?.toUpperCase() || selectedCrypto} to this address:`;
+      document.getElementById('crypto-amount').textContent = `${data.payAmount} ${data.payCurrency?.toUpperCase() || selectedCrypto}`;
+      document.getElementById('crypto-network').textContent = data.payCurrency?.toUpperCase() || selectedCrypto;
+      showStep(2);
+    } else {
+      // Fallback to demo mode
+      showDemoAddress();
+    }
+  } catch (err) {
+    console.error('Payment create error:', err);
+    showDemoAddress();
+  }
+
+  btn.disabled = false;
+  btn.innerHTML = 'Generate Deposit Address';
+}
+
+function showDemoAddress() {
+  const addresses = {
+    BTC: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
+    ETH: '0x71C7656EC7ab88b098defB751B7401B5f6d8976F',
+    USDC: '0x71C7656EC7ab88b098defB751B7401B5f6d8976F',
+    USDT: '0x71C7656EC7ab88b098defB751B7401B5f6d8976F',
+    SOL: '7EcDhSYGxXyscszYEp35KHN8vvw3svAuLKTzXwCFLtV',
+    BNB: '0x71C7656EC7ab88b098defB751B7401B5f6d8976F'
+  };
+  document.getElementById('deposit-address').textContent = addresses[selectedCrypto] || addresses.BTC;
+  document.getElementById('deposit-currency-label').textContent = `Send ${selectedCrypto} to this address:`;
+  document.getElementById('crypto-amount').textContent = `Enter amount from previous step`;
+  document.getElementById('crypto-network').textContent = selectedCrypto;
+  showStep(2);
+}
+
+function showStep(step) {
+  document.getElementById('deposit-step-1').style.display = step === 1 ? 'block' : 'none';
+  document.getElementById('deposit-step-2').style.display = step === 2 ? 'block' : 'none';
 }
 
 function copyAddress() {
@@ -456,8 +515,17 @@ function submitWithdraw() {
   const address = document.getElementById('withdraw-address').value;
   if (!amount || !address) { alert('Please fill in all fields.'); return; }
   closeModal('withdraw');
-  alert('Withdrawal request submitted! You will receive a confirmation email within 24 hours.');
+  alert('Withdrawal request submitted! You will receive a confirmation within 24 hours.');
 }
+
+function openModal(type) { document.getElementById(type+'-modal').classList.add('open'); }
+function closeModal(type) { document.getElementById(type+'-modal').classList.remove('open'); }
+
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
+  });
+});
 
 function setChartPeriod(period, btn) {
   document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('active'));
@@ -471,73 +539,33 @@ function drawChart(period) {
   canvas.width = canvas.offsetWidth * window.devicePixelRatio;
   canvas.height = 120 * window.devicePixelRatio;
   ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
-  const w = canvas.offsetWidth;
-  const h = 120;
-
+  const w = canvas.offsetWidth, h = 120;
   const datasets = {
-    '1W': [10200,10350,10100,10480,10620,10750,10847],
-    '1M': [9800,10100,9950,10300,10150,10600,10400,10700,10550,10847],
-    '3M': [8500,9000,8800,9400,9200,9800,10100,9900,10300,10500,10200,10847],
-    '1Y': [7000,7500,8000,7800,8500,9000,8700,9500,10000,9800,10400,10847],
+    '1W': [0,0,0,0,0,0,0],
+    '1M': [0,0,0,0,0,0,0,0,0,0],
+    '3M': [0,0,0,0,0,0,0,0,0,0,0,0],
+    '1Y': [0,0,0,0,0,0,0,0,0,0,0,0],
   };
-
   const data = datasets[period] || datasets['1W'];
-  const min = Math.min(...data) * 0.998;
-  const max = Math.max(...data) * 1.002;
-  const range = max - min;
-  const stepX = w / (data.length - 1);
-
   ctx.clearRect(0, 0, w, h);
-
-  // Gradient fill
-  const grad = ctx.createLinearGradient(0, 0, 0, h);
-  grad.addColorStop(0, 'rgba(0,212,255,0.2)');
-  grad.addColorStop(1, 'rgba(0,212,255,0)');
-
   ctx.beginPath();
-  data.forEach((val, i) => {
-    const x = i * stepX;
-    const y = h - ((val - min) / range) * (h - 10) - 5;
-    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-  });
-  ctx.lineTo((data.length - 1) * stepX, h);
-  ctx.lineTo(0, h);
-  ctx.closePath();
-  ctx.fillStyle = grad;
-  ctx.fill();
-
-  // Line
-  ctx.beginPath();
-  data.forEach((val, i) => {
-    const x = i * stepX;
-    const y = h - ((val - min) / range) * (h - 10) - 5;
-    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-  });
-  ctx.strokeStyle = '#00D4FF';
-  ctx.lineWidth = 2;
+  ctx.moveTo(0, h/2);
+  ctx.lineTo(w, h/2);
+  ctx.strokeStyle = 'rgba(0,212,255,0.2)';
+  ctx.lineWidth = 1;
+  ctx.setLineDash([4,4]);
   ctx.stroke();
-
-  // End dot
-  const lastX = (data.length - 1) * stepX;
-  const lastY = h - ((data[data.length-1] - min) / range) * (h - 10) - 5;
-  ctx.beginPath();
-  ctx.arc(lastX, lastY, 4, 0, Math.PI * 2);
-  ctx.fillStyle = '#00D4FF';
-  ctx.fill();
+  ctx.setLineDash([]);
+  ctx.fillStyle = 'rgba(0,212,255,0.06)';
+  ctx.fillRect(0, 0, w, h);
+  ctx.fillStyle = 'var(--text-dim)';
+  ctx.font = '12px Inter';
+  ctx.textAlign = 'center';
+  ctx.fillText('Make your first deposit to see performance data', w/2, h/2 + 4);
 }
 
-// Close modal on overlay click
-document.querySelectorAll('.modal-overlay').forEach(overlay => {
-  overlay.addEventListener('click', function(e) {
-    if (e.target === this) this.classList.remove('open');
-  });
-});
-
-window.addEventListener('load', () => drawChart('1W'));
-window.addEventListener('resize', () => {
-  const active = document.querySelector('.chart-tab.active');
-  drawChart(active ? active.textContent : '1W');
-});
+window.addEventListener('load', () => { loadWallet(); drawChart('1W'); });
+window.addEventListener('resize', () => drawChart(document.querySelector('.chart-tab.active')?.textContent || '1W'));
 </script>
 </body>
 </html>
