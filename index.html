@@ -743,7 +743,7 @@ function toggleBilling(){
 // FETCH AEC LIVE PRICE
 async function fetchAECPrice(){
   try {
-    const res = await fetch('https://api.dexscreener.com/latest/dex/pairs/solana/H9cfWQqA7vGf8zkJHsL5WDWeNghBCm2AwY26jfUDQ5tk');
+    const res = await fetch('https://api.dexscreener.com/latest/dex/pairs/solana/H9cfWQqA7vGf8zkJHsL5WDWeNghBCm2AwY26jfUDQ5tkQ5tk');
     const data = await res.json();
     const pair = data.pairs && data.pairs[0];
     if(!pair) return;
