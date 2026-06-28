@@ -52,7 +52,7 @@
     <div class="form-group">
       <label class="form-label">Password</label>
       <input type="password" class="form-input" id="password" placeholder="••••••••">
-      <a href="#" class="forgot-link">Forgot password?</a>
+      <a href="#" class="forgot-link" onclick="handleForgot(event)">Forgot password?</a>
     </div>
     <button class="submit-btn" id="login-btn" onclick="handleLogin()">Sign in</button>
     <div class="divider">or</div>
@@ -87,6 +87,27 @@ async function handleLogin() {
     btn.disabled = false; btn.textContent = 'Sign in';
   }
 }
+
+async function handleForgot(e) {
+  e.preventDefault();
+  const email = document.getElementById('email').value.trim();
+  if (!email) { 
+    document.getElementById('error-msg').textContent = 'Enter your email first, then click Forgot password.';
+    document.getElementById('error-msg').style.display = 'block';
+    return;
+  }
+  const errEl = document.getElementById('error-msg');
+  const sucEl = document.getElementById('success-msg');
+  errEl.style.display='none';
+  try {
+    await fetch(`${BACKEND}/api/auth/forgot-password`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({email}) });
+    sucEl.textContent = 'If an account exists, a reset link has been sent to your email.';
+    sucEl.style.display = 'block';
+  } catch(e) {
+    errEl.textContent = 'Network error. Please try again.'; errEl.style.display='block';
+  }
+}
+
 document.addEventListener('keypress', e => { if(e.key==='Enter') handleLogin(); });
 </script>
 </body>
