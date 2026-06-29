@@ -187,5 +187,29 @@
     <a href="alphaedge-terms.html">Terms</a>
   </div>
 </footer>
+
+<script>
+async function loadLiveForex() {
+  try {
+    const pairs = ['C:EURUSD','C:GBPUSD','C:USDJPY'];
+    const res = await fetch(`https://api.polygon.io/v2/snapshot/locale/global/markets/forex/tickers?tickers=${pairs.join(',')}&apiKey=plqa3f4a1kcCABt7zvcl11bmkN8A9AZy`);
+    const data = await res.json();
+    const rows = document.querySelectorAll('.signal-row');
+    const map = {'C:EURUSD':'EUR/USD','C:GBPUSD':'GBP/USD','C:USDJPY':'USD/JPY'};
+    if (data.tickers && rows.length > 1) {
+      data.tickers.slice(0,2).forEach((snap, i) => {
+        if (rows[i+1]) {
+          const cells = rows[i+1].querySelectorAll('div');
+          const chg = snap.todaysChangePerc || 0;
+          if (cells[0]) cells[0].innerHTML = `<span class="sig-ticker">${map[snap.ticker] || snap.ticker}</span>`;
+          if (cells[1]) cells[1].innerHTML = `<span class="sig-badge ${chg >= 0 ? 'sig-buy' : 'sig-sell'}">${chg >= 0 ? 'BUY' : 'SELL'}</span>`;
+          if (cells[2]) cells[2].textContent = snap.day?.c ? snap.day.c.toFixed(5) : '—';
+        }
+      });
+    }
+  } catch(e) { console.log('Polygon forex:', e.message); }
+}
+loadLiveForex();
+</script>
 </body>
 </html>
