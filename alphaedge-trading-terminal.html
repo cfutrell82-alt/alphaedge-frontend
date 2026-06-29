@@ -999,6 +999,88 @@ simulatePrices();
 setTimeout(()=>{
   showSignalAlert({sym:'BTC/USDT',direction:'BUY',entry:67420,tp:71000,sl:65000});
 }, 7000);
+
+// ═══════════════════════════════════════════
+// POLYGON.IO REAL DATA
+// ═══════════════════════════════════════════
+const POLYGON_KEY = 'plqa3f4a1kcCABt7zvcl11bmkN8A9AZy';
+
+async function fetchPolygonPrice(ticker) {
+  try {
+    const res = await fetch(`https://api.polygon.io/v2/last/trade/${ticker}?apiKey=${POLYGON_KEY}`);
+    const data = await res.json();
+    if (data.results?.p) return data.results.p;
+  } catch(e) {}
+  return null;
+}
+
+async function fetchPolygonSnapshot(tickers) {
+  try {
+    const res = await fetch(`https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?tickers=${tickers.join(',')}&apiKey=${POLYGON_KEY}`);
+    const data = await res.json();
+    return data.tickers || [];
+  } catch(e) { return []; }
+}
+
+async function fetchForexSnapshot() {
+  try {
+    const pairs = ['C:EURUSD','C:GBPUSD','C:USDJPY','C:GBPJPY','C:AUDUSD','C:USDCHF','C:USDCAD'];
+    const res = await fetch(`https://api.polygon.io/v2/snapshot/locale/global/markets/forex/tickers?tickers=${pairs.join(',')}&apiKey=${POLYGON_KEY}`);
+    const data = await res.json();
+    return data.tickers || [];
+  } catch(e) { return []; }
+}
+
+async function updateStockPrices() {
+  const stockTickers = MARKETS.stocks.map(s => s.sym);
+  const snapshots = await fetchPolygonSnapshot(stockTickers);
+  snapshots.forEach(snap => {
+    const item = MARKETS.stocks.find(s => s.sym === snap.ticker);
+    if (item && snap.day?.c) {
+      item.price = snap.day.c;
+      item.chg = snap.todaysChangePerc ? parseFloat(snap.todaysChangePerc.toFixed(2)) : item.chg;
+      item.vol = snap.day?.v ? (snap.day.v / 1000000).toFixed(1) + 'M' : item.vol;
+    }
+  });
+  if (S.market === 'stocks') renderMarkets();
+  console.log('[POLYGON] Stocks updated');
+}
+
+async function updateForexPrices() {
+  const snapshots = await fetchForexSnapshot();
+  snapshots.forEach(snap => {
+    const pair = snap.ticker?.replace('C:', '').replace('USD', '/USD').replace('EUR/', 'EUR/').replace('GBP/', 'GBP/');
+    // Map polygon ticker to our format
+    const tickerMap = {
+      'C:EURUSD': 'EUR/USD', 'C:GBPUSD': 'GBP/USD', 'C:USDJPY': 'USD/JPY',
+      'C:GBPJPY': 'GBP/JPY', 'C:AUDUSD': 'AUD/USD', 'C:USDCHF': 'USD/CHF', 'C:USDCAD': 'USD/CAD'
+    };
+    const sym = tickerMap[snap.ticker];
+    if (sym) {
+      const item = MARKETS.forex.find(i => i.sym === sym);
+      if (item && snap.day?.c) {
+        item.price = snap.day.c;
+        item.chg = snap.todaysChangePerc ? parseFloat(snap.todaysChangePerc.toFixed(2)) : item.chg;
+      }
+    }
+  });
+  if (S.market === 'forex') renderMarkets();
+  console.log('[POLYGON] Forex updated');
+}
+
+// Update prices every 60 seconds
+async function startPolygonUpdates() {
+  await updateStockPrices();
+  await updateForexPrices();
+  setInterval(async () => {
+    await updateStockPrices();
+    await updateForexPrices();
+  }, 60000);
+}
+
+// Start after a short delay
+setTimeout(startPolygonUpdates, 2000);
+
 </script>
 </body>
 </html>
