@@ -187,5 +187,29 @@
     <a href="alphaedge-terms.html">Terms</a>
   </div>
 </footer>
+
+<script>
+// Live stock prices via Polygon.io
+async function loadLiveSignals() {
+  try {
+    const tickers = ['NVDA','AAPL','TSLA','MSFT','META','AMD','AMZN','GOOGL'];
+    const res = await fetch(`https://api.polygon.io/v2/snapshot/locale/us/markets/stocks/tickers?tickers=${tickers.join(',')}&apiKey=plqa3f4a1kcCABt7zvcl11bmkN8A9AZy`);
+    const data = await res.json();
+    const rows = document.querySelectorAll('.signal-row');
+    if (data.tickers && rows.length > 1) {
+      data.tickers.slice(0,2).forEach((snap, i) => {
+        if (rows[i+1]) {
+          const cells = rows[i+1].querySelectorAll('div');
+          if (cells[0]) cells[0].innerHTML = `<span class="sig-ticker">${snap.ticker}</span>`;
+          const chg = snap.todaysChangePerc || 0;
+          if (cells[1]) cells[1].innerHTML = `<span class="sig-badge ${chg >= 0 ? 'sig-buy' : 'sig-sell'}">${chg >= 0 ? 'BUY' : 'SELL'}</span>`;
+          if (cells[2]) cells[2].textContent = snap.day?.c ? '$' + snap.day.c.toFixed(2) : '—';
+        }
+      });
+    }
+  } catch(e) { console.log('Polygon:', e.message); }
+}
+loadLiveSignals();
+</script>
 </body>
 </html>
