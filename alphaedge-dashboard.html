@@ -410,7 +410,7 @@ function renderPerfBars() {
 async function loadWalletMini() {
   try {
     const token=localStorage.getItem('ae_token'); if(!token) return;
-    const res=await fetch('https://alphaedge-backend-uu13.onrender.com/api/wallet',{headers:{'Authorization':`Bearer ${token}`}});
+    const res=await fetch('https://alphaedge-backend-production.up.railway.app/api/wallet',{headers:{'Authorization':`Bearer ${token}`}});
     if(!res.ok) return;
     const {wallet}=await res.json(); if(!wallet) return;
     const total=wallet.btcBalance*67420+wallet.ethBalance*3512+wallet.usdcBalance+wallet.solBalance*38.20;
