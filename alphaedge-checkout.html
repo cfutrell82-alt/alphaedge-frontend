@@ -198,7 +198,7 @@ function startCheckout(plan) {
   script.onload = async () => {
     const stripe = Stripe(STRIPE_PK);
     try {
-      const res = await fetch('https://alphaedge-backend-uu13.onrender.com/api/create-subscription', {
+      const res = await fetch('https://alphaedge-backend-production.up.railway.app/api/create-subscription', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ priceId })
