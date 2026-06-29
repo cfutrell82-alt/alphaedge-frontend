@@ -2,7 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#00e5ff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="AlphaEdge">
+  <link rel="apple-touch-icon" href="/alphaedge-coin.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AlphaEdge — Crypto Signals</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
@@ -295,5 +303,114 @@ function toggleChat() {
 }
 </script>
 
+
+<!-- PWA INSTALL PROMPT -->
+<div id="pwa-prompt" style="display:none;position:fixed;bottom:90px;left:50%;transform:translateX(-50%);z-index:9998;background:#0b1630;border:1px solid #24335f;border-top:2px solid #00e5ff;border-radius:14px;padding:16px 20px;box-shadow:0 20px 60px rgba(0,0,0,0.6);min-width:300px;max-width:380px;text-align:center;">
+  <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:6px;color:#fdfdff;">📱 Install AlphaEdge App</div>
+  <div style="font-size:0.8rem;color:#b7c0e8;margin-bottom:14px;">Get instant signal alerts on your phone — no App Store needed!</div>
+  <div style="display:flex;gap:8px;justify-content:center;">
+    <button id="pwa-install-btn" style="padding:9px 20px;background:linear-gradient(90deg,#f7c948,#00e5ff);color:#02040a;border:none;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.85rem;cursor:pointer;">Install App</button>
+    <button onclick="document.getElementById('pwa-prompt').style.display='none';localStorage.setItem('pwa-dismissed','1')" style="padding:9px 14px;background:none;border:1px solid #24335f;color:#b7c0e8;border-radius:8px;cursor:pointer;font-size:0.82rem;">Not now</button>
+  </div>
+</div>
+
+<!-- PUSH NOTIFICATION PROMPT -->
+<div id="notif-prompt" style="display:none;position:fixed;top:80px;right:20px;z-index:9998;background:#0b1630;border:1px solid #24335f;border-left:3px solid #00e5ff;border-radius:12px;padding:14px 18px;box-shadow:0 12px 40px rgba(0,0,0,0.5);max-width:300px;animation:slideIn 0.3s ease;">
+  <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.88rem;margin-bottom:5px;">🔔 Enable signal alerts</div>
+  <div style="font-size:0.78rem;color:#b7c0e8;margin-bottom:12px;">Get push notifications when new signals drop — even when the tab is closed.</div>
+  <div style="display:flex;gap:8px;">
+    <button onclick="enablePushNotifications()" style="flex:1;padding:7px;background:linear-gradient(90deg,#f7c948,#00e5ff);color:#02040a;border:none;border-radius:6px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.78rem;cursor:pointer;">Enable</button>
+    <button onclick="document.getElementById('notif-prompt').style.display='none';localStorage.setItem('notif-dismissed','1')" style="padding:7px 12px;background:none;border:1px solid #24335f;color:#b7c0e8;border-radius:6px;cursor:pointer;font-size:0.75rem;">Later</button>
+  </div>
+</div>
+
+<script>
+// ─── SERVICE WORKER & PWA ───
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js').then(reg => {
+    console.log('[SW] Registered');
+  }).catch(err => console.log('[SW] Error:', err.message));
+}
+
+// ─── INSTALL PROMPT ───
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (!localStorage.getItem('pwa-dismissed') && !window.matchMedia('(display-mode: standalone)').matches) {
+    setTimeout(() => { document.getElementById('pwa-prompt').style.display = 'block'; }, 3000);
+  }
+});
+document.getElementById('pwa-install-btn')?.addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  const { outcome } = await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  document.getElementById('pwa-prompt').style.display = 'none';
+  if (outcome === 'accepted') showAEToast('✓ AlphaEdge installed!', 'var(--green)');
+});
+window.addEventListener('appinstalled', () => { showAEToast('✓ AlphaEdge app installed!', 'var(--green)'); });
+
+// ─── PUSH NOTIFICATIONS ───
+async function enablePushNotifications() {
+  document.getElementById('notif-prompt').style.display = 'none';
+  try {
+    const permission = await Notification.requestPermission();
+    if (permission === 'granted') {
+      localStorage.setItem('notif-enabled', '1');
+      showAEToast('🔔 Signal alerts enabled!', '#00e5ff');
+      // Show test notification
+      setTimeout(() => {
+        new Notification('⚡ AlphaEdge Signal', {
+          body: 'BTC/USD BUY at $67,420 | TP: $71,000 | SL: $65,800',
+          icon: '/alphaedge-coin.png',
+        });
+      }, 1000);
+    }
+  } catch(e) { console.log('Notifications not supported'); }
+}
+
+// Show notification prompt after 8s if not dismissed
+if (!localStorage.getItem('notif-dismissed') && !localStorage.getItem('notif-enabled') && 'Notification' in window && Notification.permission === 'default') {
+  setTimeout(() => { document.getElementById('notif-prompt').style.display = 'block'; }, 8000);
+}
+
+// ─── SOCIAL COUNTER ───
+function animateCounter(el, target, duration = 2000) {
+  const start = parseInt(el.textContent.replace(/,/g, '')) || 0;
+  const range = target - start;
+  const startTime = performance.now();
+  function update(currentTime) {
+    const elapsed = currentTime - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.floor(start + range * eased).toLocaleString();
+    if (progress < 1) requestAnimationFrame(update);
+    else el.textContent = target.toLocaleString() + '+';
+  }
+  requestAnimationFrame(update);
+}
+
+// Animate all member counters on page
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting && !e.target.dataset.animated) {
+      e.target.dataset.animated = '1';
+      const target = parseInt(e.target.dataset.count || '12400');
+      animateCounter(e.target, target);
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('[data-count]').forEach(el => observer.observe(el));
+
+// ─── TOAST HELPER ───
+function showAEToast(msg, color) {
+  const el = document.createElement('div');
+  el.style.cssText = 'position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:99999;background:#0b1630;border:1px solid #24335f;border-left:3px solid ' + (color||'#00e5ff') + ';border-radius:8px;padding:10px 18px;font-size:0.82rem;color:#fdfdff;box-shadow:0 8px 32px rgba(0,0,0,0.5);white-space:nowrap;font-family:Inter,sans-serif;';
+  el.textContent = msg;
+  document.body.appendChild(el);
+  setTimeout(() => { try { el.remove(); } catch(e) {} }, 3000);
+}
+</script>
 </body>
 </html>
