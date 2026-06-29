@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /alphaedge-admin.html
+Disallow: /alphaedge-reset-password.html
+
+Sitemap: https://alphaedgetrading.site/sitemap.xml
