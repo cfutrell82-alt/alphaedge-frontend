@@ -994,5 +994,27 @@ function showAEToast(msg, color) {
   setTimeout(() => { try { el.remove(); } catch(e) {} }, 3000);
 }
 </script>
+
+<!-- IOS INSTALL PROMPT -->
+<div id="ios-prompt" style="display:none;position:fixed;bottom:90px;left:50%;transform:translateX(-50%);z-index:9998;background:#0b1630;border:1px solid #24335f;border-top:2px solid #00e5ff;border-radius:14px;padding:18px 22px;box-shadow:0 20px 60px rgba(0,0,0,0.6);max-width:340px;text-align:center;">
+  <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.95rem;margin-bottom:8px;color:#fdfdff;">📱 Install AlphaEdge on iPhone</div>
+  <div style="font-size:0.8rem;color:#b7c0e8;margin-bottom:14px;line-height:1.6;">
+    Tap <strong style="color:#00e5ff;">Share</strong> <svg width="14" height="18" viewBox="0 0 16 20" style="vertical-align:middle;display:inline-block;"><path fill="#00e5ff" d="M8 1l3 3h-2v8H7V4H5l3-3zM2 9h2v9h8V9h2v9a2 2 0 01-2 2H4a2 2 0 01-2-2V9z"/></svg> then <strong style="color:#00e5ff;">"Add to Home Screen"</strong>
+  </div>
+  <button onclick="document.getElementById('ios-prompt').style.display='none';localStorage.setItem('ios-pwa-dismissed','1')" style="padding:8px 20px;background:linear-gradient(90deg,#f7c948,#00e5ff);color:#02040a;border:none;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;">Got it</button>
+</div>
+
+<script>
+// Detect iOS Safari and show custom install prompt
+(function() {
+  const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+  const isInStandaloneMode = window.navigator.standalone === true;
+  if (isIOS && !isInStandaloneMode && !localStorage.getItem('ios-pwa-dismissed')) {
+    setTimeout(() => {
+      document.getElementById('ios-prompt').style.display = 'block';
+    }, 4000);
+  }
+})();
+</script>
 </body>
 </html>
