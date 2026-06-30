@@ -100,6 +100,7 @@
     <div class="plan-name">Pro</div>
     <div class="plan-price"><div class="dollar">$</div><div class="amount" id="pro-price" style="background:linear-gradient(90deg,#00e5ff,#0099bb);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">49</div><div class="period" id="pro-period">/ month</div></div>
     <div class="plan-tagline" id="pro-tagline">Everything you need to trade all markets live.</div>
+    <button class="apple-pay-btn" data-plan="pro" style="display:none;width:100%;padding:11px;background:#000;color:#fff;border:none;border-radius:8px;font-size:0.9rem;font-weight:600;cursor:pointer;align-items:center;justify-content:center;gap:6px;margin-bottom:10px;"><svg width="16" height="20" viewBox="0 0 17 20" fill="white"><path d="M14.5 10.5c0-1.7.9-3 2.3-3.8-.8-1.2-2.1-1.9-3.7-2-1.6-.1-3.1.9-3.9.9-.8 0-2.1-.9-3.4-.9-1.8 0-3.4 1-4.3 2.6-1.8 3.2-.5 7.9 1.3 10.5.9 1.3 1.9 2.7 3.3 2.6 1.3-.1 1.8-.8 3.4-.8s2 .8 3.4.8c1.4 0 2.3-1.3 3.2-2.6.6-.9 1-1.8 1.4-2.8-1.6-.7-2.7-2.3-2.7-4.1l.7-.4zM11.9 3c.7-.9 1.2-2.1 1.1-3.3-1.1.1-2.3.7-3.1 1.6-.7.8-1.3 2-1.1 3.2 1.2.1 2.4-.6 3.1-1.5z"/></svg> Pay with Apple Pay</button>
     <a href="#" class="plan-btn plan-btn-cyan" id="pro-btn" onclick="startCheckout('pro')">Start 7-day free trial</a>
     <hr class="plan-divider">
     <ul class="plan-features">
@@ -119,6 +120,7 @@
     <div class="plan-name">Elite</div>
     <div class="plan-price"><div class="dollar">$</div><div class="amount" id="elite-price" style="background:linear-gradient(90deg,#f7c948,#ff9f1c);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">99</div><div class="period" id="elite-period">/ month</div></div>
     <div class="plan-tagline" id="elite-tagline">For serious traders who want the full advantage.</div>
+    <button class="apple-pay-btn" data-plan="elite" style="display:none;width:100%;padding:11px;background:#000;color:#fff;border:none;border-radius:8px;font-size:0.9rem;font-weight:600;cursor:pointer;align-items:center;justify-content:center;gap:6px;margin-bottom:10px;"><svg width="16" height="20" viewBox="0 0 17 20" fill="white"><path d="M14.5 10.5c0-1.7.9-3 2.3-3.8-.8-1.2-2.1-1.9-3.7-2-1.6-.1-3.1.9-3.9.9-.8 0-2.1-.9-3.4-.9-1.8 0-3.4 1-4.3 2.6-1.8 3.2-.5 7.9 1.3 10.5.9 1.3 1.9 2.7 3.3 2.6 1.3-.1 1.8-.8 3.4-.8s2 .8 3.4.8c1.4 0 2.3-1.3 3.2-2.6.6-.9 1-1.8 1.4-2.8-1.6-.7-2.7-2.3-2.7-4.1l.7-.4zM11.9 3c.7-.9 1.2-2.1 1.1-3.3-1.1.1-2.3.7-3.1 1.6-.7.8-1.3 2-1.1 3.2 1.2.1 2.4-.6 3.1-1.5z"/></svg> Pay with Apple Pay</button>
     <a href="#" class="plan-btn plan-btn-gold" id="elite-btn" onclick="startCheckout('elite')">Join Elite</a>
     <hr class="plan-divider">
     <ul class="plan-features">
@@ -439,6 +441,60 @@ function showAEToast(msg, color) {
   document.body.appendChild(el);
   setTimeout(() => { try { el.remove(); } catch(e) {} }, 3000);
 }
+</script>
+
+<script>
+// ─── APPLE PAY / PAYMENT REQUEST BUTTON ───
+async function initApplePay() {
+  if (typeof Stripe === 'undefined') {
+    const script = document.createElement('script');
+    script.src = 'https://js.stripe.com/v3/';
+    document.head.appendChild(script);
+    await new Promise(resolve => script.onload = resolve);
+  }
+  const stripe = Stripe(STRIPE_PK);
+  
+  const paymentRequest = stripe.paymentRequest({
+    country: 'US',
+    currency: 'usd',
+    total: { label: 'AlphaEdge Pro', amount: 4900 },
+    requestPayerName: true,
+    requestPayerEmail: true,
+  });
+
+  const canMakePayment = await paymentRequest.canMakePayment();
+  if (canMakePayment && canMakePayment.applePay) {
+    document.querySelectorAll('.apple-pay-btn').forEach(btn => btn.style.display = 'flex');
+  }
+
+  document.querySelectorAll('.apple-pay-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const plan = btn.dataset.plan;
+      const amount = plan === 'pro' ? (isAnnual ? 47000 : 4900) : (isAnnual ? 95000 : 9900);
+      const label = plan === 'pro' ? 'AlphaEdge Pro' : 'AlphaEdge Elite';
+      const pr = stripe.paymentRequest({
+        country: 'US', currency: 'usd',
+        total: { label, amount },
+        requestPayerName: true, requestPayerEmail: true,
+      });
+      pr.show();
+      pr.on('paymentmethod', async (ev) => {
+        const token = localStorage.getItem('ae_token');
+        try {
+          const res = await fetch('https://alphaedge-backend-production.up.railway.app/api/create-subscription', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+            body: JSON.stringify({ priceId: plan === 'pro' ? (isAnnual ? PRICE_IDS.pro_annual : PRICE_IDS.pro_monthly) : (isAnnual ? PRICE_IDS.elite_annual : PRICE_IDS.elite_monthly), paymentMethodId: ev.paymentMethod.id })
+          });
+          const data = await res.json();
+          if (data.url) { ev.complete('success'); window.location.href = data.url; }
+          else { ev.complete('fail'); }
+        } catch(e) { ev.complete('fail'); }
+      });
+    });
+  });
+}
+initApplePay();
 </script>
 </body>
 </html>
