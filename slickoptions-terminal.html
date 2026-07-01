@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SlickOptions — Terminal</title>
 <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#00e5ff">
+<meta name="theme-color" content="#9945FF">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <script src="https://unpkg.com/lightweight-charts@3.8.0/dist/lightweight-charts.standalone.production.js"></script>
 <style>
@@ -18,8 +18,8 @@
     --bg-dark2: #1a2744;
     --border: #e2e8f4;
     --border-dark: #2a3350;
-    --cyan: #00e5ff;
-    --gold: #f7c948;
+    --cyan: #9945FF; --purple: #9945FF; --sol-green: #14F195;
+    --gold: #14F195;
     --green: #00E676;
     --red: #FF4B4B;
     --text: #0a1628;
@@ -34,24 +34,24 @@
   /* TOP BAR */
   .topbar { height: 48px; background: rgba(255,255,255,0.97); border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 16px; gap: 12px; flex-shrink: 0; z-index: 10; }
   .logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; color: var(--text); display: flex; align-items: center; gap: 7px; text-decoration: none; box-shadow: 0 1px 20px rgba(0,0,0,0.06); }
-  .logo img { width: 24px; height: 24px; border-radius: 50%; box-shadow: 0 0 8px rgba(247,201,72,0.7); }
-  .logo .accent { color: var(--cyan); }
+  .logo img { width: 24px; height: 24px; border-radius: 50%; box-shadow: 0 0 8px rgba(20,241,149,0.7); }
+  .logo .accent { color: var(--purple); }
   .topbar-divider { width: 1px; height: 24px; background: var(--border); margin: 0 4px; }
   .asset-selector { display: flex; align-items: center; gap: 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 5px 12px; cursor: pointer; transition: border-color 0.2s; }
-  .asset-selector:hover { border-color: var(--cyan); }
+  .asset-selector:hover { border-color: var(--purple); }
   .asset-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.9rem; color: var(--text); }
-  .asset-price { font-family: 'Space Mono', monospace; font-size: 0.82rem; color: var(--cyan); }
+  .asset-price { font-family: 'Space Mono', monospace; font-size: 0.82rem; color: var(--purple); }
   .asset-chg { font-size: 0.72rem; font-weight: 700; padding: 2px 6px; border-radius: 4px; }
   .chg-up { background: rgba(0,230,118,0.12); color: var(--green); }
   .chg-dn { background: rgba(255,75,75,0.12); color: var(--red); }
   .tf-group { display: flex; gap: 3px; margin-left: 8px; }
   .tf-btn { padding: 4px 8px; border-radius: 5px; border: 1px solid var(--border); background: none; color: var(--text-muted); font-size: 0.72rem; font-weight: 600; cursor: pointer; font-family: 'Space Mono', monospace; transition: all 0.15s; font-size: 0.72rem; font-weight: 600; cursor: pointer; font-family: 'Space Mono', monospace; transition: all 0.15s; }
-  .tf-btn.active, .tf-btn:hover { background: rgba(0,229,255,0.1); border-color: rgba(0,229,255,0.3); color: var(--cyan); }
+  .tf-btn.active, .tf-btn:hover { background: rgba(153,69,255,0.1); border-color: rgba(153,69,255,0.3); color: var(--purple); }
   .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
   .balance-pill { background: var(--bg-dark); border: 1px solid var(--border-dark); border-radius: 8px; padding: 5px 12px; font-family: 'Space Mono', monospace; font-size: 0.78rem; }
   .balance-label { color: var(--text-muted); font-size: 0.65rem; display: block; }
   .balance-val { color: var(--gold); font-weight: 700; }
-  .topbar-link { padding: 5px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; font-family: 'Space Grotesk', sans-serif; text-decoration: none; transition: all 0.2s; background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.2); color: var(--cyan); }
+  .topbar-link { padding: 5px 12px; border-radius: 6px; font-size: 0.75rem; font-weight: 600; font-family: 'Space Grotesk', sans-serif; text-decoration: none; transition: all 0.2s; background: rgba(153,69,255,0.08); border: 1px solid rgba(153,69,255,0.2); color: var(--purple); }
 
   /* MAIN LAYOUT */
   .main-layout { display: flex; flex: 1; overflow: hidden; }
@@ -60,16 +60,16 @@
   .left-sidebar { width: 200px; background: #ffffff; border-right: 1px solid var(--border); display: flex; flex-direction: column; flex-shrink: 0; }
   .sidebar-search { padding: 10px; border-bottom: 1px solid var(--border); }
   .search-input { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 6px 10px; color: var(--text); font-size: 0.78rem; font-family: 'Inter', sans-serif; outline: none; }
-  .search-input:focus { border-color: var(--cyan); } .search-input { color: var(--text); }
+  .search-input:focus { border-color: var(--purple); } .search-input { color: var(--text); }
   .asset-tabs { display: flex; border-bottom: 1px solid var(--border); background: #fff; }
   .asset-tab { flex: 1; padding: 7px 4px; text-align: center; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.15s; background: #fff; }
-  .asset-tab.active { color: var(--cyan); border-bottom-color: var(--cyan); }
+  .asset-tab.active { color: var(--purple); border-bottom-color: var(--purple); }
   .asset-list { flex: 1; overflow-y: auto; }
   .asset-list::-webkit-scrollbar { width: 3px; }
   .asset-list::-webkit-scrollbar-thumb { background: var(--border); }
   .asset-item { display: flex; align-items: center; justify-content: space-between; padding: 8px 12px; cursor: pointer; border-bottom: 1px solid var(--border); transition: background 0.15s; }
   .asset-item:hover { background: var(--bg); }
-  .asset-item.active { background: rgba(0,229,255,0.08); border-left: 3px solid var(--cyan); }
+  .asset-item.active { background: rgba(153,69,255,0.08); border-left: 3px solid var(--cyan); }
   .ai-sym { font-family: 'Space Mono', monospace; font-weight: 700; font-size: 0.75rem; color: var(--text); }
   .ai-price { font-family: 'Space Mono', monospace; font-size: 0.68rem; color: var(--text-muted); }
   .ai-chg { font-size: 0.65rem; font-weight: 700; }
@@ -78,9 +78,10 @@
   .chart-area { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
   .chart-toolbar { height: 36px; background: #ffffff; border-bottom: 1px solid var(--border); display: flex; align-items: center; padding: 0 12px; gap: 8px; }
   .toolbar-btn { padding: 4px 8px; border-radius: 5px; border: 1px solid var(--border); background: none; color: var(--text-muted); font-size: 0.7rem; cursor: pointer; font-family: 'Inter', sans-serif; transition: all 0.15s; }
-  .toolbar-btn:hover { border-color: var(--cyan); color: var(--cyan); }
-  .toolbar-btn.active { background: rgba(0,229,255,0.1); border-color: rgba(0,229,255,0.3); color: var(--cyan); }
+  .toolbar-btn:hover { border-color: var(--purple); color: var(--purple); }
+  .toolbar-btn.active { background: rgba(153,69,255,0.1); border-color: rgba(153,69,255,0.3); color: var(--purple); }
   #chart-container { flex: 1; position: relative; }
+  #chart-bg { position: absolute; inset: 0; background-image: url('so-graph.png'); background-size: cover; background-position: center; opacity: 0.04; z-index: 0; pointer-events: none; }
   .chart-overlay { position: absolute; top: 12px; left: 12px; z-index: 5; }
   .co-price { font-family: 'Space Grotesk', sans-serif; font-size: 1.6rem; font-weight: 700; color: #ffffff; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
   .co-sub { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; display: flex; gap: 12px; }
@@ -99,7 +100,7 @@
   .amount-input { flex: 1; background: none; border: none; text-align: center; color: var(--text); font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; outline: none; }
   .amount-presets { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
   .preset-btn { flex: 1; padding: 4px 2px; border-radius: 5px; border: 1px solid var(--border); background: none; color: var(--text-muted); font-size: 0.68rem; cursor: pointer; font-family: 'Space Mono', monospace; transition: all 0.15s; min-width: 40px; }
-  .preset-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+  .preset-btn:hover { border-color: var(--purple); color: var(--purple); }
 
   /* Time selector */
   .time-group { display: flex; align-items: center; gap: 8px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; }
@@ -133,7 +134,7 @@
   /* Mode toggle */
   .mode-toggle { display: flex; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 3px; gap: 3px; }
   .mode-btn { flex: 1; padding: 6px; border-radius: 6px; border: none; background: none; color: var(--text-muted); font-size: 0.72rem; font-weight: 600; cursor: pointer; font-family: 'Space Grotesk', sans-serif; transition: all 0.15s; }
-  .mode-btn.active { background: rgba(0,229,255,0.12); color: var(--cyan); }
+  .mode-btn.active { background: rgba(153,69,255,0.12); color: var(--purple); }
 
   /* BOTTOM BAR */
   .bottom-bar { height: 32px; background: var(--bg-dark); border-top: 1px solid var(--border-dark); display: flex; align-items: center; padding: 0 16px; gap: 20px; font-size: 0.7rem; color: var(--text-muted); flex-shrink: 0; }
@@ -153,7 +154,7 @@
 <!-- TOP BAR -->
 <div class="topbar">
   <a href="index.html" class="logo">
-    <img src="alphaedge-coin.png" alt="SO">
+    <img src="so-coin.png" alt="SO">
     Slick<span class="accent">Options</span>
   </a>
   <div class="topbar-divider"></div>
@@ -208,7 +209,7 @@
       <button class="toolbar-btn">BB</button>
       <button class="toolbar-btn">MACD</button>
     </div>
-    <div id="chart-container">
+    <div id="chart-container"><div id="chart-bg"></div>
       <div class="chart-overlay">
         <div class="co-price" id="co-price">$67,420.00</div>
         <div class="co-sub">
@@ -267,7 +268,7 @@
     <div class="panel-section">
       <div class="payout-row"><span class="payout-label">Est. Payout</span><span class="payout-val" id="payout-val">+$85</span></div>
       <div class="payout-row"><span class="payout-label">Payout %</span><span class="payout-val">85%</span></div>
-      <div class="payout-row"><span class="payout-label">Current Price</span><span style="font-family:'Space Mono',monospace;font-size:0.78rem;font-weight:700;color:var(--cyan);" id="panel-price">$67,420</span></div>
+      <div class="payout-row"><span class="payout-label">Current Price</span><span style="font-family:'Space Mono',monospace;font-size:0.78rem;font-weight:700;color:var(--purple);" id="panel-price">$67,420</span></div>
     </div>
 
     <!-- Trade Buttons -->
