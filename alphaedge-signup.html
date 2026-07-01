@@ -3,205 +3,113 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AlphaEdge — Create Account</title>
+<title>SlickOptions — Create Account</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#00e5ff">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  :root { --navy:#050816; --navy-card:#0b1630; --navy-border:#24335f; --navy-hover:#0f1f40; --cyan:#00e5ff; --gold:#f7c948; --green:#00E676; --red:#FF4B4B; --text:#fdfdff; --text-muted:#b7c0e8; --text-dim:#3A4A6B; }
-  body { background: radial-gradient(circle at top, #1b2b5a 0%, #050816 55%, #000000 100%); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
-  nav { display:flex; align-items:center; justify-content:space-between; padding:0 40px; height:64px; border-bottom:1px solid var(--navy-border); background:linear-gradient(90deg,rgba(10,20,60,0.95),rgba(10,40,90,0.95)); backdrop-filter:blur(12px); }
-  .nav-logo { font-family:'Space Grotesk',sans-serif; font-weight:700; font-size:1.2rem; color:var(--text); text-decoration:none; display:flex; align-items:center; gap:8px; }
-  .nav-logo span { color:var(--cyan); }
-  .nav-logo-coin { width:26px; height:26px; border-radius:50%; box-shadow:0 0 10px rgba(247,201,72,0.8); }
-  .main { flex:1; display:flex; align-items:center; justify-content:center; padding:40px 20px; }
-  .auth-card { background:var(--navy-card); border:1px solid var(--navy-border); border-radius:20px; padding:40px; width:100%; max-width:440px; position:relative; overflow:hidden; }
-  .auth-card::before { content:''; display:block; height:3px; margin:-40px -40px 36px; background:linear-gradient(90deg,#f7c948,#00e5ff); }
-  .auth-title { font-family:'Space Grotesk',sans-serif; font-size:1.6rem; font-weight:700; margin-bottom:6px; }
-  .auth-sub { color:var(--text-muted); font-size:0.875rem; margin-bottom:28px; }
-  .form-row { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-  .form-group { margin-bottom:16px; }
-  .form-label { display:block; font-size:0.78rem; font-weight:500; color:var(--text-muted); margin-bottom:6px; }
-  .form-input { width:100%; background:rgba(255,255,255,0.04); border:1px solid var(--navy-border); border-radius:8px; padding:12px 14px; color:var(--text); font-family:'Inter',sans-serif; font-size:0.9rem; outline:none; transition:border-color 0.2s; }
-  .form-input:focus { border-color:var(--cyan); }
-  .form-input::placeholder { color:var(--text-dim); }
-  .submit-btn { width:100%; padding:13px; background:linear-gradient(90deg,#f7c948,#00e5ff); color:#02040a; border:none; border-radius:10px; font-family:'Space Grotesk',sans-serif; font-size:1rem; font-weight:700; cursor:pointer; transition:all 0.2s; margin-top:4px; }
-  .submit-btn:hover { transform:translateY(-1px); box-shadow:0 0 20px rgba(0,229,255,0.4); }
-  .submit-btn:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
-  .auth-footer { text-align:center; margin-top:20px; font-size:0.85rem; color:var(--text-muted); }
-  .auth-footer a { color:var(--cyan); text-decoration:none; font-weight:500; }
-  .error-msg { background:rgba(255,75,75,0.1); border:1px solid rgba(255,75,75,0.3); border-radius:8px; padding:10px 14px; font-size:0.82rem; color:var(--red); margin-bottom:16px; display:none; }
-  .success-msg { background:rgba(0,230,118,0.1); border:1px solid rgba(0,230,118,0.3); border-radius:8px; padding:10px 14px; font-size:0.82rem; color:var(--green); margin-bottom:16px; display:none; }
-  .terms-note { font-size:0.75rem; color:var(--text-dim); text-align:center; margin-top:12px; }
-  .terms-note a { color:var(--cyan); text-decoration:none; }
+  :root { --cyan: #00e5ff; --gold: #f7c948; --navy: #0a1628; --bg: #f8faff; --border: #e2e8f4; --text: #0a1628; --text-muted: #4b5e82; --red: #FF4B4B; --green: #00C853; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 64px; background: rgba(255,255,255,0.97); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--navy); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+  .nav-logo img { width: 28px; height: 28px; border-radius: 50%; box-shadow: 0 0 8px rgba(0,229,255,0.5); }
+  .nav-logo .accent { color: var(--cyan); }
+  .main { flex: 1; display: flex; align-items: center; justify-content: center; padding: 40px 20px; }
+  .auth-card { background: #fff; border: 1px solid var(--border); border-radius: 20px; padding: 40px; width: 100%; max-width: 460px; box-shadow: 0 8px 40px rgba(0,0,0,0.08); position: relative; overflow: hidden; }
+  .auth-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--cyan), var(--gold)); }
+  .auth-logo { display: flex; align-items: center; justify-content: center; margin-bottom: 24px; }
+  .auth-logo img { width: 48px; height: 48px; border-radius: 50%; box-shadow: 0 0 16px rgba(247,201,72,0.5); }
+  .auth-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; text-align: center; margin-bottom: 6px; color: var(--navy); }
+  .auth-sub { font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-bottom: 28px; }
+  .google-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 12px; background: #fff; border: 1px solid var(--border); border-radius: 10px; color: var(--text); font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 0.9rem; text-decoration: none; transition: all 0.2s; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); cursor: pointer; }
+  .google-btn:hover { border-color: var(--cyan); box-shadow: 0 4px 14px rgba(0,229,255,0.15); }
+  .divider { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; color: var(--text-muted); font-size: 0.78rem; }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .form-group { margin-bottom: 14px; }
+  .form-label { font-size: 0.78rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 6px; }
+  .form-input { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 11px 14px; color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.9rem; outline: none; transition: all 0.15s; }
+  .form-input:focus { border-color: var(--cyan); background: #fff; box-shadow: 0 0 0 3px rgba(0,229,255,0.1); }
+  .submit-btn { width: 100%; padding: 12px; background: linear-gradient(90deg, var(--cyan), var(--gold)); color: var(--navy); border: none; border-radius: 10px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; margin-top: 4px; box-shadow: 0 4px 14px rgba(0,229,255,0.25); }
+  .submit-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,229,255,0.35); }
+  .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .auth-footer { text-align: center; margin-top: 20px; font-size: 0.84rem; color: var(--text-muted); }
+  .auth-footer a { color: var(--cyan); text-decoration: none; font-weight: 600; }
+  .error-msg { background: rgba(255,75,75,0.08); border: 1px solid rgba(255,75,75,0.25); border-radius: 8px; padding: 10px 14px; font-size: 0.82rem; color: var(--red); margin-bottom: 14px; display: none; }
+  .success-msg { background: rgba(0,200,83,0.08); border: 1px solid rgba(0,200,83,0.25); border-radius: 8px; padding: 10px 14px; font-size: 0.82rem; color: var(--green); margin-bottom: 14px; display: none; }
+  .terms-note { font-size: 0.75rem; color: var(--text-muted); text-align: center; margin-top: 14px; line-height: 1.5; }
+  .terms-note a { color: var(--cyan); text-decoration: none; }
 </style>
 </head>
 <body>
 <nav>
-  <a href="index.html" class="nav-logo"><img src="alphaedge-coin.png" alt="AEC" class="nav-logo-coin">Alpha<span>Edge</span></a>
+  <a href="index.html" class="nav-logo">
+    <img src="alphaedge-coin.png" alt="SO">
+    Slick<span class="accent">Options</span>
+  </a>
+  <a href="slickoptions-login.html" style="font-size:0.85rem;color:var(--text-muted);text-decoration:none;">Have an account? <span style="color:var(--cyan);font-weight:600;">Sign in</span></a>
 </nav>
 <div class="main">
   <div class="auth-card">
-    <div class="auth-title">Create your account 🚀</div>
-    <div class="auth-sub">Start trading with AlphaEdge — free forever, upgrade when ready.</div>
+    <div class="auth-logo"><img src="alphaedge-coin.png" alt="SlickOptions"></div>
+    <div class="auth-title">Create your account</div>
+    <div class="auth-sub">Personal trading dashboard — free forever</div>
     <div class="error-msg" id="error-msg"></div>
     <div class="success-msg" id="success-msg"></div>
-    
-      <a href="https://alphaedge-backend-production.up.railway.app/api/auth/google" style="display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:12px;background:rgba(255,255,255,0.05);border:1px solid var(--navy-border);border-radius:10px;color:var(--text);font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:0.9rem;text-decoration:none;transition:all 0.2s;margin-bottom:16px;" onmouseover="this.style.borderColor='var(--cyan)'" onmouseout="this.style.borderColor='var(--navy-border)'">
-        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-        Sign up with Google
-      </a>
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;color:var(--text-dim);font-size:0.78rem;"><div style="flex:1;height:1px;background:var(--navy-border)"></div>or<div style="flex:1;height:1px;background:var(--navy-border)"></div></div><div class="form-row">
-      <div class="form-group"><label class="form-label">First name</label><input type="text" class="form-input" id="firstName" placeholder="Curtis"></div>
-      <div class="form-group"><label class="form-label">Last name</label><input type="text" class="form-input" id="lastName" placeholder="Futrell"></div>
+    <a href="https://alphaedge-backend-production.up.railway.app/api/auth/google" class="google-btn">
+      <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      Sign up with Google
+    </a>
+    <div class="divider">or</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">First name</label>
+        <input type="text" class="form-input" id="firstName" placeholder="Curtis">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Last name</label>
+        <input type="text" class="form-input" id="lastName" placeholder="Futrell">
+      </div>
     </div>
-    <div class="form-group"><label class="form-label">Email address</label><input type="email" class="form-input" id="email" placeholder="you@example.com"></div>
-    <div class="form-group"><label class="form-label">Password</label><input type="password" class="form-input" id="password" placeholder="Min. 8 characters"></div>
-    <button class="submit-btn" id="signup-btn" onclick="handleSignup()">Create free account</button>
-    <div class="terms-note">By signing up you agree to our <a href="alphaedge-terms.html">Terms</a> and <a href="alphaedge-privacy.html">Privacy Policy</a>.</div>
-    <div class="auth-footer" style="margin-top:16px;">Already have an account? <a href="alphaedge-login.html">Sign in</a></div>
+    <div class="form-group">
+      <label class="form-label">Email address</label>
+      <input type="email" class="form-input" id="email" placeholder="you@example.com">
+    </div>
+    <div class="form-group">
+      <label class="form-label">Password</label>
+      <input type="password" class="form-input" id="password" placeholder="Min. 8 characters">
+    </div>
+    <button class="submit-btn" id="signup-btn" onclick="doSignup()">Create free account</button>
+    <div class="terms-note">By signing up you agree to our <a href="slickoptions-terms.html">Terms</a> and <a href="slickoptions-privacy.html">Privacy Policy</a>.</div>
+    <div class="auth-footer">Already have an account? <a href="slickoptions-login.html">Sign in</a></div>
   </div>
 </div>
 <script>
 const BACKEND = 'https://alphaedge-backend-production.up.railway.app';
-async function handleSignup() {
+function showError(msg) { const el = document.getElementById('error-msg'); el.textContent = msg; el.style.display = 'block'; document.getElementById('success-msg').style.display = 'none'; }
+function showSuccess(msg) { const el = document.getElementById('success-msg'); el.textContent = msg; el.style.display = 'block'; document.getElementById('error-msg').style.display = 'none'; }
+async function doSignup() {
   const firstName = document.getElementById('firstName').value.trim();
   const lastName = document.getElementById('lastName').value.trim();
   const email = document.getElementById('email').value.trim();
   const password = document.getElementById('password').value;
   const btn = document.getElementById('signup-btn');
-  const errEl = document.getElementById('error-msg');
-  const sucEl = document.getElementById('success-msg');
-  errEl.style.display='none'; sucEl.style.display='none';
-  if (!firstName||!lastName) { errEl.textContent='Please enter your first and last name.'; errEl.style.display='block'; return; }
-  if (!email||!email.includes('@')) { errEl.textContent='Please enter a valid email.'; errEl.style.display='block'; return; }
-  if (!password||password.length<8) { errEl.textContent='Password must be at least 8 characters.'; errEl.style.display='block'; return; }
-  btn.disabled=true; btn.textContent='Creating account...';
+  if (!firstName || !lastName) return showError('Please enter your full name.');
+  if (!email) return showError('Please enter your email address.');
+  if (password.length < 8) return showError('Password must be at least 8 characters.');
+  btn.disabled = true; btn.textContent = 'Creating account...';
   try {
-    const res = await fetch(`${BACKEND}/api/auth/signup`, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({firstName,lastName,email,password}) });
+    const res = await fetch(`${BACKEND}/api/auth/register`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ firstName, lastName, email, password }) });
     const data = await res.json();
-    if (res.ok) {
+    if (data.token) {
       localStorage.setItem('ae_token', data.token);
       localStorage.setItem('ae_user', JSON.stringify(data.user));
-      sucEl.textContent='Account created! Redirecting to dashboard...'; sucEl.style.display='block';
-      setTimeout(()=>window.location.href='alphaedge-dashboard.html', 1200);
-    } else {
-      errEl.textContent=data.error||'Signup failed. Please try again.'; errEl.style.display='block';
-      btn.disabled=false; btn.textContent='Create free account';
-    }
-  } catch(e) {
-    errEl.textContent='Network error. Please try again.'; errEl.style.display='block';
-    btn.disabled=false; btn.textContent='Create free account';
-  }
-}
-document.addEventListener('keypress',e=>{ if(e.key==='Enter') handleSignup(); });
-</script>
-<!-- CHAT SUPPORT WIDGET -->
-<div id="chat-widget" style="position:fixed;bottom:24px;right:24px;z-index:9999;">
-  <!-- CHAT BUBBLE -->
-  <button id="chat-bubble" onclick="toggleChat()" style="width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#f7c948,#00e5ff);border:none;cursor:pointer;box-shadow:0 4px 20px rgba(0,229,255,0.4);display:flex;align-items:center;justify-content:center;font-size:1.4rem;transition:transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">💬</button>
-
-  <!-- CHAT WINDOW -->
-  <div id="chat-window" style="display:none;position:absolute;bottom:70px;right:0;width:340px;background:#0b1630;border:1px solid #24335f;border-radius:16px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.6);">
-    <!-- HEADER -->
-    <div style="background:linear-gradient(90deg,rgba(10,20,60,0.98),rgba(10,40,90,0.98));padding:14px 18px;display:flex;align-items:center;gap:12px;border-bottom:1px solid #24335f;">
-      <img src="alphaedge-ai-robot.png" alt="Support" style="width:36px;height:36px;border-radius:50%;object-fit:cover;">
-      <div style="flex:1;">
-        <div style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.9rem;color:#fdfdff;">AlphaEdge Support</div>
-        <div style="font-size:0.72rem;color:#00E676;display:flex;align-items:center;gap:4px;"><span style="width:6px;height:6px;border-radius:50%;background:#00E676;display:inline-block;"></span>Online · Usually replies instantly</div>
-      </div>
-      <button onclick="toggleChat()" style="background:none;border:none;color:#b7c0e8;cursor:pointer;font-size:1.1rem;padding:4px;">✕</button>
-    </div>
-
-    <!-- MESSAGES -->
-    <div id="chat-messages" style="height:280px;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;scrollbar-width:thin;">
-      <div class="msg bot-msg">👋 Hi! I'm the AlphaEdge AI assistant. How can I help you today?</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;" id="quick-replies">
-        <button class="quick-reply" onclick="sendQuick('How do signals work?')">How do signals work?</button>
-        <button class="quick-reply" onclick="sendQuick('What plans are available?')">Pricing plans</button>
-        <button class="quick-reply" onclick="sendQuick('How do I connect Telegram?')">Connect Telegram</button>
-        <button class="quick-reply" onclick="sendQuick('What is AEC Coin?')">AEC Coin</button>
-      </div>
-    </div>
-
-    <!-- INPUT -->
-    <div style="padding:12px;border-top:1px solid #24335f;display:flex;gap:8px;">
-      <input id="chat-input" type="text" placeholder="Ask anything..." style="flex:1;background:rgba(255,255,255,0.04);border:1px solid #24335f;border-radius:8px;padding:9px 12px;color:#fdfdff;font-family:'Inter',sans-serif;font-size:0.82rem;outline:none;" onkeypress="if(event.key==='Enter')sendMsg()">
-      <button onclick="sendMsg()" style="padding:9px 14px;background:linear-gradient(90deg,#f7c948,#00e5ff);border:none;border-radius:8px;color:#02040a;font-weight:700;cursor:pointer;font-size:0.85rem;">→</button>
-    </div>
-  </div>
-</div>
-
-<style>
-.msg { max-width:85%;padding:9px 13px;border-radius:12px;font-size:0.82rem;line-height:1.5; }
-.bot-msg { background:#0f1c35;border:1px solid #24335f;color:#fdfdff;align-self:flex-start;border-radius:4px 12px 12px 12px; }
-.user-msg { background:linear-gradient(135deg,rgba(0,229,255,0.15),rgba(247,201,72,0.08));border:1px solid rgba(0,229,255,0.2);color:#fdfdff;align-self:flex-end;border-radius:12px 4px 12px 12px; }
-.quick-reply { padding:5px 12px;border-radius:100px;border:1px solid #24335f;background:rgba(0,229,255,0.06);color:#00e5ff;font-size:0.72rem;cursor:pointer;transition:all 0.15s;font-family:'Inter',sans-serif; }
-.quick-reply:hover { background:rgba(0,229,255,0.15); }
-#chat-messages::-webkit-scrollbar { width:3px; }
-#chat-messages::-webkit-scrollbar-thumb { background:#24335f;border-radius:2px; }
-</style>
-
-<script>
-const FAQ = {
-  'how do signals work': `📡 AlphaEdge signals include:\n\n• **Entry price** — where to buy/sell\n• **Take profit** — your target\n• **Stop loss** — your risk limit\n• **Market & timeframe** — context\n\nSignals arrive via dashboard, email, and Telegram in real time. Free members get 2 delayed signals/day. Pro & Elite get unlimited live signals.`,
-  'what plans are available': `💰 **AlphaEdge Plans:**\n\n🆓 **Free** — $0/mo\n2 signals/day, paper trading terminal\n\n🔵 **Pro** — $49/mo\nUnlimited signals, all markets, Telegram alerts\n\n👑 **Elite** — $99/mo\nPriority signals, scanner, Elite Telegram channel\n\nAll plans include the trading terminal and crypto wallet!`,
-  'how do i connect telegram': `✈️ To connect Telegram:\n\n1. Message **@AlphaEdgeProBot** on Telegram\n2. Type **/connect**\n3. You'll get a 6-digit code\n4. Enter it in your Dashboard → Account tab\n\nYou'll then receive all signals directly in Telegram!`,
-  'what is aec coin': `🪙 **AlphaEdge Coin (AEC)** is the official token of the AlphaEdge ecosystem, live on the Solana blockchain via PumpFun.\n\nContract: \`3qak68LnM1KAo7pVhtLxzZzpLbp8tv5KtELt5azfpump\`\n\nBuy on PumpFun or view the coin page for live stats!`,
-  'how do i deposit crypto': `💰 To deposit crypto:\n\n1. Go to **Dashboard → Wallet**\n2. Click **Deposit**\n3. Select your currency (BTC, ETH, USDC, SOL)\n4. Enter amount and get your deposit address\n5. Send crypto to that address\n\nDeposits are processed via NOWPayments and credited automatically!`,
-  'how do i cancel': `↩️ To cancel your subscription:\n\n1. Go to **Dashboard → Account**\n2. Click **Manage Subscription**\n3. Click **Cancel Plan**\n\nYou'll keep access until the end of your billing period. No questions asked!`,
-  'what markets': `📊 AlphaEdge covers **4 markets:**\n\n📈 **Stocks** — NYSE, NASDAQ, S&P 500 (12-18 signals/day)\n💱 **Forex** — Major & minor pairs (8-14 signals/day)\n₿ **Crypto** — BTC, ETH, altcoins (10-20 signals/day)\n⚙️ **Options** — Weekly plays & unusual activity (5-10 signals/day)`,
-  'trading terminal': `💻 The **AlphaEdge Terminal** includes:\n\n• 60+ markets (stocks, crypto, forex, commodities)\n• Live Binance candlestick charts\n• Real stock prices via Polygon.io\n• Paper trading with $100K simulated funds\n• Connect real brokers (Alpaca, Binance, OANDA)\n• Available on all paid plans!`,
-  'default': `Thanks for your message! For detailed support, please email us at **support@alphaedgetrading.site** or message **@AlphaEdgeProBot** on Telegram.\n\nYou can also visit our FAQ sections:\n• [Pricing](alphaedge-checkout.html)\n• [Community](alphaedge-community.html)\n• [Dashboard](alphaedge-dashboard.html)`
-};
-
-function getBotReply(msg) {
-  const lower = msg.toLowerCase();
-  for (const [key, val] of Object.entries(FAQ)) {
-    if (key !== 'default' && lower.includes(key)) return val;
-  }
-  if (lower.includes('signal')) return FAQ['how do signals work'];
-  if (lower.includes('price') || lower.includes('plan') || lower.includes('cost') || lower.includes('subscription')) return FAQ['what plans are available'];
-  if (lower.includes('telegram') || lower.includes('bot')) return FAQ['how do i connect telegram'];
-  if (lower.includes('aec') || lower.includes('coin') || lower.includes('token')) return FAQ['what is aec coin'];
-  if (lower.includes('deposit') || lower.includes('wallet') || lower.includes('crypto')) return FAQ['how do i deposit crypto'];
-  if (lower.includes('cancel') || lower.includes('refund')) return FAQ['how do i cancel'];
-  if (lower.includes('market') || lower.includes('stock') || lower.includes('forex')) return FAQ['what markets'];
-  if (lower.includes('terminal') || lower.includes('chart') || lower.includes('trade')) return FAQ['trading terminal'];
-  if (lower.includes('hello') || lower.includes('hi') || lower.includes('hey')) return `👋 Hey there! Great to meet you. I can help you with signals, pricing, Telegram setup, AEC Coin, and more. What would you like to know?`;
-  return FAQ['default'];
-}
-
-function addMsg(text, type) {
-  const msgs = document.getElementById('chat-messages');
-  const div = document.createElement('div');
-  div.className = 'msg ' + (type === 'user' ? 'user-msg' : 'bot-msg');
-  // Convert markdown bold to html
-  div.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>').replace(/\`(.*?)\`/g, '<code style="font-family:monospace;background:rgba(0,229,255,0.1);padding:1px 4px;border-radius:3px;font-size:0.78rem;">$1</code>');
-  msgs.appendChild(div);
-  msgs.scrollTop = msgs.scrollHeight;
-}
-
-function sendMsg() {
-  const input = document.getElementById('chat-input');
-  const msg = input.value.trim();
-  if (!msg) return;
-  document.getElementById('quick-replies')?.remove();
-  addMsg(msg, 'user');
-  input.value = '';
-  setTimeout(() => addMsg(getBotReply(msg), 'bot'), 600);
-}
-
-function sendQuick(msg) {
-  document.getElementById('quick-replies')?.remove();
-  addMsg(msg, 'user');
-  setTimeout(() => addMsg(getBotReply(msg), 'bot'), 500);
-}
-
-function toggleChat() {
-  const win = document.getElementById('chat-window');
-  win.style.display = win.style.display === 'none' ? 'block' : 'none';
+      showSuccess('Account created! Redirecting...');
+      setTimeout(() => window.location.href = 'slickoptions-dashboard.html', 1200);
+    } else { showError(data.error || 'Signup failed. Please try again.'); btn.disabled = false; btn.textContent = 'Create free account'; }
+  } catch(e) { showError('Connection error. Please try again.'); btn.disabled = false; btn.textContent = 'Create free account'; }
 }
 </script>
-
 </body>
 </html>
