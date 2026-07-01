@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SlickOptions — Wallet</title>
+<link rel="manifest" href="/manifest.json">
+<meta name="theme-color" content="#00e5ff">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --cyan: #00e5ff; --gold: #f7c948; --navy: #0a1628; --navy-mid: #1a2744; --bg: #f0f4ff; --bg-card: #ffffff; --border: #e2e8f4; --text: #0a1628; --text-muted: #4b5e82; --text-dim: #94a3b8; --red: #FF4B4B; --green: #00C853; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
+
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 64px; background: rgba(255,255,255,0.97); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 20px rgba(0,0,0,0.06); }
+  .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--navy); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+  .nav-logo img { width: 28px; height: 28px; border-radius: 50%; box-shadow: 0 0 8px rgba(0,229,255,0.5); }
+  .nav-logo .accent { color: var(--cyan); }
+  .nav-links { display: flex; gap: 20px; align-items: center; }
+  .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--cyan); }
+  .btn-primary { background: linear-gradient(90deg, var(--cyan), var(--gold)); color: var(--navy); border: none; padding: 8px 20px; border-radius: 8px; font-size: 0.875rem; font-weight: 700; font-family: 'Space Grotesk', sans-serif; cursor: pointer; text-decoration: none; display: inline-block; }
+
+  .main { max-width: 1000px; margin: 0 auto; padding: 36px 40px 80px; }
+  .page-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; color: var(--navy); margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+  .grad { background: linear-gradient(90deg, #00b8cc, #f7c948); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+  /* TOTAL CARD */
+  .total-card { background: var(--navy); border-radius: 20px; padding: 32px 36px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; position: relative; overflow: hidden; }
+  .total-card::before { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; background: radial-gradient(circle, rgba(0,229,255,0.1), transparent 70%); }
+  .total-card::after { content: ''; position: absolute; bottom: -40px; left: 100px; width: 150px; height: 150px; background: radial-gradient(circle, rgba(247,201,72,0.08), transparent 70%); }
+  .total-label { font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: #64748b; margin-bottom: 8px; }
+  .total-value { font-family: 'Space Grotesk', sans-serif; font-size: 2.4rem; font-weight: 700; background: linear-gradient(90deg, #00e5ff, #f7c948); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 4px; }
+  .total-sub { font-size: 0.78rem; color: #64748b; }
+  .total-coin { width: 80px; height: 80px; border-radius: 50%; box-shadow: 0 0 30px rgba(247,201,72,0.5); position: relative; z-index: 1; }
+
+  /* STATS ROW */
+  .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 24px; }
+  .stat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; position: relative; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+  .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--cyan), var(--gold)); }
+  .stat-label { font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .stat-val { font-family: 'Space Grotesk', sans-serif; font-size: 1.2rem; font-weight: 700; background: linear-gradient(90deg, #00b8cc, #f7c948); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .stat-sub { font-size: 0.7rem; color: var(--text-dim); margin-top: 3px; }
+
+  /* HOLDINGS */
+  .section-title { font-family: 'Space Grotesk', sans-serif; font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 14px; }
+  .holdings-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; margin-bottom: 28px; }
+  .holding-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 14px; box-shadow: 0 2px 12px rgba(0,0,0,0.04); transition: all 0.2s; }
+  .holding-card:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,229,255,0.08); }
+  .coin-icon { width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; }
+  .coin-info { flex: 1; }
+  .coin-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--navy); margin-bottom: 2px; }
+  .coin-sym { font-size: 0.72rem; color: var(--text-dim); font-family: 'Space Mono', monospace; }
+  .coin-bal { font-family: 'Space Mono', monospace; font-size: 0.82rem; color: var(--text-muted); }
+  .coin-usd { text-align: right; }
+  .coin-usd-val { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; color: var(--green); }
+  .coin-chg { font-size: 0.72rem; font-weight: 600; margin-top: 2px; }
+
+  /* DEPOSIT/WITHDRAW */
+  .actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-bottom: 28px; }
+  .action-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 22px; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+  .action-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.95rem; color: var(--navy); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+  .action-sub { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 16px; }
+  .form-label { font-size: 0.72rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; display: block; margin-bottom: 5px; }
+  .form-input { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; color: var(--text); font-family: 'Space Mono', monospace; font-size: 0.85rem; outline: none; margin-bottom: 10px; transition: border-color 0.15s; }
+  .form-input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0,229,255,0.08); }
+  .form-select { width: 100%; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.85rem; outline: none; margin-bottom: 10px; cursor: pointer; }
+  .action-btn { width: 100%; padding: 10px; border-radius: 8px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 0.875rem; cursor: pointer; border: none; transition: all 0.2s; }
+  .deposit-btn { background: linear-gradient(90deg, var(--cyan), var(--gold)); color: var(--navy); box-shadow: 0 4px 14px rgba(0,229,255,0.25); }
+  .deposit-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,229,255,0.35); }
+  .withdraw-btn { background: var(--bg); border: 1px solid var(--border) !important; color: var(--navy); }
+  .withdraw-btn:hover { border-color: var(--cyan) !important; color: #0099aa; }
+
+  /* TRANSACTION HISTORY */
+  .tx-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+  .tx-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border); }
+  .tx-row { display: flex; align-items: center; gap: 14px; padding: 13px 20px; border-bottom: 1px solid rgba(226,232,244,0.6); transition: background 0.15s; }
+  .tx-row:last-child { border-bottom: none; }
+  .tx-row:hover { background: var(--bg); }
+  .tx-icon { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+  .tx-info { flex: 1; }
+  .tx-type { font-weight: 600; font-size: 0.84rem; color: var(--navy); }
+  .tx-date { font-size: 0.72rem; color: var(--text-dim); margin-top: 1px; }
+  .tx-amount { font-family: 'Space Mono', monospace; font-weight: 700; font-size: 0.88rem; }
+  .tx-status { font-size: 0.68rem; font-weight: 700; padding: 2px 8px; border-radius: 100px; }
+  .status-complete { background: rgba(0,200,83,0.1); color: var(--green); border: 1px solid rgba(0,200,83,0.2); }
+  .status-pending { background: rgba(247,201,72,0.1); color: #b8860b; border: 1px solid rgba(247,201,72,0.25); }
+
+  /* ADDRESS DISPLAY */
+  .addr-box { background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 10px 12px; font-family: 'Space Mono', monospace; font-size: 0.72rem; color: var(--text-muted); word-break: break-all; margin-top: 8px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+  .copy-btn { padding: 4px 10px; border-radius: 5px; border: 1px solid var(--border); background: #fff; color: var(--text-muted); font-size: 0.68rem; cursor: pointer; white-space: nowrap; transition: all 0.15s; flex-shrink: 0; }
+  .copy-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+
+  @media (max-width: 768px) { .main{padding:24px 16px;} nav{padding:0 16px;} .stats-row{grid-template-columns:1fr 1fr;} .holdings-grid{grid-template-columns:1fr;} .actions-grid{grid-template-columns:1fr;} .total-coin{display:none;} }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="alphaedge-coin.png" alt="SO">
+    Slick<span class="accent">Options</span>
+  </a>
+  <div class="nav-links">
+    <a href="slickoptions-dashboard.html">Dashboard</a>
+    <a href="slickoptions-terminal.html">Terminal</a>
+    <a href="slickoptions-wallet.html" style="color:var(--cyan);font-weight:600;">Wallet</a>
+  </div>
+  <a href="slickoptions-dashboard.html" class="btn-primary">← Dashboard</a>
+</nav>
+
+<div class="main">
+  <div class="page-title">My <span class="grad">Wallet</span></div>
+
+  <!-- TOTAL VALUE -->
+  <div class="total-card">
+    <div>
+      <div class="total-label">Total Portfolio Value</div>
+      <div class="total-value" id="total-value">$0.00</div>
+      <div class="total-sub" id="total-sub">Loading your holdings...</div>
+    </div>
+    <img src="alphaedge-coin.png" alt="SO" class="total-coin">
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-label">Bitcoin</div><div class="stat-val" id="s-btc">0.000</div><div class="stat-sub" id="s-btc-usd">≈ $0</div></div>
+    <div class="stat-card"><div class="stat-label">Ethereum</div><div class="stat-val" id="s-eth">0.000</div><div class="stat-sub" id="s-eth-usd">≈ $0</div></div>
+    <div class="stat-card"><div class="stat-label">Solana</div><div class="stat-val" id="s-sol">0.000</div><div class="stat-sub" id="s-sol-usd">≈ $0</div></div>
+    <div class="stat-card"><div class="stat-label">USDC</div><div class="stat-val" id="s-usdc">$0</div><div class="stat-sub">Stablecoin</div></div>
+  </div>
+
+  <!-- HOLDINGS -->
+  <div class="section-title">Holdings</div>
+  <div class="holdings-grid" id="holdings-grid">
+    <div style="grid-column:1/-1;text-align:center;padding:32px;color:var(--text-dim);">Loading wallet...</div>
+  </div>
+
+  <!-- DEPOSIT / WITHDRAW -->
+  <div class="section-title">Deposit & Withdraw</div>
+  <div class="actions-grid">
+    <div class="action-card">
+      <div class="action-title">💰 Deposit Crypto</div>
+      <div class="action-sub">Send crypto to your SlickOptions wallet</div>
+      <label class="form-label">Select Currency</label>
+      <select class="form-select" id="deposit-currency" onchange="showDepositAddress()">
+        <option value="BTC">Bitcoin (BTC)</option>
+        <option value="ETH">Ethereum (ETH)</option>
+        <option value="SOL">Solana (SOL)</option>
+        <option value="USDC">USD Coin (USDC)</option>
+      </select>
+      <label class="form-label">Amount (USD)</label>
+      <input type="number" class="form-input" id="deposit-amount" placeholder="100.00">
+      <div id="deposit-address-section" style="display:none;">
+        <label class="form-label">Deposit Address</label>
+        <div class="addr-box">
+          <span id="deposit-addr">—</span>
+          <button class="copy-btn" onclick="copyAddr()">Copy</button>
+        </div>
+      </div>
+      <button class="action-btn deposit-btn" style="margin-top:10px;" onclick="initiateDeposit()">Generate Deposit Address</button>
+    </div>
+    <div class="action-card">
+      <div class="action-title">📤 Withdraw</div>
+      <div class="action-sub">Send crypto to an external wallet</div>
+      <label class="form-label">Currency</label>
+      <select class="form-select" id="withdraw-currency">
+        <option value="BTC">Bitcoin (BTC)</option>
+        <option value="ETH">Ethereum (ETH)</option>
+        <option value="SOL">Solana (SOL)</option>
+        <option value="USDC">USD Coin (USDC)</option>
+      </select>
+      <label class="form-label">Amount</label>
+      <input type="number" class="form-input" id="withdraw-amount" placeholder="0.00">
+      <label class="form-label">Destination Address</label>
+      <input type="text" class="form-input" id="withdraw-address" placeholder="Wallet address...">
+      <button class="action-btn withdraw-btn" onclick="initiateWithdraw()" style="border:1px solid var(--border);">Request Withdrawal</button>
+    </div>
+  </div>
+
+  <!-- TRANSACTION HISTORY -->
+  <div class="tx-card">
+    <div class="tx-header">
+      <div class="section-title" style="margin:0;">Transaction History</div>
+      <div style="font-size:0.75rem;color:var(--text-dim);" id="tx-count">0 transactions</div>
+    </div>
+    <div id="tx-list">
+      <div style="padding:32px;text-align:center;color:var(--text-dim);font-size:0.85rem;">No transactions yet.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const BACKEND = 'https://alphaedge-backend-production.up.railway.app';
+const PRICES = { BTC: 67420, ETH: 3812, SOL: 168.40, USDC: 1 };
+const COINS = [
+  { sym: 'BTC', name: 'Bitcoin', icon: '₿', color: '#f7931a', field: 'btcBalance' },
+  { sym: 'ETH', name: 'Ethereum', icon: 'Ξ', color: '#627eea', field: 'ethBalance' },
+  { sym: 'SOL', name: 'Solana', icon: '◎', color: '#9945ff', field: 'solBalance' },
+  { sym: 'USDC', name: 'USD Coin', icon: '$', color: '#2775ca', field: 'usdcBalance' },
+];
+
+const DEMO_ADDRESSES = {
+  BTC: '1A1zP1eP5QGefi2DMPTfTL5SLmv7Divf Na',
+  ETH: '0x742d35Cc6634C0532925a3b8D4C9B7F9A2e1234',
+  SOL: '7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU',
+  USDC: '0x742d35Cc6634C0532925a3b8D4C9B7F9A2e1234',
+};
+
+async function loadWallet() {
+  const token = localStorage.getItem('ae_token');
+  if (!token) { window.location.href = 'slickoptions-login.html'; return; }
+  try {
+    const res = await fetch(`${BACKEND}/api/wallet`, { headers: { 'Authorization': `Bearer ${token}` } });
+    const data = await res.json();
+    const w = data.wallet || data;
+    renderWallet(w);
+  } catch(e) {
+    // Use default demo balances
+    renderWallet({ btcBalance: 0.03, ethBalance: 0.5, solBalance: 10, usdcBalance: 800 });
+  }
+}
+
+function renderWallet(w) {
+  const btc = w.btcBalance || 0, eth = w.ethBalance || 0, sol = w.solBalance || 0, usdc = w.usdcBalance || 0;
+  const total = btc * PRICES.BTC + eth * PRICES.ETH + sol * PRICES.SOL + usdc;
+
+  document.getElementById('total-value').textContent = '$' + total.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById('total-sub').textContent = `${COINS.length} assets · Updated just now`;
+  document.getElementById('s-btc').textContent = btc.toFixed(4);
+  document.getElementById('s-btc-usd').textContent = '≈ $' + (btc * PRICES.BTC).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});
+  document.getElementById('s-eth').textContent = eth.toFixed(4);
+  document.getElementById('s-eth-usd').textContent = '≈ $' + (eth * PRICES.ETH).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});
+  document.getElementById('s-sol').textContent = sol.toFixed(2);
+  document.getElementById('s-sol-usd').textContent = '≈ $' + (sol * PRICES.SOL).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});
+  document.getElementById('s-usdc').textContent = '$' + usdc.toFixed(2);
+
+  const bals = { BTC: btc, ETH: eth, SOL: sol, USDC: usdc };
+  document.getElementById('holdings-grid').innerHTML = COINS.map(c => {
+    const bal = bals[c.sym] || 0;
+    const usdVal = bal * PRICES[c.sym];
+    const pct = total > 0 ? ((usdVal / total) * 100).toFixed(1) : 0;
+    return `<div class="holding-card">
+      <div class="coin-icon" style="background:${c.color}18;">${c.icon}</div>
+      <div class="coin-info">
+        <div class="coin-name">${c.name}</div>
+        <div class="coin-sym">${c.sym}</div>
+        <div class="coin-bal">${bal.toFixed(6)} ${c.sym}</div>
+      </div>
+      <div class="coin-usd">
+        <div class="coin-usd-val">$${usdVal.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
+        <div class="coin-chg" style="color:var(--text-dim);">${pct}% of portfolio</div>
+      </div>
+    </div>`;
+  }).join('');
+
+  // Demo transactions
+  const txs = [
+    { type: 'Deposit', currency: 'BTC', amount: '+0.03 BTC', usd: '+$2,022', date: 'Jun 29, 2026', status: 'complete', icon: '₿', color: '#f7931a' },
+    { type: 'Deposit', currency: 'ETH', amount: '+0.5 ETH', usd: '+$1,906', date: 'Jun 28, 2026', status: 'complete', icon: 'Ξ', color: '#627eea' },
+    { type: 'Deposit', currency: 'USDC', amount: '+$800', usd: '+$800', date: 'Jun 27, 2026', status: 'complete', icon: '$', color: '#2775ca' },
+    { type: 'Deposit', currency: 'SOL', amount: '+10 SOL', usd: '+$1,684', date: 'Jun 26, 2026', status: 'complete', icon: '◎', color: '#9945ff' },
+  ];
+  document.getElementById('tx-count').textContent = `${txs.length} transactions`;
+  document.getElementById('tx-list').innerHTML = txs.map(tx => `
+    <div class="tx-row">
+      <div class="tx-icon" style="background:${tx.color}18;">${tx.icon}</div>
+      <div class="tx-info">
+        <div class="tx-type">${tx.type} · ${tx.currency}</div>
+        <div class="tx-date">${tx.date}</div>
+      </div>
+      <div style="text-align:right;">
+        <div class="tx-amount" style="color:var(--green);">${tx.amount}</div>
+        <div style="font-size:0.7rem;color:var(--text-dim);">${tx.usd}</div>
+      </div>
+      <span class="tx-status status-${tx.status}">${tx.status}</span>
+    </div>`).join('');
+}
+
+function showDepositAddress() {
+  document.getElementById('deposit-address-section').style.display = 'none';
+}
+
+function initiateDeposit() {
+  const currency = document.getElementById('deposit-currency').value;
+  const addr = DEMO_ADDRESSES[currency];
+  document.getElementById('deposit-addr').textContent = addr;
+  document.getElementById('deposit-address-section').style.display = 'block';
+}
+
+function copyAddr() {
+  const addr = document.getElementById('deposit-addr').textContent;
+  navigator.clipboard.writeText(addr).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 2000);
+  });
+}
+
+function initiateWithdraw() {
+  const amount = document.getElementById('withdraw-amount').value;
+  const address = document.getElementById('withdraw-address').value;
+  const currency = document.getElementById('withdraw-currency').value;
+  if (!amount || !address) return alert('Please fill in all fields.');
+  alert(`✅ Withdrawal request submitted!\n\n${amount} ${currency} → ${address.slice(0,12)}...`);
+}
+
+loadWallet();
+</script>
+</body>
+</html>
