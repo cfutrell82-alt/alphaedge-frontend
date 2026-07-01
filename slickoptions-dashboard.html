@@ -714,14 +714,22 @@ async function saveBroker() {
   // Test Alpaca connection before saving
   if (currentBroker === 'alpaca') {
     try {
-      const res = await fetch('https://paper-api.alpaca.markets/v2/account', {
+      // Try live endpoint first, fall back to paper
+      let alpacaUrl = 'https://api.alpaca.markets';
+      let res = await fetch(`${alpacaUrl}/v2/account`, {
         headers: { 'APCA-API-KEY-ID': key, 'APCA-API-SECRET-KEY': secret }
       });
+      if (!res.ok) {
+        alpacaUrl = 'https://paper-api.alpaca.markets';
+        res = await fetch(`${alpacaUrl}/v2/account`, {
+        headers: { 'APCA-API-KEY-ID': key, 'APCA-API-SECRET-KEY': secret }
+      });
+      } // end fallback
       if (!res.ok) { alert('❌ Alpaca connection failed. Please check your API keys.'); return; }
       const acct = await res.json();
       const equity = parseFloat(acct.equity || 0).toLocaleString('en-US', {minimumFractionDigits:2});
       const brokers = JSON.parse(localStorage.getItem('so_brokers') || '{}');
-      brokers[currentBroker] = { key, secret, connected: new Date().toISOString(), equity: acct.equity, id: acct.id };
+      brokers[currentBroker] = { key, secret, connected: new Date().toISOString(), equity: acct.equity, id: acct.id, url: alpacaUrl, live: alpacaUrl.includes('paper') ? false : true };
       localStorage.setItem('so_brokers', JSON.stringify(brokers));
       document.getElementById('broker-form-card').style.display = 'none';
       loadBrokers();
