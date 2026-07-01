@@ -328,6 +328,9 @@ const ASSETS = {
     { sym: 'DOGE/USDT', name: 'Dogecoin', price: 0.132, chg: 5.4, ws: 'dogeusdt' },
     { sym: 'ADA/USDT', name: 'Cardano', price: 0.458, chg: 1.2, ws: 'adausdt' },
     { sym: 'AVAX/USDT', name: 'Avalanche', price: 34.80, chg: 3.1, ws: 'avaxusdt' },
+    { sym: 'XRP/USDT', name: 'XRP', price: 0.524, chg: 2.9, ws: 'xrpusdt' },
+    { sym: 'XLM/USDT', name: 'Stellar', price: 0.112, chg: 1.8, ws: 'xlmusdt' },
+    { sym: 'DOGE/USDT', name: 'Dogecoin', price: 0.132, chg: 5.4, ws: 'dogeusdt' },
   ],
   stocks: [
     { sym: 'NVDA', name: 'Nvidia', price: 1142, chg: 2.8 },
@@ -929,7 +932,8 @@ function handleTrade(direction) {
     const krakenPairs = {
       'BTC/USDT': 'XBTUSD', 'ETH/USDT': 'ETHUSD', 'SOL/USDT': 'SOLUSD',
       'XRP/USDT': 'XRPUSD', 'DOGE/USDT': 'DOGEUSD', 'ADA/USDT': 'ADAUSD',
-      'AVAX/USDT': 'AVAXUSD', 'BNB/USDT': 'BNBUSD'
+      'AVAX/USDT': 'AVAXUSD', 'BNB/USDT': 'BNBUSD',
+      'XLM/USDT': 'XLMUSD', 'LTC/USDT': 'LTCUSD'
     };
     const pair = krakenPairs[currentAsset.sym];
     if (!pair) return showNotif('❌ Pair not supported on Kraken', 'var(--red)');
