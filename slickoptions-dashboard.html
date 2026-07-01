@@ -439,6 +439,100 @@
       </div>
     </div>
 
+
+    <!-- TRADE JOURNAL -->
+    <div class="page" id="page-journal">
+      <div class="page-title">Trade <span class="grad">Journal</span></div>
+
+      <!-- STATS ROW -->
+      <div class="stats-grid" id="journal-stats">
+        <div class="stat-card"><div class="stat-label">Total Trades</div><div class="stat-val" id="j-total">0</div><div class="stat-sub">All time</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-val" id="j-winrate">0%</div><div class="stat-sub">Wins / total</div></div>
+        <div class="stat-card"><div class="stat-label">Total P&L</div><div class="stat-val" id="j-pnl">$0</div><div class="stat-sub">All trades</div></div>
+        <div class="stat-card"><div class="stat-label">Best Trade</div><div class="stat-val" id="j-best">$0</div><div class="stat-sub">Single trade</div></div>
+      </div>
+
+      <!-- NEW TRADE FORM -->
+      <div class="card" style="margin-bottom:18px;">
+        <div class="card-header"><div class="card-title">📝 Log a Trade</div></div>
+        <div style="padding:18px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+          <div>
+            <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;">Symbol</div>
+            <input id="j-sym" type="text" placeholder="e.g. AAPL, BTC" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:'Space Mono',monospace;font-size:0.85rem;outline:none;">
+          </div>
+          <div>
+            <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;">Direction</div>
+            <select id="j-dir" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:'Inter',sans-serif;font-size:0.85rem;outline:none;">
+              <option value="LONG">LONG (Buy)</option>
+              <option value="SHORT">SHORT (Sell)</option>
+            </select>
+          </div>
+          <div>
+            <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;">Market</div>
+            <select id="j-market" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:'Inter',sans-serif;font-size:0.85rem;outline:none;">
+              <option>Stocks</option>
+              <option>Crypto</option>
+              <option>Forex</option>
+              <option>Options</option>
+            </select>
+          </div>
+          <div>
+            <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;">Entry Price</div>
+            <input id="j-entry" type="number" placeholder="0.00" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:'Space Mono',monospace;font-size:0.85rem;outline:none;">
+          </div>
+          <div>
+            <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;">Exit Price</div>
+            <input id="j-exit" type="number" placeholder="0.00" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:'Space Mono',monospace;font-size:0.85rem;outline:none;">
+          </div>
+          <div>
+            <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;">Amount ($)</div>
+            <input id="j-amount" type="number" placeholder="100.00" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:'Space Mono',monospace;font-size:0.85rem;outline:none;">
+          </div>
+          <div>
+            <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;">Result</div>
+            <select id="j-result" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:'Inter',sans-serif;font-size:0.85rem;outline:none;">
+              <option value="win">Win ✅</option>
+              <option value="loss">Loss ❌</option>
+              <option value="breakeven">Breakeven ➖</option>
+              <option value="open">Still Open 🔄</option>
+            </select>
+          </div>
+          <div>
+            <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;">P&L ($)</div>
+            <input id="j-pnl-input" type="number" placeholder="0.00" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:'Space Mono',monospace;font-size:0.85rem;outline:none;">
+          </div>
+          <div>
+            <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;">Emotion</div>
+            <select id="j-emotion" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:'Inter',sans-serif;font-size:0.85rem;outline:none;">
+              <option>😊 Confident</option>
+              <option>😰 Anxious</option>
+              <option>😤 FOMO</option>
+              <option>😐 Neutral</option>
+              <option>🤑 Greedy</option>
+              <option>😱 Fearful</option>
+            </select>
+          </div>
+          <div style="grid-column:1/-1;">
+            <div style="font-size:0.72rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:5px;">Notes / Reasoning</div>
+            <textarea id="j-notes" placeholder="Why did you take this trade? What did you learn?" style="width:100%;background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:9px 12px;color:var(--text);font-family:'Inter',sans-serif;font-size:0.85rem;outline:none;resize:vertical;min-height:70px;"></textarea>
+          </div>
+          <div style="grid-column:1/-1;">
+            <button onclick="logTrade()" style="padding:10px 24px;background:linear-gradient(90deg,#9945FF,#14F195);color:#fff;border:none;border-radius:8px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.875rem;cursor:pointer;transition:all 0.2s;">📝 Log Trade</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- JOURNAL ENTRIES -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title">Trade History</div>
+          <button onclick="clearJournal()" style="font-size:0.72rem;color:var(--red);background:rgba(255,75,75,0.06);border:1px solid rgba(255,75,75,0.2);border-radius:6px;padding:4px 10px;cursor:pointer;">Clear All</button>
+        </div>
+        <div id="journal-entries" style="overflow-x:auto;">
+          <div style="padding:32px;text-align:center;color:var(--text-dim);font-size:0.85rem;">No trades logged yet. Start tracking your trades above!</div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -726,6 +820,115 @@ function updateProgress(realTotal) {
 
 init();
 setTimeout(loadRealPortfolio, 800);
+
+// ── TRADE JOURNAL ──
+let journal = JSON.parse(localStorage.getItem('so_journal') || '[]');
+
+function logTrade() {
+  const sym = document.getElementById('j-sym').value.trim().toUpperCase();
+  const dir = document.getElementById('j-dir').value;
+  const market = document.getElementById('j-market').value;
+  const entry = parseFloat(document.getElementById('j-entry').value) || 0;
+  const exit = parseFloat(document.getElementById('j-exit').value) || 0;
+  const amount = parseFloat(document.getElementById('j-amount').value) || 0;
+  const result = document.getElementById('j-result').value;
+  const pnl = parseFloat(document.getElementById('j-pnl-input').value) || 0;
+  const emotion = document.getElementById('j-emotion').value;
+  const notes = document.getElementById('j-notes').value.trim();
+
+  if (!sym) return alert('Please enter a symbol');
+  if (!amount) return alert('Please enter an amount');
+
+  const trade = { id: Date.now(), sym, dir, market, entry, exit, amount, result, pnl, emotion, notes, date: new Date().toISOString() };
+  journal.unshift(trade);
+  localStorage.setItem('so_journal', JSON.stringify(journal));
+
+  // Clear form
+  ['j-sym','j-entry','j-exit','j-amount','j-pnl-input','j-notes'].forEach(id => document.getElementById(id).value = '');
+
+  renderJournal();
+  updateJournalStats();
+
+  const btn = document.querySelector('button[onclick="logTrade()"]');
+  btn.textContent = '✅ Logged!';
+  setTimeout(() => btn.textContent = '📝 Log Trade', 2000);
+}
+
+function renderJournal() {
+  const el = document.getElementById('journal-entries');
+  if (!journal.length) {
+    el.innerHTML = '<div style="padding:32px;text-align:center;color:var(--text-dim);font-size:0.85rem;">No trades logged yet. Start tracking your trades above!</div>';
+    return;
+  }
+  el.innerHTML = `<table style="width:100%;border-collapse:collapse;font-size:0.8rem;">
+    <thead>
+      <tr style="border-bottom:1px solid var(--border);">
+        <th style="padding:10px 16px;text-align:left;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Date</th>
+        <th style="padding:10px 16px;text-align:left;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Symbol</th>
+        <th style="padding:10px 16px;text-align:left;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Dir</th>
+        <th style="padding:10px 16px;text-align:left;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Entry</th>
+        <th style="padding:10px 16px;text-align:left;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Exit</th>
+        <th style="padding:10px 16px;text-align:left;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Amount</th>
+        <th style="padding:10px 16px;text-align:left;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">P&L</th>
+        <th style="padding:10px 16px;text-align:left;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Result</th>
+        <th style="padding:10px 16px;text-align:left;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Mood</th>
+        <th style="padding:10px 16px;text-align:left;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-muted);">Notes</th>
+        <th style="padding:10px 16px;"></th>
+      </tr>
+    </thead>
+    <tbody>
+      ${journal.map(t => `
+        <tr style="border-bottom:1px solid rgba(226,232,244,0.5);transition:background 0.15s;" onmouseover="this.style.background='var(--bg)'" onmouseout="this.style.background='none'">
+          <td style="padding:11px 16px;color:var(--text-dim);font-size:0.75rem;">${new Date(t.date).toLocaleDateString()}</td>
+          <td style="padding:11px 16px;font-family:'Space Mono',monospace;font-weight:700;color:var(--navy);">${t.sym}</td>
+          <td style="padding:11px 16px;"><span style="padding:2px 8px;border-radius:4px;font-size:0.7rem;font-weight:700;background:${t.dir==='LONG'?'rgba(20,241,149,0.12)':'rgba(255,75,75,0.12)'};color:${t.dir==='LONG'?'#0a7a4a':'var(--red)'};">${t.dir}</span></td>
+          <td style="padding:11px 16px;font-family:'Space Mono',monospace;font-size:0.78rem;">$${t.entry||'—'}</td>
+          <td style="padding:11px 16px;font-family:'Space Mono',monospace;font-size:0.78rem;">$${t.exit||'—'}</td>
+          <td style="padding:11px 16px;font-family:'Space Mono',monospace;font-size:0.78rem;">$${t.amount}</td>
+          <td style="padding:11px 16px;font-family:'Space Mono',monospace;font-weight:700;color:${t.pnl>0?'var(--green)':t.pnl<0?'var(--red)':'var(--text-muted)'};">${t.pnl>0?'+':''}$${t.pnl||0}</td>
+          <td style="padding:11px 16px;"><span style="padding:2px 8px;border-radius:100px;font-size:0.68rem;font-weight:700;background:${t.result==='win'?'rgba(20,241,149,0.1)':t.result==='loss'?'rgba(255,75,75,0.1)':'rgba(148,163,184,0.1)'};color:${t.result==='win'?'#0a7a4a':t.result==='loss'?'var(--red)':'var(--text-muted)'};">${t.result==='win'?'✅ Win':t.result==='loss'?'❌ Loss':t.result==='open'?'🔄 Open':'➖ BE'}</span></td>
+          <td style="padding:11px 16px;font-size:0.82rem;">${t.emotion?.split(' ')[0]||'—'}</td>
+          <td style="padding:11px 16px;color:var(--text-muted);font-size:0.78rem;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${t.notes||'—'}</td>
+          <td style="padding:11px 16px;"><button onclick="deleteTrade(${t.id})" style="padding:3px 8px;border-radius:5px;border:1px solid rgba(255,75,75,0.2);background:rgba(255,75,75,0.06);color:var(--red);font-size:0.65rem;cursor:pointer;">✕</button></td>
+        </tr>`).join('')}
+    </tbody>
+  </table>`;
+}
+
+function updateJournalStats() {
+  const total = journal.length;
+  const wins = journal.filter(t => t.result === 'win').length;
+  const winRate = total > 0 ? Math.round((wins / total) * 100) : 0;
+  const totalPnl = journal.reduce((sum, t) => sum + (t.pnl || 0), 0);
+  const bestTrade = journal.length ? Math.max(...journal.map(t => t.pnl || 0)) : 0;
+
+  document.getElementById('j-total').textContent = total;
+  document.getElementById('j-winrate').textContent = winRate + '%';
+  document.getElementById('j-pnl').textContent = (totalPnl >= 0 ? '+' : '') + '$' + totalPnl.toFixed(2);
+  document.getElementById('j-pnl').style.color = totalPnl >= 0 ? 'var(--green)' : 'var(--red)';
+  document.getElementById('j-best').textContent = '+$' + bestTrade.toFixed(2);
+}
+
+function deleteTrade(id) {
+  if (!confirm('Delete this trade entry?')) return;
+  journal = journal.filter(t => t.id !== id);
+  localStorage.setItem('so_journal', JSON.stringify(journal));
+  renderJournal();
+  updateJournalStats();
+}
+
+function clearJournal() {
+  if (!confirm('Clear all journal entries? This cannot be undone.')) return;
+  journal = [];
+  localStorage.setItem('so_journal', JSON.stringify(journal));
+  renderJournal();
+  updateJournalStats();
+}
+
+// Load journal on init
+renderJournal();
+updateJournalStats();
+
 </script>
 </body>
 </html>
