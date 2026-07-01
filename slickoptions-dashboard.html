@@ -232,6 +232,18 @@
                   <div style="font-size:0.68rem;color:var(--text-dim);margin-bottom:3px;">USD / USDC</div>
                   <input id="real-usd" type="number" step="1" placeholder="0.00" style="width:100%;background:#fff;border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:0.82rem;font-family:'Space Mono',monospace;outline:none;color:var(--navy);">
                 </div>
+                <div>
+                  <div style="font-size:0.68rem;color:var(--text-dim);margin-bottom:3px;">XRP</div>
+                  <input id="real-xrp" type="number" step="1" placeholder="0.00" style="width:100%;background:#fff;border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:0.82rem;font-family:'Space Mono',monospace;outline:none;color:var(--navy);">
+                </div>
+                <div>
+                  <div style="font-size:0.68rem;color:var(--text-dim);margin-bottom:3px;">XLM</div>
+                  <input id="real-xlm" type="number" step="1" placeholder="0.00" style="width:100%;background:#fff;border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:0.82rem;font-family:'Space Mono',monospace;outline:none;color:var(--navy);">
+                </div>
+                <div>
+                  <div style="font-size:0.68rem;color:var(--text-dim);margin-bottom:3px;">DOGE</div>
+                  <input id="real-doge" type="number" step="1" placeholder="0.00" style="width:100%;background:#fff;border:1px solid var(--border);border-radius:6px;padding:7px 10px;font-size:0.82rem;font-family:'Space Mono',monospace;outline:none;color:var(--navy);">
+                </div>
               </div>
               <button onclick="saveRealPortfolio()" style="width:100%;padding:8px;background:linear-gradient(90deg,var(--purple),var(--sol-green));color:var(--navy);border:none;border-radius:7px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:0.82rem;cursor:pointer;">Save Real Holdings</button>
             </div>
@@ -516,7 +528,7 @@ async function loadWallet(token) {
     // Update progress after goal loads
     setTimeout(() => {
       const real = JSON.parse(localStorage.getItem('so_real_portfolio') || '{}');
-      const realTotal = (real.btc||0)*PRICES.BTC + (real.eth||0)*PRICES.ETH + (real.sol||0)*PRICES.SOL + (real.usd||0);
+      const realTotal = (real.btc||0)*PRICES.BTC + (real.eth||0)*PRICES.ETH + (real.sol||0)*PRICES.SOL + (real.usd||0) + (real.xrp||0)*0.524 + (real.xlm||0)*0.112 + (real.doge||0)*0.132;
       updateProgress(realTotal);
     }, 200);
   } catch(e) { console.log('Wallet error:', e.message); }
@@ -667,6 +679,9 @@ function saveRealPortfolio() {
     eth: parseFloat(document.getElementById('real-eth').value) || 0,
     sol: parseFloat(document.getElementById('real-sol').value) || 0,
     usd: parseFloat(document.getElementById('real-usd').value) || 0,
+    xrp: parseFloat(document.getElementById('real-xrp').value) || 0,
+    xlm: parseFloat(document.getElementById('real-xlm').value) || 0,
+    doge: parseFloat(document.getElementById('real-doge').value) || 0,
   };
   localStorage.setItem('so_real_portfolio', JSON.stringify(real));
   loadRealPortfolio();
