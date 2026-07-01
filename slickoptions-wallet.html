@@ -123,11 +123,16 @@
   </div>
 
   <!-- STATS -->
-  <div class="stats-row">
+  <div class="stats-row" style="grid-template-columns:repeat(4,1fr);">
     <div class="stat-card"><div class="stat-label">Bitcoin</div><div class="stat-val" id="s-btc">0.000</div><div class="stat-sub" id="s-btc-usd">≈ $0</div></div>
     <div class="stat-card"><div class="stat-label">Ethereum</div><div class="stat-val" id="s-eth">0.000</div><div class="stat-sub" id="s-eth-usd">≈ $0</div></div>
     <div class="stat-card"><div class="stat-label">Solana</div><div class="stat-val" id="s-sol">0.000</div><div class="stat-sub" id="s-sol-usd">≈ $0</div></div>
     <div class="stat-card"><div class="stat-label">USDC</div><div class="stat-val" id="s-usdc">$0</div><div class="stat-sub">Stablecoin</div></div>
+  </div>
+  <div class="stats-row" style="grid-template-columns:repeat(3,1fr);margin-top:-8px;">
+    <div class="stat-card"><div class="stat-label">XRP</div><div class="stat-val" id="s-xrp">0.00</div><div class="stat-sub">Ripple</div></div>
+    <div class="stat-card"><div class="stat-label">XLM</div><div class="stat-val" id="s-xlm">0.00</div><div class="stat-sub">Stellar</div></div>
+    <div class="stat-card"><div class="stat-label">DOGE</div><div class="stat-val" id="s-doge">0.00</div><div class="stat-sub">Dogecoin</div></div>
   </div>
 
   <!-- HOLDINGS -->
@@ -148,6 +153,9 @@
         <option value="ETH">Ethereum (ETH)</option>
         <option value="SOL">Solana (SOL)</option>
         <option value="USDC">USD Coin (USDC)</option>
+        <option value="XRP">XRP (XRP)</option>
+        <option value="XLM">Stellar (XLM)</option>
+        <option value="DOGE">Dogecoin (DOGE)</option>
       </select>
       <label class="form-label">Amount (USD)</label>
       <input type="number" class="form-input" id="deposit-amount" placeholder="100.00">
@@ -169,6 +177,9 @@
         <option value="ETH">Ethereum (ETH)</option>
         <option value="SOL">Solana (SOL)</option>
         <option value="USDC">USD Coin (USDC)</option>
+        <option value="XRP">XRP (XRP)</option>
+        <option value="XLM">Stellar (XLM)</option>
+        <option value="DOGE">Dogecoin (DOGE)</option>
       </select>
       <label class="form-label">Amount</label>
       <input type="number" class="form-input" id="withdraw-amount" placeholder="0.00">
@@ -192,7 +203,7 @@
 
 <script>
 const BACKEND = 'https://alphaedge-backend-production.up.railway.app';
-const PRICES = { BTC: 67420, ETH: 3812, SOL: 168.40, USDC: 1 };
+const PRICES = { BTC: 67420, ETH: 3812, SOL: 168.40, USDC: 1, XRP: 0.524, XLM: 0.112, DOGE: 0.132 };
 const COINS = [
   { sym: 'BTC', name: 'Bitcoin', icon: '₿', color: '#9945FF', field: 'btcBalance' },
   { sym: 'ETH', name: 'Ethereum', icon: 'Ξ', color: '#627eea', field: 'ethBalance' },
@@ -205,6 +216,9 @@ const DEMO_ADDRESSES = {
   ETH: '0x742d35Cc6634C0532925a3b8D4C9B7F9A2e1234',
   SOL: '7xKXtg2CW87d97TXJSDpbD5jBkheTqA83TZRuJosgAsU',
   USDC: '0x742d35Cc6634C0532925a3b8D4C9B7F9A2e1234',
+  XRP: 'rHb9CJAWyB4rj91VRWn96DkukG4bwdtyTh',
+  XLM: 'GBZXN7PIRZGNMHGA7MUUUF4GWPY5AYPGK2FAKBV7JZKJJCHQSJ6YBVR',
+  DOGE: 'DH5yaieqoZN36fDVciNyRueRGvGLR3mr7L',
 };
 
 async function loadWallet() {
@@ -223,7 +237,8 @@ async function loadWallet() {
 
 function renderWallet(w) {
   const btc = w.btcBalance || 0, eth = w.ethBalance || 0, sol = w.solBalance || 0, usdc = w.usdcBalance || 0;
-  const total = btc * PRICES.BTC + eth * PRICES.ETH + sol * PRICES.SOL + usdc;
+  const xrp = w.xrpBalance || 0, xlm = w.xlmBalance || 0, doge = w.dogeBalance || 0;
+  const total = btc * PRICES.BTC + eth * PRICES.ETH + sol * PRICES.SOL + usdc + xrp * PRICES.XRP + xlm * PRICES.XLM + doge * PRICES.DOGE;
 
   document.getElementById('total-value').textContent = '$' + total.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
   document.getElementById('total-sub').textContent = `${COINS.length} assets · Updated just now`;
@@ -235,7 +250,7 @@ function renderWallet(w) {
   document.getElementById('s-sol-usd').textContent = '≈ $' + (sol * PRICES.SOL).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0});
   document.getElementById('s-usdc').textContent = '$' + usdc.toFixed(2);
 
-  const bals = { BTC: btc, ETH: eth, SOL: sol, USDC: usdc };
+  const bals = { BTC: btc, ETH: eth, SOL: sol, USDC: usdc, XRP: xrp, XLM: xlm, DOGE: doge };
   document.getElementById('holdings-grid').innerHTML = COINS.map(c => {
     const bal = bals[c.sym] || 0;
     const usdVal = bal * PRICES[c.sym];
