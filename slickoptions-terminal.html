@@ -274,12 +274,12 @@
     <!-- Trade Buttons -->
     <div class="panel-section">
       <div class="trade-btns">
-        <button class="buy-btn" onclick="placeTrade('BUY')">
+        <button class="buy-btn" onclick="handleTrade('BUY')">
           <span class="btn-arrow">↑</span>
           <span>BUY</span>
           <span class="btn-label">Higher</span>
         </button>
-        <button class="sell-btn" onclick="placeTrade('SELL')">
+        <button class="sell-btn" onclick="handleTrade('SELL')">
           <span class="btn-arrow">↓</span>
           <span>SELL</span>
           <span class="btn-label">Lower</span>
@@ -756,15 +756,15 @@ async function closeAlpacaPosition(symbol) {
   }
 }
 
-// Override placeTrade to use Alpaca in real mode
-const originalPlaceTrade = placeTrade;
-function placeTrade(direction) {
+// placeTrade is already defined above — Alpaca handled inside it
+// Patch: override buy/sell buttons to check real mode first
+function handleTrade(direction) {
   if (currentMode === 'real' && ALPACA.connected) {
     const qty = Math.floor((parseFloat(document.getElementById('amount-input').value) || 100) / currentPrice);
     if (qty < 1) return showNotif('❌ Amount too low for 1 share', 'var(--red)');
     placeAlpacaOrder(currentAsset.sym, direction, qty);
   } else {
-    originalPlaceTrade(direction);
+    placeTrade(direction);
   }
 }
 
