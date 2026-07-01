@@ -622,6 +622,155 @@ setInterval(() => {
   // Update open trade timers
   if (openTrades.length) renderOpenTrades();
 }, 1000);
+
+// ─────────────────────────────
+// ALPACA BROKER INTEGRATION
+// ─────────────────────────────
+const ALPACA = {
+  baseUrl: 'https://paper-api.alpaca.markets',
+  keyId: null,
+  secretKey: null,
+  connected: false,
+  account: null,
+  positions: []
+};
+
+async function loadAlpacaKeys() {
+  const brokers = JSON.parse(localStorage.getItem('so_brokers') || '{}');
+  if (brokers.alpaca) {
+    ALPACA.keyId = brokers.alpaca.key;
+    ALPACA.secretKey = brokers.alpaca.secret;
+    await connectAlpaca();
+  }
+}
+
+async function connectAlpaca() {
+  try {
+    const res = await fetch(`${ALPACA.baseUrl}/v2/account`, {
+      headers: {
+        'APCA-API-KEY-ID': ALPACA.keyId,
+        'APCA-API-SECRET-KEY': ALPACA.secretKey
+      }
+    });
+    if (!res.ok) throw new Error('Auth failed');
+    ALPACA.account = await res.json();
+    ALPACA.connected = true;
+    updateAlpacaUI();
+    loadAlpacaPositions();
+    console.log('[ALPACA] Connected! Account:', ALPACA.account.id);
+  } catch(e) {
+    console.log('[ALPACA] Connection failed:', e.message);
+    ALPACA.connected = false;
+  }
+}
+
+async function loadAlpacaPositions() {
+  if (!ALPACA.connected) return;
+  try {
+    const res = await fetch(`${ALPACA.baseUrl}/v2/positions`, {
+      headers: {
+        'APCA-API-KEY-ID': ALPACA.keyId,
+        'APCA-API-SECRET-KEY': ALPACA.secretKey
+      }
+    });
+    ALPACA.positions = await res.json();
+    renderAlpacaPositions();
+  } catch(e) {}
+}
+
+async function placeAlpacaOrder(symbol, side, qty) {
+  if (!ALPACA.connected) return showNotif('❌ Alpaca not connected', 'var(--red)');
+  try {
+    const res = await fetch(`${ALPACA.baseUrl}/v2/orders`, {
+      method: 'POST',
+      headers: {
+        'APCA-API-KEY-ID': ALPACA.keyId,
+        'APCA-API-SECRET-KEY': ALPACA.secretKey,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        symbol: symbol.replace('/',''),
+        qty: qty,
+        side: side.toLowerCase(),
+        type: 'market',
+        time_in_force: 'gtc'
+      })
+    });
+    const order = await res.json();
+    if (order.id) {
+      showNotif(`✅ ${side} order placed! ${qty} ${symbol}`, 'var(--sol-green)');
+      setTimeout(loadAlpacaPositions, 2000);
+    } else {
+      showNotif(`❌ Order failed: ${order.message || 'Unknown error'}`, 'var(--red)');
+    }
+  } catch(e) {
+    showNotif('❌ Order failed: ' + e.message, 'var(--red)');
+  }
+}
+
+function updateAlpacaUI() {
+  if (!ALPACA.account) return;
+  const cash = parseFloat(ALPACA.account.cash || 0);
+  const equity = parseFloat(ALPACA.account.equity || 0);
+  const modeLabel = document.getElementById('mode-label');
+  if (modeLabel) modeLabel.textContent = `Alpaca Paper · $${equity.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2})} equity`;
+  document.getElementById('tb-balance').textContent = '$' + cash.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById('bb-balance').textContent = '$' + cash.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+
+function renderAlpacaPositions() {
+  if (!ALPACA.positions.length) return;
+  const el = document.getElementById('open-trades');
+  document.getElementById('open-count').textContent = ALPACA.positions.length;
+  el.innerHTML = ALPACA.positions.map(p => {
+    const pnl = parseFloat(p.unrealized_pl || 0);
+    const side = p.side === 'long' ? 'BUY' : 'SELL';
+    return `<div class="trade-item">
+      <div class="ti-header">
+        <span class="ti-sym">${p.symbol}</span>
+        <span class="ti-dir ${side.toLowerCase()}">${side}</span>
+      </div>
+      <div class="ti-row"><span>Qty</span><span>${p.qty}</span></div>
+      <div class="ti-row"><span>Entry</span><span>$${parseFloat(p.avg_entry_price).toFixed(2)}</span></div>
+      <div class="ti-row"><span>Current</span><span>$${parseFloat(p.current_price || 0).toFixed(2)}</span></div>
+      <div class="ti-pnl" style="color:${pnl >= 0 ? 'var(--sol-green)' : 'var(--red)'};">${pnl >= 0 ? '+' : ''}$${pnl.toFixed(2)}</div>
+      <button class="close-btn" onclick="closeAlpacaPosition('${p.symbol}')">Close Position</button>
+    </div>`;
+  }).join('');
+}
+
+async function closeAlpacaPosition(symbol) {
+  if (!ALPACA.connected) return;
+  try {
+    await fetch(`${ALPACA.baseUrl}/v2/positions/${symbol}`, {
+      method: 'DELETE',
+      headers: {
+        'APCA-API-KEY-ID': ALPACA.keyId,
+        'APCA-API-SECRET-KEY': ALPACA.secretKey
+      }
+    });
+    showNotif(`✅ ${symbol} position closed`, 'var(--sol-green)');
+    setTimeout(loadAlpacaPositions, 2000);
+  } catch(e) {
+    showNotif('❌ Failed to close position', 'var(--red)');
+  }
+}
+
+// Override placeTrade to use Alpaca in real mode
+const originalPlaceTrade = placeTrade;
+function placeTrade(direction) {
+  if (currentMode === 'real' && ALPACA.connected) {
+    const qty = Math.floor((parseFloat(document.getElementById('amount-input').value) || 100) / currentPrice);
+    if (qty < 1) return showNotif('❌ Amount too low for 1 share', 'var(--red)');
+    placeAlpacaOrder(currentAsset.sym, direction, qty);
+  } else {
+    originalPlaceTrade(direction);
+  }
+}
+
+// Load Alpaca on startup
+setTimeout(loadAlpacaKeys, 1000);
+
 </script>
 </body>
 </html>
