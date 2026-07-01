@@ -226,7 +226,8 @@
     <div class="panel-section">
       <div class="mode-toggle">
         <button class="mode-btn active" onclick="setMode('paper',this)">📄 Paper</button>
-        <button class="mode-btn" onclick="setMode('real',this)">🔴 Real</button>
+        <button class="mode-btn" onclick="setMode('real',this)">📈 Alpaca</button>
+        <button class="mode-btn" onclick="setMode('real',this)">⚓ Kraken</button>
       </div>
       <div style="font-size:0.65rem;color:var(--text-dim);text-align:center;margin-top:6px;" id="mode-label">Paper trading — simulated funds</div>
     </div>
@@ -817,6 +818,129 @@ setInterval(() => {
     loadAlpacaPositions();
   }
 }, 10000);
+
+
+// ─────────────────────────────
+// KRAKEN BROKER INTEGRATION
+// ─────────────────────────────
+const KRAKEN = {
+  baseUrl: 'https://api.kraken.com',
+  apiKey: null,
+  secretKey: null,
+  connected: false,
+  balance: {},
+  positions: []
+};
+
+async function loadKrakenKeys() {
+  const brokers = JSON.parse(localStorage.getItem('so_brokers') || '{}');
+  if (brokers.kraken) {
+    KRAKEN.apiKey = brokers.kraken.key;
+    KRAKEN.secretKey = brokers.kraken.secret;
+    await connectKraken();
+  }
+}
+
+async function connectKraken() {
+  try {
+    const nonce = Date.now().toString();
+    const res = await fetch(`${KRAKEN.baseUrl}/0/private/Balance`, {
+      method: 'POST',
+      headers: {
+        'API-Key': KRAKEN.apiKey,
+        'API-Sign': await getKrakenSignature('/0/private/Balance', nonce, ''),
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `nonce=${nonce}`
+    });
+    const data = await res.json();
+    if (data.error && data.error.length > 0) throw new Error(data.error[0]);
+    KRAKEN.balance = data.result || {};
+    KRAKEN.connected = true;
+    updateKrakenUI();
+    console.log('[KRAKEN] Connected! Balance:', KRAKEN.balance);
+  } catch(e) {
+    console.log('[KRAKEN] Connection failed:', e.message);
+    KRAKEN.connected = false;
+  }
+}
+
+async function getKrakenSignature(path, nonce, postData) {
+  try {
+    const encoder = new TextEncoder();
+    const secretBytes = Uint8Array.from(atob(KRAKEN.secretKey), c => c.charCodeAt(0));
+    const key = await crypto.subtle.importKey('raw', secretBytes, { name: 'HMAC', hash: 'SHA-512' }, false, ['sign']);
+    const message = nonce + postData;
+    const hash = await crypto.subtle.digest('SHA-256', encoder.encode(nonce + postData));
+    const combined = new Uint8Array([...encoder.encode(path), ...new Uint8Array(hash)]);
+    const sig = await crypto.subtle.sign('HMAC', key, combined);
+    return btoa(String.fromCharCode(...new Uint8Array(sig)));
+  } catch(e) {
+    return '';
+  }
+}
+
+async function placeKrakenOrder(pair, side, volume) {
+  if (!KRAKEN.connected) return showNotif('❌ Kraken not connected', 'var(--red)');
+  try {
+    const nonce = Date.now().toString();
+    const postData = `nonce=${nonce}&ordertype=market&type=${side.toLowerCase()}&volume=${volume}&pair=${pair}`;
+    const res = await fetch(`${KRAKEN.baseUrl}/0/private/AddOrder`, {
+      method: 'POST',
+      headers: {
+        'API-Key': KRAKEN.apiKey,
+        'API-Sign': await getKrakenSignature('/0/private/AddOrder', nonce, postData),
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: postData
+    });
+    const data = await res.json();
+    if (data.error && data.error.length > 0) {
+      showNotif(`❌ ${data.error[0]}`, 'var(--red)');
+    } else {
+      showNotif(`✅ Kraken ${side} order placed! ${pair}`, 'var(--sol-green)');
+      setTimeout(connectKraken, 3000);
+    }
+  } catch(e) {
+    showNotif('❌ Kraken order error: ' + e.message, 'var(--red)');
+  }
+}
+
+function updateKrakenUI() {
+  if (!KRAKEN.balance) return;
+  const usd = parseFloat(KRAKEN.balance.ZUSD || KRAKEN.balance.USD || 0);
+  const btc = parseFloat(KRAKEN.balance.XXBT || KRAKEN.balance.XBT || 0);
+  const eth = parseFloat(KRAKEN.balance.XETH || KRAKEN.balance.ETH || 0);
+  console.log(`[KRAKEN] USD: $${usd.toFixed(2)} | BTC: ${btc} | ETH: ${eth}`);
+  if (currentMode === 'real-kraken') {
+    document.getElementById('tb-balance').textContent = '$' + usd.toLocaleString('en-US',{minimumFractionDigits:2});
+    document.getElementById('bb-balance').textContent = '$' + usd.toLocaleString('en-US',{minimumFractionDigits:2});
+  }
+}
+
+// Update handleTrade to support Kraken for crypto
+const _handleTrade = handleTrade;
+function handleTrade(direction) {
+  if (currentMode === 'real' && KRAKEN.connected && currentAsset.ws) {
+    // Crypto asset — use Kraken
+    const amount = parseFloat(document.getElementById('amount-input').value) || 100;
+    const volume = (amount / currentPrice).toFixed(6);
+    // Map to Kraken pair format
+    const krakenPairs = {
+      'BTC/USDT': 'XBTUSD', 'ETH/USDT': 'ETHUSD', 'SOL/USDT': 'SOLUSD',
+      'XRP/USDT': 'XRPUSD', 'DOGE/USDT': 'DOGEUSD', 'ADA/USDT': 'ADAUSD',
+      'AVAX/USDT': 'AVAXUSD', 'BNB/USDT': 'BNBUSD'
+    };
+    const pair = krakenPairs[currentAsset.sym];
+    if (!pair) return showNotif('❌ Pair not supported on Kraken', 'var(--red)');
+    placeKrakenOrder(pair, direction, volume);
+  } else {
+    _handleTrade(direction);
+  }
+}
+
+// Load Kraken on startup
+setTimeout(loadKrakenKeys, 1500);
 
 </script>
 </body>
