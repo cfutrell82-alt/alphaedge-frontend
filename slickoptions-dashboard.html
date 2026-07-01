@@ -550,10 +550,33 @@ function connectBroker(broker) {
   document.getElementById('broker-form-card').scrollIntoView({ behavior: 'smooth' });
 }
 
-function saveBroker() {
+async function saveBroker() {
   const key = document.getElementById('broker-api-key').value.trim();
   const secret = document.getElementById('broker-api-secret').value.trim();
   if (!key || !secret) return alert('Please enter both API key and secret.');
+
+  // Test Alpaca connection before saving
+  if (currentBroker === 'alpaca') {
+    try {
+      const res = await fetch('https://paper-api.alpaca.markets/v2/account', {
+        headers: { 'APCA-API-KEY-ID': key, 'APCA-API-SECRET-KEY': secret }
+      });
+      if (!res.ok) { alert('❌ Alpaca connection failed. Please check your API keys.'); return; }
+      const acct = await res.json();
+      const equity = parseFloat(acct.equity || 0).toLocaleString('en-US', {minimumFractionDigits:2});
+      const brokers = JSON.parse(localStorage.getItem('so_brokers') || '{}');
+      brokers[currentBroker] = { key, secret, connected: new Date().toISOString(), equity: acct.equity, id: acct.id };
+      localStorage.setItem('so_brokers', JSON.stringify(brokers));
+      document.getElementById('broker-form-card').style.display = 'none';
+      loadBrokers();
+      alert(`✅ Alpaca connected!\n\nAccount: ${acct.id}\nEquity: $${equity}\nStatus: ${acct.status}\n\nSwitch to Real mode in the terminal to place live orders!`);
+      return;
+    } catch(e) {
+      alert('❌ Connection error: ' + e.message);
+      return;
+    }
+  }
+
   const brokers = JSON.parse(localStorage.getItem('so_brokers') || '{}');
   brokers[currentBroker] = { key, secret, connected: new Date().toISOString() };
   localStorage.setItem('so_brokers', JSON.stringify(brokers));
@@ -569,7 +592,11 @@ function loadBrokers() {
   if (!Object.keys(brokers).length) { el.innerHTML = '<div style="text-align:center;color:var(--text-dim);padding:20px;font-size:0.85rem;">No brokers connected yet.</div>'; return; }
   el.innerHTML = Object.entries(brokers).map(([broker, data]) => `
     <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);">
-      <div><div style="font-weight:600;font-size:0.85rem;">${names[broker]}</div><div style="font-size:0.75rem;color:var(--text-dim);">Connected ${new Date(data.connected).toLocaleDateString()}</div></div>
+      <div>
+        <div style="font-weight:600;font-size:0.85rem;">${names[broker]}</div>
+        <div style="font-size:0.75rem;color:var(--text-dim);">Connected ${new Date(data.connected).toLocaleDateString()}</div>
+        ${data.equity ? `<div style="font-size:0.78rem;font-weight:700;color:var(--green);margin-top:2px;">Equity: $${parseFloat(data.equity).toLocaleString('en-US',{minimumFractionDigits:2})}</div>` : ''}
+      </div>
       <div style="display:flex;align-items:center;gap:10px;">
         <span style="color:var(--green);font-size:0.75rem;font-weight:600;">● Connected</span>
         <button onclick="disconnectBroker('${broker}')" style="padding:4px 10px;border-radius:5px;border:1px solid rgba(255,75,75,0.3);background:rgba(255,75,75,0.06);color:var(--red);font-size:0.72rem;cursor:pointer;">Disconnect</button>
