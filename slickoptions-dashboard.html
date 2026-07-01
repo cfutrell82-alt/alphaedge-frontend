@@ -335,21 +335,19 @@
             <button onclick="filterMarket('forex',this)" style="padding:6px;border-radius:6px;border:1px solid var(--border);background:none;color:var(--text-muted);font-size:0.75rem;cursor:pointer;" class="mf-btn">💱 Forex</button>
           </div>
           <div id="all-markets">
-            ${[
-              ['BTC/USD','Bitcoin','crypto','$67,420','+3.6%',true],
-              ['ETH/USD','Ethereum','crypto','$3,812','+2.1%',true],
-              ['SOL/USD','Solana','crypto','$168.40','+4.2%',true],
-              ['BNB/USD','BNB','crypto','$578','+1.8%',true],
-              ['NVDA','Nvidia','stocks','$1,142','+2.8%',true],
-              ['AAPL','Apple','stocks','$198.30','+1.2%',true],
-              ['TSLA','Tesla','stocks','$185.60','-0.8%',false],
-              ['MSFT','Microsoft','stocks','$412.40','+0.6%',true],
-              ['EUR/USD','Euro/Dollar','forex','1.0821','-0.19%',false],
-              ['GBP/USD','Pound/Dollar','forex','1.2684','+0.14%',true],
-              ['USD/JPY','Dollar/Yen','forex','156.84','+0.22%',true],
-            ].map(([sym,name,cat,price,chg,up]) =>
-              `<div class="market-row" data-cat="${cat}"><span class="market-sym">${sym}</span><span class="market-name">${name}</span><span class="market-price">${price}</span><span class="market-chg ${up?'up':'dn'}">${chg}</span></div>`
-            ).join('')}
+            <div class="market-row" data-cat="crypto"><span class="market-sym">BTC/USD</span><span class="market-name">Bitcoin</span><span class="market-price">$67,420</span><span class="market-chg up">+3.6%</span></div>
+            <div class="market-row" data-cat="crypto"><span class="market-sym">ETH/USD</span><span class="market-name">Ethereum</span><span class="market-price">$3,812</span><span class="market-chg up">+2.1%</span></div>
+            <div class="market-row" data-cat="crypto"><span class="market-sym">SOL/USD</span><span class="market-name">Solana</span><span class="market-price">$168.40</span><span class="market-chg up">+4.2%</span></div>
+            <div class="market-row" data-cat="crypto"><span class="market-sym">XRP/USD</span><span class="market-name">XRP</span><span class="market-price">$0.524</span><span class="market-chg up">+2.9%</span></div>
+            <div class="market-row" data-cat="crypto"><span class="market-sym">DOGE/USD</span><span class="market-name">Dogecoin</span><span class="market-price">$0.132</span><span class="market-chg up">+5.4%</span></div>
+            <div class="market-row" data-cat="crypto"><span class="market-sym">XLM/USD</span><span class="market-name">Stellar</span><span class="market-price">$0.112</span><span class="market-chg up">+1.8%</span></div>
+            <div class="market-row" data-cat="stocks"><span class="market-sym">NVDA</span><span class="market-name">Nvidia</span><span class="market-price">$1,142</span><span class="market-chg up">+2.8%</span></div>
+            <div class="market-row" data-cat="stocks"><span class="market-sym">AAPL</span><span class="market-name">Apple</span><span class="market-price">$198.30</span><span class="market-chg up">+1.2%</span></div>
+            <div class="market-row" data-cat="stocks"><span class="market-sym">TSLA</span><span class="market-name">Tesla</span><span class="market-price">$185.60</span><span class="market-chg dn">-0.8%</span></div>
+            <div class="market-row" data-cat="stocks"><span class="market-sym">MSFT</span><span class="market-name">Microsoft</span><span class="market-price">$412.40</span><span class="market-chg up">+0.6%</span></div>
+            <div class="market-row" data-cat="forex"><span class="market-sym">EUR/USD</span><span class="market-name">Euro/Dollar</span><span class="market-price">1.0821</span><span class="market-chg dn">-0.19%</span></div>
+            <div class="market-row" data-cat="forex"><span class="market-sym">GBP/USD</span><span class="market-name">Pound/Dollar</span><span class="market-price">1.2684</span><span class="market-chg up">+0.14%</span></div>
+            <div class="market-row" data-cat="forex"><span class="market-sym">USD/JPY</span><span class="market-name">Dollar/Yen</span><span class="market-price">156.84</span><span class="market-chg up">+0.22%</span></div>
           </div>
         </div>
       </div>
@@ -363,6 +361,12 @@
         <div class="stat-card"><div class="stat-label">BTC</div><div class="stat-val" id="w-btc">0.000</div><div class="stat-sub" id="w-btc-usd">≈ $0</div></div>
         <div class="stat-card"><div class="stat-label">ETH</div><div class="stat-val" id="w-eth">0.000</div><div class="stat-sub" id="w-eth-usd">≈ $0</div></div>
         <div class="stat-card"><div class="stat-label">USDC</div><div class="stat-val" id="w-usdc">$0</div><div class="stat-sub">Stablecoin</div></div>
+      </div>
+      <div class="stats-grid" style="margin-top:-8px;">
+        <div class="stat-card"><div class="stat-label">SOL</div><div class="stat-val" id="w-sol">0.00</div><div class="stat-sub" id="w-sol-usd">≈ $0</div></div>
+        <div class="stat-card"><div class="stat-label">USDT</div><div class="stat-val" id="w-usdt">$0</div><div class="stat-sub">Tether</div></div>
+        <div class="stat-card"><div class="stat-label">XRP</div><div class="stat-val" id="w-xrp">0.00</div><div class="stat-sub">Ripple</div></div>
+        <div class="stat-card"><div class="stat-label">XLM / DOGE</div><div class="stat-val" id="w-xlm">0.00</div><div class="stat-sub" id="w-doge">0.00 DOGE</div></div>
       </div>
       <div class="card">
         <div class="card-header"><div class="card-title">Holdings</div></div>
@@ -478,7 +482,7 @@ function loadUserUI(user) {
 async function loadWallet(token) {
   try {
     // Try API first, fall back to known balances
-    let btc = 0.03, eth = 0.5, usdc = 800, sol = 10; // default goal balances
+    let btc = 0.03, eth = 0.5, usdc = 800, sol = 10, xrp = 0, xlm = 0, doge = 0, usdt = 0;
     try {
       const res = await fetch(`${BACKEND}/api/wallet`, { headers: { 'Authorization': `Bearer ${token}` } });
       if (res.ok) {
@@ -488,24 +492,39 @@ async function loadWallet(token) {
         eth = w.ethBalance ?? 0.5;
         usdc = w.usdcBalance ?? 800;
         sol = w.solBalance ?? 10;
+        xrp = w.xrpBalance ?? 0;
+        xlm = w.xlmBalance ?? 0;
+        doge = w.dogeBalance ?? 0;
+        usdt = w.usdtBalance ?? 0;
       }
     } catch(e2) { console.log('Using default balances'); }
-    const total = btc * PRICES.BTC + eth * PRICES.ETH + usdc + sol * PRICES.SOL;
+    const total = btc * PRICES.BTC + eth * PRICES.ETH + usdc + sol * PRICES.SOL + xrp * 0.524 + xlm * 0.112 + doge * 0.132 + usdt;
     document.getElementById('portfolio-val').textContent = '$' + total.toLocaleString('en-US', {minimumFractionDigits:2,maximumFractionDigits:2});
     document.getElementById('btc-val').textContent = btc.toFixed(4);
     document.getElementById('eth-val').textContent = eth.toFixed(4);
     document.getElementById('usdc-val').textContent = '$' + usdc.toFixed(2);
+    // Wallet tab stats
     document.getElementById('w-total').textContent = '$' + total.toLocaleString('en-US', {minimumFractionDigits:0,maximumFractionDigits:0});
     document.getElementById('w-btc').textContent = btc.toFixed(4);
     document.getElementById('w-btc-usd').textContent = '≈ $' + (btc * PRICES.BTC).toLocaleString();
     document.getElementById('w-eth').textContent = eth.toFixed(4);
     document.getElementById('w-eth-usd').textContent = '≈ $' + (eth * PRICES.ETH).toLocaleString();
     document.getElementById('w-usdc').textContent = '$' + usdc.toFixed(2);
+    if (document.getElementById('w-sol')) document.getElementById('w-sol').textContent = sol.toFixed(2);
+    if (document.getElementById('w-sol-usd')) document.getElementById('w-sol-usd').textContent = '≈ $' + (sol * PRICES.SOL).toLocaleString();
+    if (document.getElementById('w-usdt')) document.getElementById('w-usdt').textContent = '$' + usdt.toFixed(2);
+    if (document.getElementById('w-xrp')) document.getElementById('w-xrp').textContent = xrp.toFixed(2);
+    if (document.getElementById('w-xlm')) document.getElementById('w-xlm').textContent = xlm.toFixed(2);
+    if (document.getElementById('w-doge')) document.getElementById('w-doge').textContent = doge.toFixed(2) + ' DOGE';
     document.getElementById('wallet-holdings').innerHTML = [
-      ['₿', '#9945FF', 'Bitcoin', 'BTC', btc, btc * PRICES.BTC],
+      ['₿', '#f7931a', 'Bitcoin', 'BTC', btc, btc * PRICES.BTC],
       ['Ξ', '#627eea', 'Ethereum', 'ETH', eth, eth * PRICES.ETH],
       ['◎', '#9945ff', 'Solana', 'SOL', sol, sol * PRICES.SOL],
       ['$', '#2775ca', 'USD Coin', 'USDC', usdc, usdc],
+      ['₮', '#26a17b', 'Tether', 'USDT', usdt, usdt],
+      ['✕', '#346aa9', 'XRP', 'XRP', xrp, xrp * 0.524],
+      ['★', '#08b5e5', 'Stellar', 'XLM', xlm, xlm * 0.112],
+      ['Ð', '#c2a633', 'Dogecoin', 'DOGE', doge, doge * 0.132],
     ].map(([icon, color, name, sym, bal, usd]) =>
       `<div class="wallet-coin">
         <div class="coin-icon" style="background:${color}22;">${icon}</div>
