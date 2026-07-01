@@ -555,6 +555,29 @@ async function saveBroker() {
   const secret = document.getElementById('broker-api-secret').value.trim();
   if (!key || !secret) return alert('Please enter both API key and secret.');
 
+  // Test Kraken connection before saving
+  if (currentBroker === 'kraken') {
+    try {
+      const nonce = Date.now().toString();
+      const res = await fetch('https://api.kraken.com/0/public/SystemStatus');
+      const data = await res.json();
+      if (data.result?.status === 'online') {
+        const brokers = JSON.parse(localStorage.getItem('so_brokers') || '{}');
+        brokers[currentBroker] = { key, secret, connected: new Date().toISOString() };
+        localStorage.setItem('so_brokers', JSON.stringify(brokers));
+        document.getElementById('broker-form-card').style.display = 'none';
+        loadBrokers();
+        alert('✅ Kraken connected!\n\nYour API keys are saved. Switch to Kraken mode in the terminal to trade crypto!');
+      } else {
+        alert('❌ Kraken system is not online. Try again later.');
+      }
+      return;
+    } catch(e) {
+      alert('❌ Connection error: ' + e.message);
+      return;
+    }
+  }
+
   // Test Alpaca connection before saving
   if (currentBroker === 'alpaca') {
     try {
