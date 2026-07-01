@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SlickOptions — Privacy Policy</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --cyan: #00e5ff; --gold: #f7c948; --navy: #0a1628; --bg: #f8faff; --border: #e2e8f4; --text: #0a1628; --text-muted: #4b5e82; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; min-height: 100vh; }
+  nav { display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 64px; background: rgba(255,255,255,0.97); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 20px rgba(0,0,0,0.06); }
+  .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; color: var(--navy); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+  .nav-logo img { width: 28px; height: 28px; border-radius: 50%; box-shadow: 0 0 8px rgba(0,229,255,0.5); }
+  .nav-logo .accent { color: var(--cyan); }
+  .main { max-width: 800px; margin: 0 auto; padding: 48px 40px 80px; }
+  .page-title { font-family: 'Space Grotesk', sans-serif; font-size: 2rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; }
+  .page-date { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 40px; }
+  h2 { font-family: 'Space Grotesk', sans-serif; font-size: 1.1rem; font-weight: 700; color: var(--navy); margin: 32px 0 10px; padding-bottom: 8px; border-bottom: 2px solid; border-image: linear-gradient(90deg, var(--cyan), var(--gold)) 1; }
+  p { font-size: 0.9rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 12px; }
+  ul { margin: 10px 0 12px 20px; }
+  ul li { font-size: 0.9rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 4px; }
+  .highlight { background: rgba(0,229,255,0.06); border: 1px solid rgba(0,229,255,0.2); border-radius: 10px; padding: 16px 20px; margin-bottom: 20px; }
+  .highlight p { margin-bottom: 0; color: var(--text); }
+  footer { background: var(--navy); padding: 28px 40px; text-align: center; }
+  footer a { color: #64748b; text-decoration: none; font-size: 0.82rem; margin: 0 12px; }
+  footer a:hover { color: var(--cyan); }
+  @media (max-width: 768px) { .main { padding: 32px 20px 60px; } nav { padding: 0 20px; } }
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="nav-logo">
+    <img src="alphaedge-coin.png" alt="SO">
+    Slick<span class="accent">Options</span>
+  </a>
+  <a href="index.html" style="font-size:0.85rem;color:var(--text-muted);text-decoration:none;">← Back to Home</a>
+</nav>
+<div class="main">
+  <div class="page-title">Privacy Policy</div>
+  <div class="page-date">Last updated: June 30, 2026</div>
+
+  <div class="highlight">
+    <p>🔒 <strong>Short version:</strong> SlickOptions collects minimal data. Your API keys are stored locally in your browser only — never on our servers. We don't sell your data. Ever.</p>
+  </div>
+
+  <h2>1. Information We Collect</h2>
+  <p>When you create an account, we collect:</p>
+  <ul>
+    <li>Your name and email address</li>
+    <li>Your password (stored as a secure hash — we never see your actual password)</li>
+    <li>Your portfolio balances (BTC, ETH, SOL, USDC)</li>
+    <li>If you sign in with Google, your Google profile name and email</li>
+  </ul>
+
+  <h2>2. What We Do NOT Collect</h2>
+  <ul>
+    <li>Your broker or exchange API keys — these are stored locally in your browser only</li>
+    <li>Your actual trade history from connected brokers</li>
+    <li>Payment card details (handled entirely by Stripe)</li>
+    <li>Any biometric data</li>
+  </ul>
+
+  <h2>3. How We Use Your Information</h2>
+  <ul>
+    <li>To create and manage your account</li>
+    <li>To send you account-related emails (welcome, password reset)</li>
+    <li>To display your portfolio data in the dashboard</li>
+    <li>To process subscription payments through Stripe</li>
+  </ul>
+
+  <h2>4. API Keys & Broker Connections</h2>
+  <p>When you connect a broker account, your API keys are stored exclusively in your browser's local storage. They are never transmitted to SlickOptions servers. All API calls to your broker are made directly from your browser to the broker's API.</p>
+
+  <h2>5. Data Storage & Security</h2>
+  <p>Your account data is stored in a secure PostgreSQL database hosted on Neon. Passwords are hashed using bcrypt. All data transmission uses HTTPS/TLS encryption. We do not store payment card information — all payments are processed by Stripe.</p>
+
+  <h2>6. Third-Party Services</h2>
+  <p>We use the following third-party services:</p>
+  <ul>
+    <li><strong>Stripe</strong> — payment processing</li>
+    <li><strong>Google OAuth</strong> — optional sign-in</li>
+    <li><strong>Polygon.io</strong> — stock and forex market data</li>
+    <li><strong>Binance WebSocket</strong> — live crypto prices</li>
+    <li><strong>Resend</strong> — transactional email</li>
+  </ul>
+
+  <h2>7. Data Sharing</h2>
+  <p>We do not sell, trade, or rent your personal information to third parties. We may share data with service providers only as necessary to operate the Service, and only under strict confidentiality agreements.</p>
+
+  <h2>8. Your Rights</h2>
+  <p>You have the right to access, correct, or delete your personal data at any time. To request deletion of your account and all associated data, contact us at support@slickoptions.com</p>
+
+  <h2>9. Cookies</h2>
+  <p>We use minimal cookies and local storage only for authentication (keeping you logged in) and storing your preferences. We do not use advertising or tracking cookies.</p>
+
+  <h2>10. Contact</h2>
+  <p>For privacy-related questions, contact us at support@slickoptions.com</p>
+</div>
+<footer>
+  <a href="index.html">Home</a>
+  <a href="slickoptions-privacy.html">Privacy Policy</a>
+  <a href="slickoptions-terms.html">Terms of Service</a>
+</footer>
+</body>
+</html>
