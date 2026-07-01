@@ -760,11 +760,45 @@ async function closeAlpacaPosition(symbol) {
 // Patch: override buy/sell buttons to check real mode first
 function handleTrade(direction) {
   if (currentMode === 'real' && ALPACA.connected) {
-    const qty = Math.floor((parseFloat(document.getElementById('amount-input').value) || 100) / currentPrice);
-    if (qty < 1) return showNotif('❌ Amount too low for 1 share', 'var(--red)');
-    placeAlpacaOrder(currentAsset.sym, direction, qty);
+    // Check if asset is a stock (Alpaca doesn't support crypto)
+    if (currentAsset.ws) {
+      return showNotif('❌ Alpaca supports stocks only. Use paper mode for crypto.', 'var(--red)');
+    }
+    const amount = parseFloat(document.getElementById('amount-input').value) || 100;
+    // Use notional (dollar amount) for fractional shares
+    placeAlpacaOrderNotional(currentAsset.sym, direction, amount);
   } else {
     placeTrade(direction);
+  }
+}
+
+async function placeAlpacaOrderNotional(symbol, side, notional) {
+  if (!ALPACA.connected) return showNotif('❌ Alpaca not connected', 'var(--red)');
+  try {
+    const res = await fetch(`${ALPACA.baseUrl}/v2/orders`, {
+      method: 'POST',
+      headers: {
+        'APCA-API-KEY-ID': ALPACA.keyId,
+        'APCA-API-SECRET-KEY': ALPACA.secretKey,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        symbol: symbol,
+        notional: notional.toFixed(2),
+        side: side.toLowerCase(),
+        type: 'market',
+        time_in_force: 'day'
+      })
+    });
+    const order = await res.json();
+    if (order.id) {
+      showNotif(`✅ ${side} $${notional} of ${symbol} placed!`, 'var(--sol-green)');
+      setTimeout(loadAlpacaPositions, 3000);
+    } else {
+      showNotif(`❌ ${order.message || 'Order failed'}`, 'var(--red)');
+    }
+  } catch(e) {
+    showNotif('❌ Order error: ' + e.message, 'var(--red)');
   }
 }
 
