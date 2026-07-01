@@ -7,9 +7,8 @@
 <meta name="description" content="SlickOptions is a personal trading dashboard and terminal. Track your portfolio, watch live markets, and connect your own broker accounts.">
 <meta property="og:title" content="SlickOptions — Personal Trading Dashboard">
 <meta property="og:description" content="Watch live markets, track your portfolio, and connect your own broker. Built for personal use.">
-<meta property="og:image" content="https://alphaedgetrading.site/alphaedge-coin.png">
 <link rel="manifest" href="/manifest.json">
-<meta name="theme-color" content="#4fd1ff">
+<meta name="theme-color" content="#00e5ff">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="SlickOptions">
@@ -18,107 +17,115 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
-    --navy: #f8faff;
-    --navy-card: #ffffff;
-    --navy-border: #dce3f0;
-    --navy-hover: #f0f4ff;
-    --cyan: #1a56db;
-    --violet: #6c2bd9;
-    --green: #057a55;
-    --red: #e02424;
-    --text: #111827;
-    --text-muted: #4b5563;
-    --text-dim: #9ca3af;
+    --bg: #f8faff;
+    --bg-card: #ffffff;
+    --border: #e2e8f4;
+    --hover: #f0f4ff;
+    --cyan: #00e5ff;
+    --gold: #f7c948;
+    --green: #00C853;
+    --red: #FF4B4B;
+    --navy: #0a1628;
+    --navy-mid: #1a2744;
+    --text: #0a1628;
+    --text-muted: #4b5e82;
+    --text-dim: #94a3b8;
   }
   html { scroll-behavior: smooth; }
-  body { background: linear-gradient(160deg, #f0f4ff 0%, #ffffff 50%, #f8faff 100%); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; min-height: 100vh; }
+  body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; min-height: 100vh; }
 
-  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 64px; background: rgba(255,255,255,0.97); border-bottom: 1px solid var(--navy-border); backdrop-filter: blur(12px); }
-  .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.25rem; letter-spacing: -0.02em; color: var(--text); text-decoration: none; display: flex; align-items: center; gap: 10px; }
-  .nav-logo .so { color: var(--cyan); }
-  .nav-logo-mark { width: 30px; height: 30px; border-radius: 8px; background: linear-gradient(135deg, var(--cyan), var(--violet)); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; color: #ffffff; font-family: 'Space Mono', monospace; }
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 66px; background: rgba(255,255,255,0.97); border-bottom: 1px solid var(--border); backdrop-filter: blur(12px); box-shadow: 0 1px 20px rgba(0,0,0,0.06); }
+  .nav-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; letter-spacing: -0.02em; color: var(--navy); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .nav-logo img { width: 32px; height: 32px; border-radius: 50%; box-shadow: 0 0 10px rgba(0,229,255,0.5); }
+  .nav-logo .accent { color: var(--cyan); }
   .nav-links { display: flex; gap: 28px; }
   .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
   .nav-links a:hover { color: var(--cyan); }
   .nav-cta { display: flex; gap: 10px; align-items: center; }
-  .btn-ghost { background: none; border: 1px solid var(--navy-border); color: var(--text-muted); padding: 8px 20px; border-radius: 6px; font-size: 0.875rem; font-weight: 500; transition: all 0.2s; text-decoration: none; display: inline-block; }
+  .btn-ghost { background: none; border: 1px solid var(--border); color: var(--text-muted); padding: 8px 20px; border-radius: 8px; font-size: 0.875rem; font-weight: 500; transition: all 0.2s; text-decoration: none; display: inline-block; }
   .btn-ghost:hover { border-color: var(--cyan); color: var(--cyan); }
-  .btn-primary { background: linear-gradient(90deg, var(--cyan), var(--violet)); color: #06080f; border: none; padding: 8px 20px; border-radius: 6px; font-size: 0.875rem; font-weight: 700; font-family: 'Space Grotesk', sans-serif; transition: all 0.2s; text-decoration: none; display: inline-block; }
-  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 0 20px rgba(79,209,255,0.35); }
+  .btn-primary { background: linear-gradient(90deg, #00e5ff, #f7c948); color: var(--navy); border: none; padding: 9px 22px; border-radius: 8px; font-size: 0.875rem; font-weight: 700; font-family: 'Space Grotesk', sans-serif; transition: all 0.2s; text-decoration: none; display: inline-block; box-shadow: 0 4px 14px rgba(0,229,255,0.25); }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(0,229,255,0.35); }
 
-  .hero { padding: 150px 40px 80px; max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-  .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(26,86,219,0.08); border: 1px solid rgba(26,86,219,0.2); color: var(--cyan); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 14px; border-radius: 100px; margin-bottom: 22px; }
-  h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.2rem, 4vw, 3.3rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 20px; }
-  h1 .grad { background: linear-gradient(90deg, var(--cyan), var(--violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  /* HERO */
+  .hero { padding: 150px 48px 80px; max-width: 1140px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.25); color: #0099aa; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 6px 14px; border-radius: 100px; margin-bottom: 22px; }
+  h1 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(2.2rem, 4vw, 3.3rem); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 20px; color: var(--navy); }
+  h1 .grad { background: linear-gradient(90deg, #00b8cc, #f7c948); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   .hero-sub { color: var(--text-muted); font-size: 1rem; line-height: 1.75; margin-bottom: 30px; max-width: 460px; }
   .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
   .btn-large { padding: 13px 28px; font-size: 0.95rem; border-radius: 8px; font-family: 'Space Grotesk', sans-serif; font-weight: 700; text-decoration: none; display: inline-block; transition: all 0.2s; }
   .hero-note { font-size: 0.78rem; color: var(--text-dim); margin-top: 16px; line-height: 1.6; }
+  .hero-robot { display: flex; justify-content: center; align-items: center; }
+  .hero-robot img { width: 100%; max-width: 420px; filter: drop-shadow(0 20px 60px rgba(0,229,255,0.2)); animation: float 4s ease-in-out infinite; }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
 
-  .terminal-preview { background: #111827; border: 1px solid #374151; border-radius: 16px; overflow: hidden; box-shadow: 0 30px 80px rgba(0,0,0,0.15); }
-  .t-topbar { background: #1f2937; border-bottom: 1px solid var(--navy-border); padding: 12px 16px; display: flex; align-items: center; gap: 8px; }
-  .tdot { width: 10px; height: 10px; border-radius: 50%; }
-  .t-body { padding: 18px; background: #111827; }
-  .t-row { display: flex; align-items: center; gap: 10px; padding: 9px 10px; border-radius: 7px; margin-bottom: 3px; font-size: 0.8rem; font-family: 'Space Mono', monospace; transition: background 0.15s; color: #f9fafb; }
-  .t-row:hover { background: rgba(255,255,255,0.03); }
-  .t-sym { font-weight: 700; min-width: 75px; }
-  .t-price { color: #9ca3af; flex: 1; }
-  .t-up { color: var(--green); }
-  .t-dn { color: var(--red); }
-  .t-footer { margin-top: 12px; padding: 11px 14px; background: rgba(26,86,219,0.06); border: 1px solid rgba(26,86,219,0.15); border-radius: 8px; font-size: 0.7rem; font-family: 'Space Mono', monospace; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center; }
-  .t-status { display: flex; align-items: center; gap: 6px; }
-  .t-dot-live { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 1.5s infinite; }
-  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+  /* STATS BAR */
+  .stats-bar { background: var(--navy); padding: 20px 48px; }
+  .stats-inner { max-width: 1140px; margin: 0 auto; display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 20px; }
+  .stat-item { text-align: center; }
+  .stat-num { font-family: 'Space Grotesk', sans-serif; font-size: 1.5rem; font-weight: 700; background: linear-gradient(90deg, #00e5ff, #f7c948); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .stat-lbl { font-size: 0.72rem; color: #64748b; text-transform: uppercase; letter-spacing: 0.06em; margin-top: 2px; }
 
-  .section { padding: 80px 40px; max-width: 1100px; margin: 0 auto; }
-  .section-divider { border-top: 1px solid var(--navy-border); }
-  .section-eyebrow { font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cyan); margin-bottom: 10px; }
-  .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
-  .section-title .grad { background: linear-gradient(90deg, var(--cyan), var(--violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  /* SECTIONS */
+  .section { padding: 80px 48px; max-width: 1140px; margin: 0 auto; }
+  .section-divider { border-top: 1px solid var(--border); }
+  .section-eyebrow { font-family: 'Space Mono', monospace; font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: #0099aa; margin-bottom: 10px; }
+  .section-title { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; color: var(--navy); }
+  .section-title .grad { background: linear-gradient(90deg, #00b8cc, #f7c948); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
   .section-sub { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; max-width: 560px; margin-bottom: 40px; }
 
-  .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .feature-card { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 14px; padding: 26px; transition: all 0.2s; position: relative; overflow: hidden; }
-  .feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--cyan), var(--violet)); opacity: 0; transition: opacity 0.2s; }
-  .feature-card:hover { border-color: rgba(79,209,255,0.25); transform: translateY(-2px); }
+  /* FEATURES */
+  .feature-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .feature-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px; padding: 28px; transition: all 0.2s; position: relative; overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+  .feature-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #00e5ff, #f7c948); opacity: 0; transition: opacity 0.2s; }
+  .feature-card:hover { border-color: rgba(0,229,255,0.3); transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,229,255,0.1); }
   .feature-card:hover::before { opacity: 1; }
-  .feature-icon { font-size: 1.9rem; margin-bottom: 14px; }
-  .feature-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 8px; }
+  .feature-icon { font-size: 2rem; margin-bottom: 16px; }
+  .feature-name { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; margin-bottom: 8px; color: var(--navy); }
   .feature-desc { font-size: 0.84rem; color: var(--text-muted); line-height: 1.65; }
 
-  .broker-section { background: var(--navy-card); border: 1px solid var(--navy-border); border-radius: 16px; padding: 32px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: center; margin-top: 20px; }
-  .broker-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.1rem; margin-bottom: 10px; }
-  .broker-desc { font-size: 0.85rem; color: var(--text-muted); line-height: 1.7; margin-bottom: 18px; }
-  .broker-badges { display: flex; gap: 10px; flex-wrap: wrap; }
-  .broker-badge { padding: 6px 14px; border-radius: 100px; border: 1px solid var(--navy-border); font-size: 0.75rem; font-weight: 600; font-family: 'Space Mono', monospace; color: var(--text-muted); background: rgba(255,255,255,0.02); }
-  .broker-badge.active { border-color: rgba(79,209,255,0.3); color: var(--cyan); background: rgba(79,209,255,0.06); }
-  .broker-visual { background: rgba(26,86,219,0.04); border: 1px solid rgba(26,86,219,0.12); border-radius: 12px; padding: 20px; font-family: 'Space Mono', monospace; font-size: 0.75rem; color: var(--text-muted); }
-  .broker-visual .bv-row { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(36,45,69,0.5); }
-  .broker-visual .bv-row:last-child { border-bottom: none; }
-  .bv-label { color: var(--text-dim); }
-  .bv-val { color: var(--text); }
-  .bv-val.green { color: var(--green); }
+  /* BROKER */
+  .broker-section { background: var(--navy); border-radius: 20px; padding: 36px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: center; margin-top: 24px; }
+  .broker-title { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.2rem; margin-bottom: 10px; color: #fff; }
+  .broker-desc { font-size: 0.85rem; color: #94a3b8; line-height: 1.7; margin-bottom: 18px; }
+  .broker-badges { display: flex; gap: 8px; flex-wrap: wrap; }
+  .broker-badge { padding: 5px 12px; border-radius: 100px; border: 1px solid #2a3a5c; font-size: 0.72rem; font-weight: 600; font-family: 'Space Mono', monospace; color: #64748b; }
+  .broker-badge.active { border-color: rgba(0,229,255,0.4); color: #00e5ff; background: rgba(0,229,255,0.06); }
+  .broker-visual { background: rgba(255,255,255,0.04); border: 1px solid rgba(0,229,255,0.15); border-radius: 12px; padding: 20px; font-family: 'Space Mono', monospace; font-size: 0.75rem; }
+  .bv-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.06); color: #94a3b8; }
+  .bv-row:last-child { border-bottom: none; }
+  .bv-val { color: #f1f5f9; }
+  .bv-val.green { color: #00C853; }
 
-  .disclaimer { background: rgba(224,36,36,0.04); border: 1px solid rgba(224,36,36,0.15); border-radius: 12px; padding: 18px 22px; margin-top: 40px; }
+  /* DISCLAIMER */
+  .disclaimer { background: rgba(255,75,75,0.04); border: 1px solid rgba(255,75,75,0.15); border-radius: 12px; padding: 18px 22px; margin-top: 40px; }
   .disclaimer p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.65; }
 
-  .cta-wrap { background: linear-gradient(135deg, rgba(26,86,219,0.06), rgba(108,43,217,0.04)); border: 1px solid var(--navy-border); border-radius: 20px; padding: 56px 48px; text-align: center; margin: 0 40px 80px; }
-  .cta-wrap h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.7rem, 3vw, 2.3rem); font-weight: 700; margin-bottom: 12px; }
-  .cta-wrap p { color: var(--text-muted); margin-bottom: 28px; font-size: 0.95rem; }
+  /* CTA */
+  .cta-wrap { background: var(--navy); border-radius: 24px; padding: 60px 48px; text-align: center; margin: 0 48px 80px; position: relative; overflow: hidden; }
+  .cta-wrap::before { content: ''; position: absolute; top: -80px; left: 50%; transform: translateX(-50%); width: 400px; height: 400px; background: radial-gradient(circle, rgba(0,229,255,0.12), transparent 70%); }
+  .cta-wrap h2 { font-family: 'Space Grotesk', sans-serif; font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 700; margin-bottom: 12px; color: #fff; position: relative; }
+  .cta-wrap p { color: #64748b; margin-bottom: 28px; font-size: 0.95rem; position: relative; }
+  .cta-coin { width: 56px; height: 56px; border-radius: 50%; box-shadow: 0 0 24px rgba(247,201,72,0.6); margin: 0 auto 20px; display: block; position: relative; }
 
-  footer { background: #f8faff; border-top: 1px solid var(--navy-border); padding: 32px 40px; }
-  .footer-inner { max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
-  .footer-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; display: flex; align-items: center; gap: 8px; }
-  .footer-logo .so { color: var(--cyan); }
+  /* FOOTER */
+  footer { background: var(--navy); padding: 36px 48px; }
+  .footer-inner { max-width: 1140px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; }
+  .footer-logo { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1rem; display: flex; align-items: center; gap: 8px; color: #fff; }
+  .footer-logo img { width: 24px; height: 24px; border-radius: 50%; box-shadow: 0 0 8px rgba(247,201,72,0.6); }
+  .footer-logo .accent { color: var(--cyan); }
   .footer-links { display: flex; gap: 22px; flex-wrap: wrap; }
-  .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.84rem; transition: color 0.2s; }
+  .footer-links a { color: #64748b; text-decoration: none; font-size: 0.84rem; transition: color 0.2s; }
   .footer-links a:hover { color: var(--cyan); }
-  .footer-copy { font-size: 0.75rem; color: var(--text-dim); }
+  .footer-copy { font-size: 0.75rem; color: #334155; }
 
   @media (max-width: 900px) {
     nav { padding: 0 20px; }
     .nav-links { display: none; }
     .hero { grid-template-columns: 1fr; padding: 120px 20px 60px; gap: 40px; }
+    .stats-bar { padding: 20px; }
     .feature-grid { grid-template-columns: 1fr; }
     .broker-section { grid-template-columns: 1fr; }
     .section { padding: 50px 20px; }
@@ -131,14 +138,14 @@
 
 <nav>
   <a href="index.html" class="nav-logo">
-    <div class="nav-logo-mark">SO</div>
-    Slick<span class="so">Options</span>
+    <img src="alphaedge-coin.png" alt="SO">
+    Slick<span class="accent">Options</span>
   </a>
   <div class="nav-links">
     <a href="#features">Features</a>
     <a href="slickoptions-terminal.html">Terminal</a>
-    <a href="slickoptions-portfolio.html">Portfolio</a>
     <a href="slickoptions-dashboard.html">Dashboard</a>
+    <a href="slickoptions-wallet.html">Wallet</a>
   </div>
   <div class="nav-cta">
     <a href="slickoptions-login.html" class="btn-ghost">Sign in</a>
@@ -148,43 +155,34 @@
 
 <section class="hero">
   <div>
-    <div class="hero-eyebrow">Personal trading dashboard</div>
+    <div class="hero-eyebrow">🚀 Personal Trading Dashboard</div>
     <h1>Your markets.<br><span class="grad">Your portfolio.</span><br>One slick dashboard.</h1>
     <p class="hero-sub">SlickOptions is a personal trading terminal and portfolio tracker. Watch live markets, track your positions, and connect your own broker accounts to place real trades — all from one clean interface.</p>
     <div class="hero-actions">
       <a href="slickoptions-signup.html" class="btn-large btn-primary">Create account</a>
       <a href="slickoptions-terminal.html" class="btn-large btn-ghost">View terminal →</a>
     </div>
-    <p class="hero-note">Personal use · No signals sold · No funds custodied · You connect your own broker</p>
+    <p class="hero-note">Personal use only · No signals sold · No funds custodied · You connect your own broker</p>
   </div>
-
-  <div class="terminal-preview">
-    <div class="t-topbar">
-      <div class="tdot" style="background:#FF5F57;"></div>
-      <div class="tdot" style="background:#FFBD2E;"></div>
-      <div class="tdot" style="background:#28C840;"></div>
-      <span style="font-family:'Space Mono',monospace;font-size:0.65rem;color:var(--text-muted);margin-left:8px;">SlickOptions Terminal</span>
-    </div>
-    <div class="t-body">
-      <div style="display:flex;justify-content:space-between;margin-bottom:8px;font-size:0.66rem;color:var(--text-dim);font-family:'Space Mono',monospace;padding:0 10px;"><span>SYMBOL</span><span>PRICE</span><span>24H</span></div>
-      <div class="t-row"><span class="t-sym">BTC/USD</span><span class="t-price">$67,420</span><span class="t-up">+3.6%</span></div>
-      <div class="t-row"><span class="t-sym">ETH/USD</span><span class="t-price">$3,812</span><span class="t-up">+2.1%</span></div>
-      <div class="t-row"><span class="t-sym">NVDA</span><span class="t-price">$1,142</span><span class="t-up">+2.8%</span></div>
-      <div class="t-row"><span class="t-sym">EUR/USD</span><span class="t-price">1.0821</span><span class="t-dn">-0.19%</span></div>
-      <div class="t-row"><span class="t-sym">AAPL</span><span class="t-price">$198.30</span><span class="t-up">+1.2%</span></div>
-      <div class="t-row"><span class="t-sym">SOL/USD</span><span class="t-price">$168.40</span><span class="t-up">+4.2%</span></div>
-      <div class="t-footer">
-        <div class="t-status"><div class="t-dot-live"></div>Live via Polygon.io + Binance</div>
-        <div>Personal account</div>
-      </div>
-    </div>
+  <div class="hero-robot">
+    <img src="alphaedge-ai-robot.png" alt="SlickOptions AI">
   </div>
 </section>
+
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat-item"><div class="stat-num">60+</div><div class="stat-lbl">Markets tracked</div></div>
+    <div class="stat-item"><div class="stat-num">Live</div><div class="stat-lbl">Real-time data</div></div>
+    <div class="stat-item"><div class="stat-num">$0</div><div class="stat-lbl">Funds custodied</div></div>
+    <div class="stat-item"><div class="stat-num">3</div><div class="stat-lbl">Broker connections</div></div>
+    <div class="stat-item"><div class="stat-num">100%</div><div class="stat-lbl">Your control</div></div>
+  </div>
+</div>
 
 <section class="section section-divider" id="features">
   <div class="section-eyebrow">What it does</div>
   <div class="section-title">Everything you need to <span class="grad">trade smarter</span></div>
-  <p class="section-sub">SlickOptions is built for personal use — a clean, fast dashboard for watching markets and managing your own portfolio. No noise, no upsells, just your data.</p>
+  <p class="section-sub">SlickOptions is built for personal use — a clean, fast dashboard for watching markets and managing your own portfolio. No noise, just your data.</p>
   <div class="feature-grid">
     <div class="feature-card">
       <div class="feature-icon">📊</div>
@@ -207,9 +205,9 @@
       <div class="feature-desc">Practice strategies with $100K simulated paper money before committing real capital.</div>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">📓</div>
-      <div class="feature-name">Trade Journal</div>
-      <div class="feature-desc">Log your own trade ideas, entries, exits, and notes. Track your personal performance over time.</div>
+      <div class="feature-icon">💰</div>
+      <div class="feature-name">Crypto Wallet</div>
+      <div class="feature-desc">Track your BTC, ETH, USDC, and SOL balances. Deposit via NOWPayments. All in one place.</div>
     </div>
     <div class="feature-card">
       <div class="feature-icon">🔒</div>
@@ -231,31 +229,36 @@
       </div>
     </div>
     <div class="broker-visual">
-      <div class="bv-row"><span class="bv-label">Account</span><span class="bv-val">Your Alpaca account</span></div>
-      <div class="bv-row"><span class="bv-label">Buying power</span><span class="bv-val green">$4,280.00</span></div>
-      <div class="bv-row"><span class="bv-label">Portfolio value</span><span class="bv-val green">$12,840.50</span></div>
-      <div class="bv-row"><span class="bv-label">Today's P&L</span><span class="bv-val green">+$184.20</span></div>
-      <div class="bv-row"><span class="bv-label">Status</span><span class="bv-val" style="color:var(--green);">● Connected</span></div>
+      <div class="bv-row"><span>Account</span><span class="bv-val">Your Alpaca account</span></div>
+      <div class="bv-row"><span>Buying power</span><span class="bv-val green">$4,280.00</span></div>
+      <div class="bv-row"><span>Portfolio value</span><span class="bv-val green">$12,840.50</span></div>
+      <div class="bv-row"><span>Today's P&L</span><span class="bv-val green">+$184.20</span></div>
+      <div class="bv-row"><span>Status</span><span class="bv-val green">● Connected</span></div>
     </div>
   </div>
 
   <div class="disclaimer">
-    <p><strong style="color:var(--text);">Important:</strong> SlickOptions is a personal-use dashboard. It does not provide investment advice, does not sell trade signals, and does not hold, custody, or manage funds. All broker connections use your own API credentials. Trades execute directly in your own brokerage or exchange accounts. Trading involves substantial risk of loss.</p>
+    <p><strong style="color:var(--navy);">Important:</strong> SlickOptions is a personal-use dashboard. It does not provide investment advice, does not sell trade signals, and does not hold, custody, or manage funds. All broker connections use your own API credentials. Trades execute directly in your own brokerage or exchange accounts. Trading involves substantial risk of loss.</p>
   </div>
 </section>
 
 <div class="cta-wrap">
-  <h2>Ready to get <span style="background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">slick</span>?</h2>
+  <img src="alphaedge-coin.png" alt="SO" class="cta-coin">
+  <h2>Ready to get <span style="background:linear-gradient(90deg,#00e5ff,#f7c948);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">slick</span>?</h2>
   <p>Set up your personal trading dashboard in minutes.</p>
   <a href="slickoptions-signup.html" class="btn-large btn-primary">Create your account →</a>
 </div>
 
 <footer>
   <div class="footer-inner">
-    <div class="footer-logo">Slick<span class="so">Options</span></div>
+    <div class="footer-logo">
+      <img src="alphaedge-coin.png" alt="SO">
+      Slick<span class="accent">Options</span>
+    </div>
     <div class="footer-links">
       <a href="slickoptions-terminal.html">Terminal</a>
       <a href="slickoptions-dashboard.html">Dashboard</a>
+      <a href="slickoptions-wallet.html">Wallet</a>
       <a href="slickoptions-terms.html">Terms</a>
       <a href="slickoptions-privacy.html">Privacy</a>
     </div>
